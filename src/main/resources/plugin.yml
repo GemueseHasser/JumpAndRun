@@ -19,3 +19,6 @@ commands:
   jarpos:
     description: 'Setzt die Position'
     usage: '</command>'
+  hacks:
+    description: 'Lässt dich automatusch springen :D'
+    usage: '</command>'

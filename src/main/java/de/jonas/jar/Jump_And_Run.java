@@ -2,6 +2,7 @@ package de.jonas.jar;
 
 import de.jonas.commands.Erklaerung;
 import de.jonas.commands.SetPos;
+import de.jonas.hacks.AutoJumpAndRun;
 import de.jonas.listener.OnMove;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -20,6 +21,7 @@ public class Jump_And_Run extends JavaPlugin {
         //Commands
         getCommand("dec").setExecutor(new Erklaerung());
         getCommand("jarpos").setExecutor(new SetPos());
+        getCommand("hacks").setExecutor(new AutoJumpAndRun());
 
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new OnMove(), this);
