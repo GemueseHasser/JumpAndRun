@@ -1,2 +1,2 @@
 # Ein Jump-and-Run Spiel für den Informatik-Unterricht
-## Das Prinzip des Spiels gleicht dem eines gewöhnlichen Jump-and-Run spiels, bei dem man - abstrakt betrachtet - eine Figur hat, mit der man durch eine 2-Dimensionale Spielwelt läuft und verschiedenen statischen oder flexiblen Hindernissen ausweichen muss.
+## Das Prinzip des Spiels gleicht dem eines gewöhnlichen Jump-and-Run Spiels, bei dem man - abstrakt betrachtet - eine Figur hat, mit der man durch eine 2-Dimensionale Spielwelt läuft und verschiedenen statischen oder flexiblen Hindernissen ausweichen muss.
