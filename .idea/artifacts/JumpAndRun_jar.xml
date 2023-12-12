@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JumpAndRun:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JumpAndRun_jar</output-path>
+    <root id="archive" name="JumpAndRun.jar">
+      <element id="module-output" name="JumpAndRun" />
+    </root>
+  </artifact>
+</component>
