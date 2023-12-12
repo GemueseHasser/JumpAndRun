@@ -1,7 +1,5 @@
 package de.informatik.game;
 
-import javax.swing.JFrame;
-
 /**
  * <p>Die Haupt- und Main-Klasse dieses Spiels. In dieser Klasse wird das Spiel sowohl instanziiert als auch
  * initialisiert, weshalb sich die Main-Methode dieser Anwendung in der Klasse befindet, die als erstes von der JRE
