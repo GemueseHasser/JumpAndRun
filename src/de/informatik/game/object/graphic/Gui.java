@@ -9,12 +9,12 @@ import javax.swing.JFrame;
 public final class Gui extends JFrame {
 
     //<editor-fold desc="CONSTANTS">
-    /** Der Titel des Fensters. */
-    private static final String TITLE = "Jump-and-Run";
     /** Die Breite des Fensters. */
-    private static final int WIDTH = 700;
+    public static final int WIDTH = 700;
     /** Die Höhe des Fensters. */
     private static final int HEIGHT = 500;
+    /** Der Titel des Fensters. */
+    private static final String TITLE = "Jump-and-Run";
     //</editor-fold>
 
 

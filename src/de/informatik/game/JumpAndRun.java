@@ -1,11 +1,16 @@
 package de.informatik.game;
 
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.Gui;
+import de.informatik.game.task.GameTask;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Die Haupt- und Main-Klasse dieses Spiels. In dieser Klasse wird das Spiel sowohl instanziiert als auch
@@ -24,6 +29,8 @@ public class JumpAndRun {
 
 
     //<editor-fold desc="LOCAL FIELDS">
+    /** Der {@link GameHandler} des Spiels, welcher alle Angelegenheiten während das Spiel läuft, regelt. */
+    private final GameHandler gameHandler = new GameHandler();
     /** Alle geladenen Bilder, welche als {@link ImageType Typ} hinterlegt wurden. */
     private final Map<ImageType, BufferedImage> loadedImages = new HashMap<>();
     //</editor-fold>
@@ -44,6 +51,10 @@ public class JumpAndRun {
         // create and open new gui-instance
         final Gui gui = new Gui();
         gui.open();
+
+        // run tasks
+        final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
+        taskExecutor.scheduleAtFixedRate(new GameTask(), 0, 10, TimeUnit.MILLISECONDS);
     }
     //</editor-fold>
 
@@ -58,6 +69,15 @@ public class JumpAndRun {
     }
 
     //<editor-fold desc="Getter">
+
+    /**
+     * Gibt den {@link GameHandler} dieses Spiels zurück, welcher alle Angelegenheiten regelt, während das Spiel läuft.
+     *
+     * @return Der {@link GameHandler} dieses Spiels, welcher alle Angelegenheiten regelt, während das Spiel läuft.
+     */
+    public GameHandler getGameHandler() {
+        return this.gameHandler;
+    }
 
     /**
      * Gibt eine {@link Map} zurück, welche alle geladenen Bilder enthält, die als {@link ImageType Typ} hinterlegt

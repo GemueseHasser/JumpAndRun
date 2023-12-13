@@ -20,12 +20,22 @@ public final class Draw extends JLabel {
 
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BACKGROUND),
-            0,
+            JumpAndRun.GAME_INSTANCE.getGameHandler().getBackgroundPosition(),
             0,
             this.getWidth(),
             this.getHeight(),
             null
         );
+        g.drawImage(
+            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BACKGROUND),
+            JumpAndRun.GAME_INSTANCE.getGameHandler().getBackgroundPosition() + this.getWidth(),
+            0,
+            this.getWidth(),
+            this.getHeight(),
+            null
+        );
+
+        repaint();
     }
     //</editor-fold>
 }
