@@ -1,5 +1,7 @@
 package de.informatik.game;
 
+import de.informatik.game.object.graphic.Gui;
+
 /**
  * <p>Die Haupt- und Main-Klasse dieses Spiels. In dieser Klasse wird das Spiel sowohl instanziiert als auch
  * initialisiert, weshalb sich die Main-Methode dieser Anwendung in der Klasse befindet, die als erstes von der JRE
@@ -19,6 +21,9 @@ public class JumpAndRun {
      * @param args Die Argumente, die von der JRE beim Start des Programms übergeben werden.
      */
     public static void main(final String[] args) {
+        // create and open new gui-instance
+        final Gui gui = new Gui();
+        gui.open();
     }
     //</editor-fold>
 
