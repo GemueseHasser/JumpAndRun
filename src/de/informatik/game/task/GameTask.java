@@ -6,7 +6,7 @@ import de.informatik.game.JumpAndRun;
  * Der {@link GameTask} stellt eine sich konstant wiederholende Prozedur dar, wodurch das Spiel immer wieder während des
  * Spielbetriebs aktualisiert wird.
  */
-public class GameTask implements Runnable {
+public final class GameTask implements Runnable {
 
     //<editor-fold desc="implementation">
     @Override
