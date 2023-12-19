@@ -3,14 +3,15 @@ package de.informatik.game;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.Gui;
-import de.informatik.game.task.GameTask;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
 /**
  * <p>Die Haupt- und Main-Klasse dieses Spiels. In dieser Klasse wird das Spiel sowohl instanziiert als auch
@@ -48,13 +49,15 @@ public class JumpAndRun {
         // load images
         GAME_INSTANCE.loadImages();
 
+        // copy default map file
+        GAME_INSTANCE.copyDefaultMapFile();
+
+        // initialize game-handler
+        GAME_INSTANCE.getGameHandler().initialize();
+
         // create and open new gui-instance
         final Gui gui = new Gui();
         gui.open();
-
-        // run tasks
-        final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
-        taskExecutor.scheduleAtFixedRate(new GameTask(), 0, 10, TimeUnit.MILLISECONDS);
     }
     //</editor-fold>
 
@@ -65,6 +68,22 @@ public class JumpAndRun {
     private void loadImages() {
         for (final ImageType type : ImageType.values()) {
             loadedImages.put(type, type.getImage());
+        }
+    }
+
+    /**
+     * Kopiert die Standard-Map in einen automatisch erzeugten Ordner - zufalls dieser nicht schon vorhanden ist. Wenn
+     * die Map bereits existiert, macht diese Methode nichts.
+     */
+    private void copyDefaultMapFile() {
+        try {
+            new File("JumpAndRun/map.yml").getParentFile().mkdirs();
+
+            Files.copy(
+                Objects.requireNonNull(getClass().getResourceAsStream("/de/informatik/resources/maps/map.yml")),
+                Path.of("JumpAndRun/map.yml")
+            );
+        } catch (IOException ignored) {
         }
     }
 

@@ -1,6 +1,10 @@
 package de.informatik.game.handler;
 
-import de.informatik.game.object.graphic.Gui;
+import de.informatik.game.object.map.Map;
+import de.informatik.game.object.map.Opponent;
+import de.informatik.game.object.map.Player;
+
+import java.io.FileNotFoundException;
 
 /**
  * Der {@link GameHandler} stellt die nächsthöhere Instanz des Spiels - nach der Haupt- und Main-Klasse - dar und in
@@ -9,27 +13,76 @@ import de.informatik.game.object.graphic.Gui;
 public final class GameHandler {
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die aktuelle Position des Hintergrundes. */
-    private int backgroundPosition;
+    /** Der Instanz des Spielers, mit dem der Nutzer dieses Spiel spielt. */
+    private final Player player = new Player();
+    /** Die Map dieses Spiels, in welcher sich der Nutzer während des Spiels befindet. */
+    private Map map;
     //</editor-fold>
 
 
     /**
-     * Aktualisiert die aktuelle Position des Hintergrundes, um die Bewegung zu simulieren.
+     * Initialisiert dieses Spiel bzw. diese Runde dieses Spiels.
      */
-    public void updateBackgroundPosition() {
-        backgroundPosition = (backgroundPosition <= -Gui.WIDTH) ? 0 : backgroundPosition - 1;
+    public void initialize() {
+        try {
+            // load map
+            map = MapHandler.loadMap();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        // load opponents
+        map.loadOpponents();
+    }
+
+    /**
+     * Die Aktion, die ausgeführt wird, wenn der Nutzer die Taste nach links drückt. Diese Methode wird ausgeführt, wenn
+     * der {@link de.informatik.game.listener.KeyListener} getriggert wird.
+     */
+    public void moveLeft() {
+        for (final Opponent opponent : map.getLoadedOpponents()) {
+            opponent.playerMoveLeftEvent(
+                player.getAbsolutePositionX(),
+                player.getScreenPositionX() <= Player.MAX_LEFT_POINT_ON_SCREEN
+            );
+        }
+
+        player.moveLeft();
+    }
+
+    /**
+     * Die Aktion, die ausgeführt wird, wenn der Nutzer die Taste nach rechts drückt. Diese Methode wird ausgeführt,
+     * wenn der {@link de.informatik.game.listener.KeyListener} getriggert wird.
+     */
+    public void moveRight() {
+        for (final Opponent opponent : map.getLoadedOpponents()) {
+            opponent.playerMoveRightEvent(
+                player.getAbsolutePositionX(),
+                player.getScreenPositionX() >= Player.MAX_RIGHT_POINT_ON_SCREEN
+            );
+        }
+
+        player.moveRight();
     }
 
     //<editor-fold desc="Getter">
 
     /**
-     * Gibt die aktuelle Position des Hintergrundes zurück.
+     * Gibt die Map dieses Spiels zurück, in welcher sich der Nutzer während des Spiels befindet.
      *
-     * @return Die aktuelle Position des Hintergrundes.
+     * @return Die Map dieses Spiels, in welcher sich der Nutzer während des Spiels befindet.
      */
-    public int getBackgroundPosition() {
-        return this.backgroundPosition;
+    public Map getMap() {
+        return map;
+    }
+
+    /**
+     * Gibt die Instanz des Spielers zurück, mit dem der Nutzer dieses Spiel spielt.
+     *
+     * @return Der Instanz des Spielers, mit dem der Nutzer dieses Spiel spielt.
+     */
+    public Player getPlayer() {
+        return player;
     }
     //</editor-fold>
 

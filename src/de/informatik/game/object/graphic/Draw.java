@@ -1,11 +1,12 @@
 package de.informatik.game.object.graphic;
 
 import de.informatik.game.JumpAndRun;
-import de.informatik.game.constant.ImageType;
+import de.informatik.game.handler.MapHandler;
 
 import javax.swing.JLabel;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Die Zeichen-Komponente, mit der das {@link de.informatik.game.JumpAndRun Spiel} in dem {@link Gui Fenster} gezeichnet
@@ -18,22 +19,14 @@ public final class Draw extends JLabel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BACKGROUND),
-            JumpAndRun.GAME_INSTANCE.getGameHandler().getBackgroundPosition(),
-            0,
-            this.getWidth(),
-            this.getHeight(),
-            null
-        );
-        g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BACKGROUND),
-            JumpAndRun.GAME_INSTANCE.getGameHandler().getBackgroundPosition() + this.getWidth(),
-            0,
-            this.getWidth(),
-            this.getHeight(),
-            null
-        );
+        // draw map (background and opponents)
+        g.drawImage(MapHandler.getRenderedMap(
+            JumpAndRun.GAME_INSTANCE.getGameHandler().getMap(),
+            JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().getAbsolutePositionX()
+        ), 0, 0, null);
+
+        // draw player
+        JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().drawPlayer((Graphics2D) g);
 
         repaint();
     }

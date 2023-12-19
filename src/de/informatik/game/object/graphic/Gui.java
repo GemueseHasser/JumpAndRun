@@ -1,5 +1,7 @@
 package de.informatik.game.object.graphic;
 
+import de.informatik.game.listener.KeyListener;
+
 import javax.swing.JFrame;
 
 /**
@@ -12,7 +14,7 @@ public final class Gui extends JFrame {
     /** Die Breite des Fensters. */
     public static final int WIDTH = 700;
     /** Die Höhe des Fensters. */
-    private static final int HEIGHT = 500;
+    public static final int HEIGHT = 500;
     /** Der Titel des Fensters. */
     private static final String TITLE = "Jump-and-Run";
     //</editor-fold>
@@ -34,6 +36,8 @@ public final class Gui extends JFrame {
         super.setBounds(0, 0, WIDTH, HEIGHT);
         super.setLocationRelativeTo(null);
         super.setLayout(null);
+        super.setResizable(false);
+        super.addKeyListener(new KeyListener());
 
         // create basic draw-component
         final Draw draw = new Draw();

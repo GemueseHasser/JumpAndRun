@@ -17,6 +17,10 @@ public enum ImageType {
     /** Das Hintergrundbild. */
     BACKGROUND(
         "background.jpg"
+    ),
+    /** Eine einfache Barriere. */
+    BARRIER(
+        "barrier.jpg"
     );
     //</editor-fold>
 
@@ -40,7 +44,7 @@ public enum ImageType {
     ImageType(final String name) {
         try {
             this.image = ImageIO.read(
-                Objects.requireNonNull(getClass().getResource("/de/informatik/resources/" + name))
+                Objects.requireNonNull(getClass().getResource("/de/informatik/resources/textures/" + name))
             );
         } catch (final IOException e) {
             throw new RuntimeException(e);
