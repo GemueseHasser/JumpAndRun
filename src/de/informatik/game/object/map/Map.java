@@ -1,5 +1,6 @@
 package de.informatik.game.object.map;
 
+import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +27,13 @@ public final class Map {
     /** Die letzte mittlere x-Koordinate des Hintergrundes in dieser Map. */
     private int lastMiddleBackgroundX;
     //</editor-fold>
+
+
+    public Map() {
+        final int playerPosition = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().getAbsolutePositionX();
+        final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
+        lastMiddleBackgroundX = ((playerPosition / width) * width) - playerPosition;
+    }
 
 
     /**

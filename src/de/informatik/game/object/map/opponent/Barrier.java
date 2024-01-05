@@ -70,7 +70,6 @@ public final class Barrier implements Opponent {
 
 
         x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
-        System.out.println(x);
     }
     //</editor-fold>
 }

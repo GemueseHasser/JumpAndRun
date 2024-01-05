@@ -49,7 +49,9 @@ public final class MapHandler {
     public static BufferedImage getRenderedMap(final Map map, final int playerPosition) {
         final BufferedImage image = new BufferedImage(Gui.WIDTH, Gui.HEIGHT, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
-        final int middleBackgroundX = (!isBackgroundMoving() ? map.getLastMiddleBackgroundX() : ((playerPosition / Gui.WIDTH) * Gui.WIDTH) - playerPosition);
+
+        final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
+        final int middleBackgroundX = (!isBackgroundMoving() ? map.getLastMiddleBackgroundX() : ((playerPosition / width) * width) - playerPosition);
 
         // draw background
         g.drawImage(
