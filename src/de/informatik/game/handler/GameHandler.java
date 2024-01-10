@@ -47,6 +47,7 @@ public final class GameHandler {
             );
         }
 
+        // move left
         player.moveLeft();
     }
 
@@ -62,6 +63,7 @@ public final class GameHandler {
             );
         }
 
+        // move right
         player.moveRight();
     }
 
