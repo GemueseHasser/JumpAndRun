@@ -1,7 +1,7 @@
 package de.informatik.game.object.map;
 
 import de.informatik.game.JumpAndRun;
-import de.informatik.game.object.graphic.Gui;
+import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +16,7 @@ public final class Player {
     /** Der Punkt, den der Spieler maximal nach links gehen kann. */
     public static final int MAX_LEFT_POINT_ON_SCREEN = 10;
     /** Der Punkt, den der Spieler maximal nach rechts gehen kann. */
-    public static final int MAX_RIGHT_POINT_ON_SCREEN = Gui.WIDTH - 70;
+    public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
     /** Die Größe jedes Schrittes des Spielers. */
     public static final int STEP_SIZE = 5;
     //</editor-fold>

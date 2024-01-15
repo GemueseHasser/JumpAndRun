@@ -2,7 +2,7 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
-import de.informatik.game.object.graphic.Gui;
+import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.map.Opponent;
 
 import java.awt.Graphics2D;
@@ -55,7 +55,7 @@ public final class Barrier implements Opponent {
     @Override
     public void playerMoveLeftEvent(final int playerPosition, final boolean isMovingBackground) {
         if (!isMovingBackground) return;
-        if (playerPosition < startX - Gui.WIDTH - 60)
+        if (playerPosition < startX - GameGui.WIDTH - 60)
             return;
 
         x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
@@ -64,7 +64,7 @@ public final class Barrier implements Opponent {
     @Override
     public void playerMoveRightEvent(final int playerPosition, final boolean isMovingBackground) {
         if (!isMovingBackground) return;
-        if (playerPosition > startX + Gui.WIDTH + 60) {
+        if (playerPosition > startX + GameGui.WIDTH + 60) {
             return;
         }
 

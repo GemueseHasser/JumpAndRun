@@ -1,50 +1,33 @@
 package de.informatik.game.object.graphic;
 
-import de.informatik.game.listener.KeyListener;
-
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
-/**
- * Das Haupt-Fenster des {@link de.informatik.game.JumpAndRun Spiels}, welches auch als erstes geöffnet wird und worin
- * eigentlich das gesamte Spiel stattfindet.
- */
-public final class Gui extends JFrame {
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-    //<editor-fold desc="CONSTANTS">
-    /** Die Breite des Fensters. */
-    public static final int WIDTH = 700;
-    /** Die Höhe des Fensters. */
-    public static final int HEIGHT = 500;
-    /** Der Titel des Fensters. */
-    private static final String TITLE = "Jump-and-Run";
-    //</editor-fold>
-
+public abstract class Gui extends JFrame {
 
     //<editor-fold desc="CONSTRUCTORS">
-
-    /**
-     * Erzeugt eine neue Instanz eines {@link Gui Fensters}, welches ein {@link JFrame} darstellt. Dieses {@link Gui}
-     * ist das Haupt-Fenster des {@link de.informatik.game.JumpAndRun Spiels}, welches auch als erstes geöffnet wird und
-     * worin eigentlich das gesamte Spiel stattfindet.
-     */
-    public Gui() {
+    public Gui(
+        final String title,
+        final int width,
+        final int height
+    ) {
         // create frame-instance
-        super(TITLE);
+        super(title);
 
         // set default properties
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setBounds(0, 0, WIDTH, HEIGHT);
+        super.setBounds(0, 0, width, height);
         super.setLocationRelativeTo(null);
         super.setLayout(null);
         super.setResizable(false);
-        super.addKeyListener(new KeyListener());
 
-        // create basic draw-component
         final Draw draw = new Draw();
-        draw.setBounds(0, 0, WIDTH, HEIGHT);
+        draw.setBounds(0, 0, width, height);
         draw.setVisible(true);
 
-        // add components
         super.add(draw);
     }
     //</editor-fold>
@@ -56,5 +39,20 @@ public final class Gui extends JFrame {
     public void open() {
         this.setVisible(true);
     }
+
+    public abstract void draw(final Graphics2D g);
+
+
+    //<editor-fold desc="Draw">
+    private final class Draw extends JLabel {
+
+        @Override
+        protected void paintComponent(final Graphics g) {
+            super.paintComponent(g);
+
+            draw((Graphics2D) g);
+        }
+    }
+    //</editor-fold>
 
 }

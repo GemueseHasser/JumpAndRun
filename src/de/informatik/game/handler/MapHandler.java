@@ -1,7 +1,7 @@
 package de.informatik.game.handler;
 
 import de.informatik.game.JumpAndRun;
-import de.informatik.game.object.graphic.Gui;
+import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -47,7 +47,7 @@ public final class MapHandler {
      * @return Die fertig gerenderte Map in Form eines {@link BufferedImage Bildes}.
      */
     public static BufferedImage getRenderedMap(final Map map, final int playerPosition) {
-        final BufferedImage image = new BufferedImage(Gui.WIDTH, Gui.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage image = new BufferedImage(GameGui.WIDTH, GameGui.HEIGHT, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
 
         final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
@@ -56,26 +56,26 @@ public final class MapHandler {
         // draw background
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
-            middleBackgroundX - Gui.WIDTH,
+            middleBackgroundX - GameGui.WIDTH,
             0,
-            Gui.WIDTH,
-            Gui.HEIGHT,
+            GameGui.WIDTH,
+            GameGui.HEIGHT,
             null
         );
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
             middleBackgroundX,
             0,
-            Gui.WIDTH,
-            Gui.HEIGHT,
+            GameGui.WIDTH,
+            GameGui.HEIGHT,
             null
         );
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
-            middleBackgroundX + Gui.WIDTH,
+            middleBackgroundX + GameGui.WIDTH,
             0,
-            Gui.WIDTH,
-            Gui.HEIGHT,
+            GameGui.WIDTH,
+            GameGui.HEIGHT,
             null
         );
 
