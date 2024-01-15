@@ -2,7 +2,7 @@ package de.informatik.game;
 
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.GameHandler;
-import de.informatik.game.object.graphic.gui.GameGui;
+import de.informatik.game.object.graphic.gui.MenuGui;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -55,9 +55,8 @@ public class JumpAndRun {
         // initialize game-handler
         GAME_INSTANCE.getGameHandler().initialize();
 
-        // create and open new gui-instance
-        final GameGui gameGui = new GameGui();
-        gameGui.open();
+        // create and open new menu-gui-instance
+        new MenuGui().open();
     }
     //</editor-fold>
 
