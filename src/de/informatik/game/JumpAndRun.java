@@ -26,6 +26,8 @@ public class JumpAndRun {
     //<editor-fold desc="CONSTANTS">
     /** Die oberste Instanz dieses {@link JumpAndRun Spiels}. */
     public static final JumpAndRun GAME_INSTANCE = new JumpAndRun();
+    /** Die Anzahl an Level, die in dem Spiel angeboten werden sollen. */
+    public static final int LEVEL_AMOUNT = 15;
     //</editor-fold>
 
 
@@ -34,6 +36,8 @@ public class JumpAndRun {
     private final GameHandler gameHandler = new GameHandler();
     /** Alle geladenen Bilder, welche als {@link ImageType Typ} hinterlegt wurden. */
     private final Map<ImageType, BufferedImage> loadedImages = new HashMap<>();
+    /** Das Fenster, in dem das Menü in diesem Spiel angezeigt wird. */
+    private final MenuGui menuGui = new MenuGui();
     //</editor-fold>
 
 
@@ -50,13 +54,10 @@ public class JumpAndRun {
         GAME_INSTANCE.loadImages();
 
         // copy default map file
-        GAME_INSTANCE.copyDefaultMapFile();
+        GAME_INSTANCE.copyDefaultMapFiles();
 
-        // initialize game-handler
-        GAME_INSTANCE.getGameHandler().initialize();
-
-        // create and open new menu-gui-instance
-        new MenuGui().open();
+        // open menu-gui
+        GAME_INSTANCE.getMenuGui().open();
     }
     //</editor-fold>
 
@@ -71,17 +72,19 @@ public class JumpAndRun {
     }
 
     /**
-     * Kopiert die Standard-Map in einen automatisch erzeugten Ordner - zufalls dieser nicht schon vorhanden ist. Wenn
-     * die Map bereits existiert, macht diese Methode nichts.
+     * Kopiert alle Maps, die in diesem Spiel angeboten werden sollen in einen automatisch erzeugten Ordner - zufalls
+     * dieser nicht schon vorhanden ist. Maps, die bereits vorhanden sind, werden übersprungen.
      */
-    private void copyDefaultMapFile() {
+    private void copyDefaultMapFiles() {
         try {
-            new File("JumpAndRun/map.yml").getParentFile().mkdirs();
+            new File("JumpAndRun/").mkdirs();
 
-            Files.copy(
-                Objects.requireNonNull(getClass().getResourceAsStream("/de/informatik/resources/maps/map.yml")),
-                Path.of("JumpAndRun/map.yml")
-            );
+            for (int i = 1; i < LEVEL_AMOUNT + 1; i++) {
+                Files.copy(
+                    Objects.requireNonNull(getClass().getResourceAsStream("/de/informatik/resources/maps/map" + i + ".yml")),
+                    Path.of("JumpAndRun/map" + i + ".yml")
+                );
+            }
         } catch (IOException ignored) {
         }
     }
@@ -105,6 +108,15 @@ public class JumpAndRun {
      */
     public Map<ImageType, BufferedImage> getLoadedImages() {
         return this.loadedImages;
+    }
+
+    /**
+     * Gibt das {@link de.informatik.game.object.graphic.Gui} zurück, in dem das Menü dieses Spiels angezeigt wird.
+     *
+     * @return Das {@link de.informatik.game.object.graphic.Gui}, in dem das Menü dieses Spiels angezeigt wird.
+     */
+    public MenuGui getMenuGui() {
+        return this.menuGui;
     }
     //</editor-fold>
 

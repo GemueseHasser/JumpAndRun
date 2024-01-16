@@ -24,11 +24,19 @@ public final class Player {
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Die aktuelle absolute Position des Spielers. */
-    private int absolutePositionX = MAX_LEFT_POINT_ON_SCREEN;
+    private int absolutePositionX;
     /** Die aktuelle Position auf dem Bildschirm des Spielers. */
-    private int screenPositionX = MAX_LEFT_POINT_ON_SCREEN;
+    private int screenPositionX;
     //</editor-fold>
 
+
+    /**
+     * Initialisiert diesen Spieler.
+     */
+    public void initialize() {
+        absolutePositionX = MAX_LEFT_POINT_ON_SCREEN;
+        screenPositionX = MAX_LEFT_POINT_ON_SCREEN;
+    }
 
     /**
      * Zeichnet diesen Spieler.
