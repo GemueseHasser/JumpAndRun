@@ -19,9 +19,9 @@ public final class Player {
     /** Der Punkt, den der Spieler maximal nach rechts gehen kann. */
     public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
     /** Die Größe jedes Schrittes des Spielers. */
-    public static final int STEP_SIZE = 10;
+    public static final int STEP_SIZE = 5;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
-    private static final int ANIMATION_SIZE = 8;
+    private static final int ANIMATION_SIZE = 4;
     //</editor-fold>
 
 
@@ -112,6 +112,14 @@ public final class Player {
     }
 
     /**
+     * Setzt die Animation immer auf die Standard-Position zurück.
+     */
+    public void resetAnimationCount() {
+        currentAnimationCount = 1;
+        updateAnimation();
+    }
+
+    /**
      * Aktualisiert auf Grundlage der Zählvariable die aktuelle Animation des Spielers. Sollte sich die Zählvariable
      * außerhalb der festgelegten Grenzen befinden, wird diese wieder korrekt aktualisiert.
      */
@@ -119,7 +127,7 @@ public final class Player {
         if (currentAnimationCount > ANIMATION_SIZE) currentAnimationCount = 1;
         if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE;
 
-        currentAnimation = ImageType.valueOf("FROG_" + currentAnimationCount).getImage();
+        currentAnimation = ImageType.valueOf("UNC_" + currentAnimationCount).getImage();
     }
 
     //<editor-fold desc="Getter">
