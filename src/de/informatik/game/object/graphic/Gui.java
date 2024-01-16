@@ -12,7 +12,11 @@ import java.awt.Graphics2D;
  */
 public abstract class Gui extends JFrame {
 
+    //<editor-fold desc="LOCAL FIELDS">
+    /** Das Objekt, welches genutzt wird, um auf diesem Fenster Grafiken einzuzeichnen. */
     private final Draw draw;
+    //</editor-fold>
+
 
     //<editor-fold desc="CONSTRUCTORS">
 
