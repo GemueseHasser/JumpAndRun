@@ -15,13 +15,17 @@ public enum ImageType {
 
     //<editor-fold desc="VALUES">
     /** Das Hintergrundbild. */
-    BACKGROUND(
-        "background.jpg"
-    ),
+    BACKGROUND("background.jpg"),
+    /** Die erste Animation des Spielers. */
+    UNC_1("player/unc1.png"),
+    /** Die zweite Animation des Spielers. */
+    UNC_2("player/unc2.png"),
+    /** Die dritte Animation des Spielers. */
+    UNC_3("player/unc3.png"),
+    /** Die vierte Animation des Spielers. */
+    UNC_4("player/unc4.png"),
     /** Eine einfache Barriere. */
-    BARRIER(
-        "barrier.jpg"
-    );
+    BARRIER("barrier.jpg");
     //</editor-fold>
 
 

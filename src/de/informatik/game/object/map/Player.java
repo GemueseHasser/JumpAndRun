@@ -1,10 +1,11 @@
 package de.informatik.game.object.map;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.ImageType;
 import de.informatik.game.object.graphic.gui.GameGui;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  * Der Spieler, welcher vom Nutzer dieses Spiels gesteuert wird und welcher sich in der {@link Map Spielumgebung}
@@ -19,6 +20,10 @@ public final class Player {
     public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
     /** Die Größe jedes Schrittes des Spielers. */
     public static final int STEP_SIZE = 5;
+    /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
+    private static final int ANIMATION_SIZE = 4;
+    /** Die Größe des Spielers. */
+    private static final int PLAYER_SIZE = 60;
     //</editor-fold>
 
 
@@ -27,6 +32,12 @@ public final class Player {
     private int absolutePositionX;
     /** Die aktuelle Position auf dem Bildschirm des Spielers. */
     private int screenPositionX;
+    /** Die Zählvariable für die Animation des Spielers. */
+    private int currentAnimationCount = 1;
+    /** Die aktuelle Animation des Spielers in Form eines Bildes. */
+    private BufferedImage currentAnimation;
+    /** Der aktuelle Status, in welche Richtung sich der Spieler bewegt. */
+    private MovementState currentMovementState = MovementState.RIGHT;
     //</editor-fold>
 
 
@@ -34,8 +45,12 @@ public final class Player {
      * Initialisiert diesen Spieler.
      */
     public void initialize() {
+        // set players position
         absolutePositionX = MAX_LEFT_POINT_ON_SCREEN;
         screenPositionX = MAX_LEFT_POINT_ON_SCREEN;
+
+        // update animation
+        updateAnimation();
     }
 
     /**
@@ -44,20 +59,33 @@ public final class Player {
      * @param g Das {@link Graphics2D Graphics-Objekt}, auf dessen Grundlage der Spieler gezeichnet wird.
      */
     public void drawPlayer(final Graphics2D g) {
-        g.setColor(Color.RED);
-        g.drawRect(screenPositionX, 310, 50, 50);
+        switch (currentMovementState) {
+            case LEFT -> g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, 300, -PLAYER_SIZE, PLAYER_SIZE, null);
+            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, 300, PLAYER_SIZE, PLAYER_SIZE, null);
+        }
     }
 
     /**
      * Simuliert die Bewegung nach links.
      */
     public void moveLeft() {
+        // check if player should overall move left
         if (absolutePositionX - STEP_SIZE <= MAX_LEFT_POINT_ON_SCREEN) return;
 
+        // update current movement state
+        currentMovementState = MovementState.LEFT;
+
+        // update player animation
+        updateAnimation();
+        currentAnimationCount--;
+
+        // decrement absolute position
         absolutePositionX -= STEP_SIZE;
 
+        // check if player should move left on screen
         if (screenPositionX <= MAX_LEFT_POINT_ON_SCREEN) return;
 
+        // update position on screen
         screenPositionX -= STEP_SIZE;
     }
 
@@ -65,13 +93,43 @@ public final class Player {
      * Simuliert die Bewegung nach rechts.
      */
     public void moveRight() {
+        // check if player should overall move right
         if (absolutePositionX + STEP_SIZE >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
 
+        // update current movement state
+        currentMovementState = MovementState.RIGHT;
+
+        // update player animation
+        updateAnimation();
+        currentAnimationCount++;
+
+        // increment absolute position
         absolutePositionX += STEP_SIZE;
 
+        // check if player should move right on screen
         if (screenPositionX >= MAX_RIGHT_POINT_ON_SCREEN) return;
 
+        // update position on screen
         screenPositionX += STEP_SIZE;
+    }
+
+    /**
+     * Setzt die Animation immer auf die Standard-Position zurück.
+     */
+    public void resetAnimationCount() {
+        currentAnimationCount = 1;
+        updateAnimation();
+    }
+
+    /**
+     * Aktualisiert auf Grundlage der Zählvariable die aktuelle Animation des Spielers. Sollte sich die Zählvariable
+     * außerhalb der festgelegten Grenzen befinden, wird diese wieder korrekt aktualisiert.
+     */
+    private void updateAnimation() {
+        if (currentAnimationCount > ANIMATION_SIZE) currentAnimationCount = 1;
+        if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE;
+
+        currentAnimation = ImageType.valueOf("UNC_" + currentAnimationCount).getImage();
     }
 
     //<editor-fold desc="Getter">
@@ -92,6 +150,22 @@ public final class Player {
      */
     public int getScreenPositionX() {
         return screenPositionX;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="MovementState">
+
+    /**
+     * Ein {@link MovementState Status} existiert für jede Richtung, in die sich der Spieler bewegen kann.
+     */
+    private enum MovementState {
+        //<editor-fold desc="VALUES">
+        /** Der Status für die Bewegung nach links. */
+        LEFT,
+        /** Der Status für die Bewegung nach rechts. */
+        RIGHT
+        //</editor-fold>
     }
     //</editor-fold>
 

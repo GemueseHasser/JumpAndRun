@@ -24,6 +24,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
 
     @Override
     public void keyReleased(final KeyEvent e) {
+        JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().resetAnimationCount();
     }
     //</editor-fold>
 }
