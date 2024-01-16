@@ -23,10 +23,13 @@ public final class GameHandler {
     /**
      * Initialisiert dieses Spiel bzw. diese Runde dieses Spiels.
      */
-    public void initialize() {
+    public void initialize(final int mapCounter) {
+        // initialize player
+        player.initialize();
+
         try {
             // load map
-            map = MapHandler.loadMap();
+            map = MapHandler.loadMap(mapCounter);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

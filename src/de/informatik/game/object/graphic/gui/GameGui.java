@@ -36,6 +36,7 @@ public final class GameGui extends Gui {
         // create gui instance
         super(TITLE, WIDTH, HEIGHT);
         super.addKeyListener(new KeyListener());
+        super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     //</editor-fold>
 
@@ -53,6 +54,13 @@ public final class GameGui extends Gui {
         JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().drawPlayer(g);
 
         repaint();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        JumpAndRun.GAME_INSTANCE.getMenuGui().open();
     }
     //</editor-fold>
 

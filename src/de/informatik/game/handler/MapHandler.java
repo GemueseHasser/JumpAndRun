@@ -32,9 +32,9 @@ public final class MapHandler {
      * @throws FileNotFoundException Die Fehlermeldung, die entsteht, wenn sich keine Map im Ordner ./JumpAndRun
      *                               befindet.
      */
-    public static Map loadMap() throws FileNotFoundException {
+    public static Map loadMap(final int mapCount) throws FileNotFoundException {
         final Yaml yaml = new Yaml(new Constructor(Map.class, new LoaderOptions()));
-        return yaml.load(new FileInputStream("JumpAndRun/map.yml"));
+        return yaml.load(new FileInputStream("JumpAndRun/map" + mapCount + ".yml"));
     }
 
     /**

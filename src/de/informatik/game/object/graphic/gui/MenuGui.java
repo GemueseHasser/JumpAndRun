@@ -1,5 +1,6 @@
 package de.informatik.game.object.graphic.gui;
 
+import de.informatik.game.JumpAndRun;
 import de.informatik.game.object.graphic.Gui;
 
 import javax.swing.JButton;
@@ -10,6 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static de.informatik.game.JumpAndRun.GAME_INSTANCE;
+
 /**
  * Das {@link MenuGui} stellt eine Instanz eines {@link Gui} dar. Das {@link MenuGui} wird dem Nutzer als erstes
  * geöffnet und stellt ein Menü dar, in welchem der Spieler sein Spiel beginnen oder beenden kann.
@@ -18,23 +21,36 @@ public final class MenuGui extends Gui {
 
     //<editor-fold desc="CONSTANTS">
     /** Die Breite des Fensters. */
-    private static final int WIDTH = 300;
+    private static final int WIDTH = 500;
     /** Die Höhe des Fensters. */
-    private static final int HEIGHT = 400;
+    private static final int HEIGHT = 650;
     /** Der Titel des Fensters. */
     private static final String TITLE = "Jump-and-Run";
-    /** Die Hintergrundfarbe jedes Buttons. */
+    private static final Font STANDARD_FONT = new Font("Arial", Font.BOLD, 25);
+    /** Die standard Hintergrundfarbe jedes Buttons. */
     private static final Color BUTTON_BACKGROUND = Color.GRAY;
     /** Die Farbe, zu der sich die Hintergrundfarbe ändert, wenn man den Button mit der Maus berührt. */
     private static final Color BUTTON_BACKGROUND_HOVER = Color.LIGHT_GRAY;
-    /** Die Breite jedes Buttons. */
-    private static final int BUTTON_WIDTH = 200;
-    /** Die Höhe jedes Buttons. */
-    private static final int BUTTON_HEIGHT = 40;
+    /** Die standard Breite eines Buttons. */
+    private static final int BUTTON_WIDTH = 400;
+    /** Die standard Höhe eines Buttons. */
+    private static final int BUTTON_HEIGHT = 55;
     /** Der Text, der auf dem Button angezeigt wird, um das Spiel zu starten. */
     private static final String PLAY_BUTTON_TEXT = "Spiel starten";
     /** Der Text, der auf dem Button angezeigt wird, um das Spiel zu beenden. */
     private static final String EXIT_BUTTON_TEXT = "Spiel beenden";
+    /** Die Größe jedes Buttons, mit dem man das Level wählen kann. */
+    private static final int LEVEL_BUTTON_SIZE = 70;
+    /** Die Farbe, die der Button des jeweiligen Levels erhält, wenn man dieses Level ausgewählt hat. */
+    private static final Color LEVEL_BUTTON_SELECT_COLOR = Color.GREEN;
+    //</editor-fold>
+
+
+    //<editor-fold desc="LOCAL FIELDS">
+    /** Der Button, mit dem man das Spiel startet. */
+    private final JButton playButton;
+    /** Der aktuelle Level, der ausgewählt wurde. */
+    private int selectedLevel = 1;
     //</editor-fold>
 
 
@@ -49,17 +65,66 @@ public final class MenuGui extends Gui {
         super(TITLE, WIDTH, HEIGHT);
         super.setUndecorated(true);
 
-        final JButton playButton = new JButton(PLAY_BUTTON_TEXT);
+        // create buttons for each level
+        final JButton[] levelButtons = new JButton[JumpAndRun.LEVEL_AMOUNT];
+
+        for (int i = 0; i < JumpAndRun.LEVEL_AMOUNT; i++) {
+            // set current level
+            final int currentLevel = i + 1;
+
+            // create temp button with default properties
+            final JButton button = new JButton("Lvl " + currentLevel);
+            initializeButton(button, 0);
+
+            button.setFont(STANDARD_FONT.deriveFont(12F));
+            button.setBounds(
+                53 + ((i % 5) * (LEVEL_BUTTON_SIZE + 10)),
+                (i / 5) * (LEVEL_BUTTON_SIZE + 10) + 130,
+                LEVEL_BUTTON_SIZE,
+                LEVEL_BUTTON_SIZE
+            );
+            button.addActionListener(e -> {
+                // set selected level
+                selectedLevel = currentLevel;
+
+                // color all buttons in the default color
+                for (final JButton levelButton : levelButtons) {
+                    if (levelButton == button) continue;
+
+                    levelButton.setBackground(BUTTON_BACKGROUND);
+                }
+
+                // color the selected button specifically
+                button.setBackground(LEVEL_BUTTON_SELECT_COLOR);
+            });
+
+            // add button to gui
+            levelButtons[i] = button;
+            super.add(levelButtons[i]);
+        }
+
+        // select first level automatically
+        levelButtons[selectedLevel - 1].setBackground(LEVEL_BUTTON_SELECT_COLOR);
+
+        // create play button with default properties
+        playButton = new JButton(PLAY_BUTTON_TEXT);
+        playButton.setFont(STANDARD_FONT);
         playButton.addActionListener(e -> {
+            // initialize game-handler
+            GAME_INSTANCE.getGameHandler().initialize(selectedLevel);
+
             new GameGui().open();
             this.dispose();
         });
-        initializeButton(playButton, 180);
+        initializeButton(playButton, 430);
 
+        // create exit button with default properties
         final JButton exitButton = new JButton(EXIT_BUTTON_TEXT);
+        exitButton.setFont(STANDARD_FONT);
         exitButton.addActionListener(e -> System.exit(0));
-        initializeButton(exitButton, 250);
+        initializeButton(exitButton, 520);
 
+        // add components to gui
         super.add(playButton);
         super.add(exitButton);
     }
@@ -69,14 +134,24 @@ public final class MenuGui extends Gui {
     //<editor-fold desc="implementation">
     @Override
     public void draw(final Graphics2D g) {
+        // draw background
         g.setColor(Color.DARK_GRAY);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
+        // draw frame-border
         g.setColor(Color.WHITE);
         g.drawRect(1, 1, WIDTH - 2, HEIGHT - 2);
 
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("Jump-And-Run", 40, 80);
+        // draw heading
+        g.setFont(STANDARD_FONT.deriveFont(45F));
+        g.drawString("Jump-And-Run", 80, 80);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        playButton.setBackground(BUTTON_BACKGROUND);
     }
     //</editor-fold>
 
@@ -98,6 +173,8 @@ public final class MenuGui extends Gui {
     }
     //</editor-fold>
 
+
+    //<editor-fold desc="ButtonHoverListener">
 
     /**
      * Der {@link ButtonHoverListener} sorgt dafür, dass sich die Hintergrundfarbe des jeweiligen Buttons, der übergeben
@@ -146,13 +223,18 @@ public final class MenuGui extends Gui {
 
         @Override
         public void mouseEntered(final MouseEvent e) {
+            if (button.getBackground() != BUTTON_BACKGROUND) return;
+
             button.setBackground(BUTTON_BACKGROUND_HOVER);
         }
 
         @Override
         public void mouseExited(final MouseEvent e) {
+            if (button.getBackground() != BUTTON_BACKGROUND_HOVER) return;
+
             button.setBackground(BUTTON_BACKGROUND);
         }
         //</editor-fold>
     }
+    //</editor-fold>
 }
