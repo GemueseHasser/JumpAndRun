@@ -15,13 +15,25 @@ public enum ImageType {
 
     //<editor-fold desc="VALUES">
     /** Das Hintergrundbild. */
-    BACKGROUND(
-        "background.jpg"
-    ),
+    BACKGROUND("background.jpg"),
+    /** Die erste Animation des Spielers. */
+    FROG_1("player/frog1.png"),
+    /** Die zweite Animation des Spielers. */
+    FROG_2("player/frog2.png"),
+    /** Die dritte Animation des Spielers. */
+    FROG_3("player/frog3.png"),
+    /** Die vierte Animation des Spielers. */
+    FROG_4("player/frog4.png"),
+    /** Die fünfte Animation des Spielers. */
+    FROG_5("player/frog5.png"),
+    /** Die sechste Animation des Spielers. */
+    FROG_6("player/frog6.png"),
+    /** Die siebte Animation des Spielers. */
+    FROG_7("player/frog7.png"),
+    /** Die achte Animation des Spielers. */
+    FROG_8("player/frog8.png"),
     /** Eine einfache Barriere. */
-    BARRIER(
-        "barrier.jpg"
-    );
+    BARRIER("barrier.jpg");
     //</editor-fold>
 
 
