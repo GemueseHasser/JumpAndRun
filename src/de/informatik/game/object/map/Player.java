@@ -22,6 +22,7 @@ public final class Player {
     public static final int STEP_SIZE = 5;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
+    private static final int PLAYER_SIZE = 60;
     //</editor-fold>
 
 
@@ -58,8 +59,8 @@ public final class Player {
      */
     public void drawPlayer(final Graphics2D g) {
         switch (currentMovementState) {
-            case LEFT -> g.drawImage(currentAnimation, screenPositionX + 50, 310, -50, 50, null);
-            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, 310, 50, 50, null);
+            case LEFT -> g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, 300, -PLAYER_SIZE, PLAYER_SIZE, null);
+            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, 300, PLAYER_SIZE, PLAYER_SIZE, null);
         }
     }
 
