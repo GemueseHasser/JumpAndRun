@@ -34,7 +34,7 @@ public final class GameGui extends Gui {
      */
     public GameGui() {
         // create gui instance
-        super(TITLE, WIDTH, HEIGHT);
+        super(TITLE + " -- Level " + JumpAndRun.GAME_INSTANCE.getGameHandler().getCurrentLevel(), WIDTH, HEIGHT);
         super.addKeyListener(new KeyListener());
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }

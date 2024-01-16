@@ -17,19 +17,24 @@ public final class GameHandler {
     private final Player player = new Player();
     /** Die Map dieses Spiels, in welcher sich der Nutzer während des Spiels befindet. */
     private Map map;
+    /** Der aktuelle Level, der gespielt wird. */
+    private int currentLevel;
     //</editor-fold>
 
 
     /**
      * Initialisiert dieses Spiel bzw. diese Runde dieses Spiels.
      */
-    public void initialize(final int mapCounter) {
+    public void initialize(final int level) {
+        // set current level
+        currentLevel = level;
+
         // initialize player
         player.initialize();
 
         try {
             // load map
-            map = MapHandler.loadMap(mapCounter);
+            map = MapHandler.loadMap(level);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -88,6 +93,15 @@ public final class GameHandler {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * Gibt den aktuellen Level zurück, welcher gespielt wird.
+     *
+     * @return Der aktuelle Level, der gespielt wird.
+     */
+    public int getCurrentLevel() {
+        return this.currentLevel;
     }
     //</editor-fold>
 
