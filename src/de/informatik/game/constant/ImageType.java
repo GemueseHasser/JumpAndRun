@@ -16,7 +16,7 @@ public enum ImageType {
     //<editor-fold desc="VALUES">
     /** Das Hintergrundbild. */
     BACKGROUND(
-        "background.jpg"
+        "pre-dreadnough_french.jpg"
     ),
     /** Eine einfache Barriere. */
     BARRIER(

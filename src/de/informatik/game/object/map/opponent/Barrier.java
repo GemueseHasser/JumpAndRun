@@ -19,6 +19,10 @@ public final class Barrier implements Opponent {
     private final int startX;
     /** Die aktuelle x-Koordinate der Barriere. */
     private int x;
+    /** Die Menge an x-Koordinaten, die der Background sich verschoben hat. */
+    private int Xcounter;
+    /** Die letzte x-Koordinate des Backgrounds. */
+    private int middleXbg = 0;
     //</editor-fold>
 
 
@@ -43,33 +47,59 @@ public final class Barrier implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
-            x,
-            310,
-            50,
-            50,
-            null
+                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
+                x,
+                310,
+                50,
+                50,
+                null
         );
     }
 
-    @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
+    @Override // curse this bloody project!!!
+    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
+        if (!isBackgroundMovable) return;
         if (playerPosition < startX - GameGui.WIDTH - 60)
             return;
 
-        x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
+
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
+            Xcounter += 5;
+        }
+        // this is not quite working as intended
+        // stacks the barriers, once they pass the screen
+
+        // isMovingBackground was working, but named improperly
+
+        x = Xcounter + startX;
+        middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+
+        // JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() not updating properly
+        // always jumps back to 0 at -615, when wrapping background, due to the bg's x-coordinate resetting
+
+        System.out.println(x);
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
+    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
+        if (!isBackgroundMovable) return;
         if (playerPosition > startX + GameGui.WIDTH + 60) {
             return;
         }
 
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
+            Xcounter -= 5;
+        }
+        // something is going wrong here
+        // once the player moves left, the values get reset to the edge-coordinates
 
-        x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
+        // and now it won't work at all anymore....
+
+        // why does it feel like this code wants to torture us
+
+        x = Xcounter + startX;
+        middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+        System.out.println(x);
     }
     //</editor-fold>
 }
