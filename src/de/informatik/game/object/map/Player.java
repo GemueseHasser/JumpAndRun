@@ -60,8 +60,7 @@ public final class Player {
      */
     public void drawPlayer(final Graphics2D g) {
         switch (currentMovementState) {
-            case LEFT ->
-                g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, 300, -PLAYER_SIZE, PLAYER_SIZE, null);
+            case LEFT -> g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, 300, -PLAYER_SIZE, PLAYER_SIZE, null);
             case RIGHT -> g.drawImage(currentAnimation, screenPositionX, 300, PLAYER_SIZE, PLAYER_SIZE, null);
         }
     }
