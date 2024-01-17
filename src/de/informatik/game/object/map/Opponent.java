@@ -30,4 +30,20 @@ public interface Opponent {
      */
     void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMoving);
 
+    /**
+     * Dieser Gegner wird hiermit initialisiert. Das heißt, dass diese Methode einzig und allein beim Laden des Spielers
+     * auf der Map ausgeführt wird.
+     *
+     * @param startX Die Koordinate, an der der Gegner zu Beginn platziert werden soll, welche aus der jeweiligen Datei
+     *               der Map ausgelesen wird.
+     */
+    void initializeOpponent(final int startX);
+
+    /**
+     * Soll die aktuelle Position des Gegners zurückgeben.
+     *
+     * @return Die aktuelle Position des Gegners.
+     */
+    int getPositionX();
+
 }

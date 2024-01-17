@@ -2,9 +2,11 @@ package de.informatik.game.object.map;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.constant.OpponentType;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,6 +31,11 @@ public final class Map {
     //</editor-fold>
 
 
+    /**
+     * Erzeugt eine neue und vollständig unabhängige Instanz einer {@link Map}. Eine {@link Map} stellt eine
+     * Spielumgebung dar, in welcher sich der {@link Player Spieler} dieses Spiels befindet und in welcher er sich
+     * bewegen kann.
+     */
     public Map() {
         final int playerPosition = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().getAbsolutePositionX();
         final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
@@ -42,20 +49,18 @@ public final class Map {
      */
     public void loadOpponents() {
         for (final OpponentLoader loader : opponentLoader) {
-            if (!loader.getType().getOpponentClass().getSuperclass().isInstance(Opponent.class)) {
+            if (!Arrays.stream(loader.getType().getOpponentClass().getInterfaces()).toList().contains(Opponent.class)) {
                 System.out.println("No-Opponent-Class:" + loader.getType().name());
                 continue;
             }
 
             try {
                 for (final int x : loader.getPositions()) {
-                    final Opponent opponent = (Opponent) loader.getType().getOpponentClass().getConstructor(
-                        Integer.class
-                    ).newInstance(x);
+                    final Opponent opponent = (Opponent) loader.getType().getOpponentClass().getDeclaredConstructor().newInstance();
+                    opponent.initializeOpponent(x);
                     loadedOpponents.add(opponent);
                 }
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
-                     IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                 System.out.println(
                     "Error while loading opponents; has every opponent a constructor opponent(Integer startX)?"
                 );
@@ -158,6 +163,67 @@ public final class Map {
      */
     public void setOpponentLoader(final List<OpponentLoader> opponentLoader) {
         this.opponentLoader = opponentLoader;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="OpponentLoader">
+    /**
+     * Mithilfe des {@link OpponentLoader} wird für jeden {@link OpponentType Typ} aus allen Koordinaten, die in der
+     * Map-Datei hinterlegt wurden, jeder einzelne {@link Opponent Gegner} erzeugt, wobei der {@link OpponentLoader}
+     * eigentlich nur eine Data-Klasse darstellt, mit dessen Hilfe diese Gegner geladen werden.
+     */
+    public static final class OpponentLoader {
+
+        //<editor-fold desc="LOCAL FIELDS">
+        /** Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden soll. */
+        private OpponentType type;
+        /** Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll. */
+        private List<Integer> positions;
+        //</editor-fold>
+
+
+        //<editor-fold desc="Getter">
+
+        /**
+         * Gibt den Typ des Gegners zurück, welcher an verschiedenen Koordinaten geladen werden soll.
+         *
+         * @return Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden soll.
+         */
+        public OpponentType getType() {
+            return type;
+        }
+
+        /**
+         * Gibt alle Positionen zurück, an denen dieser Typ eines Gegners geladen werden soll.
+         *
+         * @return Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll.
+         */
+        public List<Integer> getPositions() {
+            return positions;
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Setter">
+
+        /**
+         * Setzt den Typen des Gegners neu, welcher an verschiedenen Koordinaten geladen werden soll.
+         *
+         * @param type Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden soll.
+         */
+        public void setType(final OpponentType type) {
+            this.type = type;
+        }
+
+        /**
+         * Setzt alle Positionen neu, an denen dieser Typ eines Gegners geladen werden soll.
+         *
+         * @param positions Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll.
+         */
+        public void setPositions(final List<Integer> positions) {
+            this.positions = positions;
+        }
+        //</editor-fold>
     }
     //</editor-fold>
 
