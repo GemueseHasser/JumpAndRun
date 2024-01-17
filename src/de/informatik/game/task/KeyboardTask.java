@@ -1,7 +1,8 @@
 package de.informatik.game.task;
 
 import de.informatik.game.JumpAndRun;
-import de.informatik.game.constant.MovementState;
+
+import java.awt.event.KeyEvent;
 
 /**
  * Der {@link KeyboardTask} stellt eine sich konstant wiederholende Prozedur dar, wobei immer wieder überprüft wird, ob
@@ -11,31 +12,29 @@ import de.informatik.game.constant.MovementState;
 public class KeyboardTask implements Runnable {
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Der aktuelle Status der Bewegung des Spielers. */
-    private MovementState movementState;
+    /** Die aktuelle Taste, die gedrückt wird. */
+    private int keyCode;
     //</editor-fold>
 
 
     //<editor-fold desc="Setter">
 
     /**
-     * Legt den aktuellen Status der Bewegung des Spielers fest.
+     * Legt die aktuelle Taste fest, die gedrückt wird.
      *
-     * @param movementState Der aktuelle Status der Bewegung des Spielers.
+     * @param keyCode Die aktuelle Taste, die gedrückt wird.
      */
-    public void setMovementState(final MovementState movementState) {
-        this.movementState = movementState;
+    public void setKeyCode(final int keyCode) {
+        this.keyCode = keyCode;
     }
     //</editor-fold>
 
     //<editor-fold desc="implementation">
     @Override
     public void run() {
-        if (movementState == null) return;
-
-        switch (movementState) {
-            case LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
-            case RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
+        switch (keyCode) {
+            case KeyEvent.VK_LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
+            case KeyEvent.VK_RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
         }
     }
     //</editor-fold>
