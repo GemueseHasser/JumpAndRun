@@ -77,7 +77,10 @@ public final class Barrier implements Opponent {
         // JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() not updating properly
         // always jumps back to 0 at -615, when wrapping background, due to the bg's x-coordinate resetting
 
-        System.out.println(x);
+        // when moving left, the Xcounter tends to unify
+        // do the barriers get reset when leaving the screen?
+
+        System.out.println(Xcounter);
     }
 
     @Override
@@ -93,13 +96,9 @@ public final class Barrier implements Opponent {
         // something is going wrong here
         // once the player moves left, the values get reset to the edge-coordinates
 
-        // and now it won't work at all anymore....
-
-        // why does it feel like this code wants to torture us
-
         x = Xcounter + startX;
         middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-        System.out.println(x);
+        System.out.println(Xcounter);
     }
     //</editor-fold>
 }
