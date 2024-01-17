@@ -7,6 +7,9 @@ import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Der Spieler, welcher vom Nutzer dieses Spiels gesteuert wird und welcher sich in der {@link Map Spielumgebung}
@@ -25,6 +28,8 @@ public final class Player {
     public static final int PLAYER_SIZE = 60;
     /** Die y-Koordinate, an der der Spieler bei der Initialisierung platziert wird. */
     private static final int START_POSITION_Y = 300;
+    /** Die Sprunghöhe des Spielers. */
+    private static final int JUMP_HEIGHT = 60;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
     //</editor-fold>
@@ -43,6 +48,8 @@ public final class Player {
     private BufferedImage currentAnimation;
     /** Der aktuelle Status, in welche Richtung sich der Spieler bewegt. */
     private MovementState currentMovementState = MovementState.RIGHT;
+    /** Der Zustand, ob der Spieler gerade hochspringt. */
+    private boolean jumping;
     //</editor-fold>
 
 
@@ -127,6 +134,22 @@ public final class Player {
     }
 
     /**
+     * Lässt den Spieler hochspringen.
+     */
+    public void jump() {
+        if (jumping) return;
+
+        jumping = true;
+        positionY -= JUMP_HEIGHT;
+
+        final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
+        taskExecutor.schedule(() -> {
+            positionY += JUMP_HEIGHT;
+            jumping = false;
+        }, 1000, TimeUnit.MILLISECONDS);
+    }
+
+    /**
      * Setzt die Animation immer auf die Standard-Position zurück.
      */
     public void resetAnimationCount() {
@@ -182,10 +205,15 @@ public final class Player {
     public MovementState getCurrentMovementState() {
         return currentMovementState;
     }
+
+    /**
+     * Gibt den Zustand zurück, ob der Spieler gerade springt.
+     *
+     * @return Wenn der Spieler gerade springt {@code true}, ansonsten {@code false}.
+     */
+    public boolean isJumping() {
+        return jumping;
+    }
     //</editor-fold>
 
-
-    public void setY(final int y) {
-        this.positionY = y;
-    }
 }

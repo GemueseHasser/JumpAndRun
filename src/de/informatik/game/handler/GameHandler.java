@@ -57,7 +57,7 @@ public final class GameHandler {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
 
-                    if (player.getCurrentMovementState() == MovementState.LEFT) return;
+                    if (player.getCurrentMovementState() == MovementState.LEFT && !player.isJumping()) return;
                 }
             }
 
@@ -84,7 +84,7 @@ public final class GameHandler {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
 
-                    if (player.getCurrentMovementState() == MovementState.RIGHT) return;
+                    if (player.getCurrentMovementState() == MovementState.RIGHT && !player.isJumping()) return;
                 }
             }
 

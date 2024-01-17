@@ -19,6 +19,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
             case KeyEvent.VK_RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
+            case KeyEvent.VK_UP -> JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump();
         }
     }
 
