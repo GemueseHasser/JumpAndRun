@@ -45,11 +45,18 @@ public interface Opponent {
     void initializeOpponent(final int startX);
 
     /**
-     * Soll die aktuelle Position des Gegners zurückgeben.
+     * Soll die aktuelle x-Koordinate des Gegners zurückgeben.
      *
-     * @return Die aktuelle Position des Gegners.
+     * @return Die aktuelle x-Koordinate des Gegners.
      */
     int getPositionX();
+
+    /**
+     * Soll die aktuelle y-Koordinate des Gegners zurückgeben.
+     *
+     * @return Die aktuelle y-Koordinate des Gegners.
+     */
+    int getPositionY();
 
     /**
      * Soll die tatsächliche Größe des Gegners zurückgeben, also die Größe des sichtbaren Gegners und nicht die des

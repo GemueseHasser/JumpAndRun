@@ -23,6 +23,8 @@ public final class Player {
     public static final int STEP_SIZE = 5;
     /** Die Größe des Spielers. */
     public static final int PLAYER_SIZE = 60;
+    /** Die y-Koordinate, an der der Spieler bei der Initialisierung platziert wird. */
+    private static final int START_POSITION_Y = 300;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
     //</editor-fold>
@@ -33,6 +35,8 @@ public final class Player {
     private int absolutePositionX;
     /** Die aktuelle Position auf dem Bildschirm des Spielers. */
     private int screenPositionX;
+    /** Die aktuelle y-Koordinate des Spielers. */
+    private int positionY;
     /** Die Zählvariable für die Animation des Spielers. */
     private int currentAnimationCount = 1;
     /** Die aktuelle Animation des Spielers in Form eines Bildes. */
@@ -49,6 +53,7 @@ public final class Player {
         // set players position
         absolutePositionX = MAX_LEFT_POINT_ON_SCREEN;
         screenPositionX = MAX_LEFT_POINT_ON_SCREEN;
+        positionY = START_POSITION_Y;
 
         // update animation
         updateAnimation();
@@ -61,8 +66,15 @@ public final class Player {
      */
     public void drawPlayer(final Graphics2D g) {
         switch (currentMovementState) {
-            case LEFT -> g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, 300, -PLAYER_SIZE, PLAYER_SIZE, null);
-            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, 300, PLAYER_SIZE, PLAYER_SIZE, null);
+            case LEFT -> g.drawImage(
+                currentAnimation,
+                screenPositionX + PLAYER_SIZE,
+                positionY,
+                -PLAYER_SIZE,
+                PLAYER_SIZE,
+                null
+            );
+            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, positionY, PLAYER_SIZE, PLAYER_SIZE, null);
         }
     }
 
@@ -154,13 +166,26 @@ public final class Player {
     }
 
     /**
+     * Gibt die aktuelle y-Koordinate des Spielers zurück.
+     *
+     * @return Die aktuelle y-Koordinate des Spielers.
+     */
+    public int getPositionY() {
+        return positionY;
+    }
+
+    /**
      * Gibt den aktuellen Status, in welche Richtung sich der Spieler bewegt, zurück.
      *
      * @return Der aktuelle Status, in welche Richtung sich der Spieler bewegt.
      */
     public MovementState getCurrentMovementState() {
-        return this.currentMovementState;
+        return currentMovementState;
     }
     //</editor-fold>
 
+
+    public void setY(final int y) {
+        this.positionY = y;
+    }
 }

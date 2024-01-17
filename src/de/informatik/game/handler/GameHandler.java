@@ -50,12 +50,15 @@ public final class GameHandler {
      */
     public void moveLeft() {
         final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+        final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && rightPlayerPosition <= opponent.getPositionX() + opponent.getSize()) {
-                opponent.playerCollideOpponentEvent();
+            if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
+                if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
+                    opponent.playerCollideOpponentEvent();
 
-                if (player.getCurrentMovementState() == MovementState.LEFT) return;
+                    if (player.getCurrentMovementState() == MovementState.LEFT) return;
+                }
             }
 
             opponent.playerMoveLeftEvent(
@@ -74,12 +77,15 @@ public final class GameHandler {
      */
     public void moveRight() {
         final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+        final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && rightPlayerPosition <= opponent.getPositionX() + opponent.getSize()) {
-                opponent.playerCollideOpponentEvent();
+            if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
+                if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
+                    opponent.playerCollideOpponentEvent();
 
-                if (player.getCurrentMovementState() == MovementState.RIGHT) return;
+                    if (player.getCurrentMovementState() == MovementState.RIGHT) return;
+                }
             }
 
             opponent.playerMoveRightEvent(
