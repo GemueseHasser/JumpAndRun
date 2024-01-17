@@ -14,6 +14,12 @@ import java.awt.Graphics2D;
  */
 public final class Barrier implements Opponent {
 
+    //<editor-fold desc="CONSTANTS">
+    /** Die Größe des Gegners. */
+    private static final int SIZE = 50;
+    //</editor-fold>
+
+
     //<editor-fold desc="LOCAL FIELDS">
     /** Die Start-Koordinate der Barriere. */
     private int startX;
@@ -29,8 +35,8 @@ public final class Barrier implements Opponent {
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
             x,
             310,
-            50,
-            50,
+            SIZE,
+            SIZE,
             null
         );
     }
@@ -56,6 +62,11 @@ public final class Barrier implements Opponent {
     }
 
     @Override
+    public void playerCollideOpponentEvent() {
+        // decrement health, etc.
+    }
+
+    @Override
     public void initializeOpponent(final int startX) {
         this.startX = startX;
         this.x = startX;
@@ -64,6 +75,11 @@ public final class Barrier implements Opponent {
     @Override
     public int getPositionX() {
         return x;
+    }
+
+    @Override
+    public int getSize() {
+        return SIZE;
     }
     //</editor-fold>
 }

@@ -1,5 +1,6 @@
 package de.informatik.game.handler;
 
+import de.informatik.game.constant.MovementState;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -48,7 +49,15 @@ public final class GameHandler {
      * der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveLeft() {
+        final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+
         for (final Opponent opponent : map.getLoadedOpponents()) {
+            if (rightPlayerPosition >= opponent.getPositionX() && rightPlayerPosition <= opponent.getPositionX() + opponent.getSize()) {
+                opponent.playerCollideOpponentEvent();
+
+                if (player.getCurrentMovementState() == MovementState.LEFT) return;
+            }
+
             opponent.playerMoveLeftEvent(
                 player.getAbsolutePositionX(),
                 player.getScreenPositionX() <= Player.MAX_LEFT_POINT_ON_SCREEN
@@ -64,7 +73,15 @@ public final class GameHandler {
      * wenn der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveRight() {
+        final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+
         for (final Opponent opponent : map.getLoadedOpponents()) {
+            if (rightPlayerPosition >= opponent.getPositionX() && rightPlayerPosition <= opponent.getPositionX() + opponent.getSize()) {
+                opponent.playerCollideOpponentEvent();
+
+                if (player.getCurrentMovementState() == MovementState.RIGHT) return;
+            }
+
             opponent.playerMoveRightEvent(
                 player.getAbsolutePositionX(),
                 player.getScreenPositionX() >= Player.MAX_RIGHT_POINT_ON_SCREEN

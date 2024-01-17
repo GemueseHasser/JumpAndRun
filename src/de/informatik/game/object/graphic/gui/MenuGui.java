@@ -26,6 +26,7 @@ public final class MenuGui extends Gui {
     private static final int HEIGHT = 650;
     /** Der Titel des Fensters. */
     private static final String TITLE = "Jump-and-Run";
+    /** Die Schriftart, die standardmäßig für alle Schriften in diesem {@link Gui} verwendet wird. */
     private static final Font STANDARD_FONT = new Font("Arial", Font.BOLD, 25);
     /** Die standard Hintergrundfarbe jedes Buttons. */
     private static final Color BUTTON_BACKGROUND = Color.GRAY;

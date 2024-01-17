@@ -31,6 +31,11 @@ public interface Opponent {
     void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMoving);
 
     /**
+     * Das Event, welches getriggert wird, wenn der Spieler mit diesem Gegner zusammenstößt.
+     */
+    void playerCollideOpponentEvent();
+
+    /**
      * Dieser Gegner wird hiermit initialisiert. Das heißt, dass diese Methode einzig und allein beim Laden des Spielers
      * auf der Map ausgeführt wird.
      *
@@ -45,5 +50,13 @@ public interface Opponent {
      * @return Die aktuelle Position des Gegners.
      */
     int getPositionX();
+
+    /**
+     * Soll die tatsächliche Größe des Gegners zurückgeben, also die Größe des sichtbaren Gegners und nicht die des
+     * Bildes.
+     *
+     * @return Die Größe des Gegners, also die Größe des sichtbaren Gegners und nicht die des Bildes.
+     */
+    int getSize();
 
 }

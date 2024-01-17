@@ -2,6 +2,7 @@ package de.informatik.game.object.map;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.constant.MovementState;
 import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.awt.Graphics2D;
@@ -20,10 +21,10 @@ public final class Player {
     public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
     /** Die Größe jedes Schrittes des Spielers. */
     public static final int STEP_SIZE = 5;
+    /** Die Größe des Spielers. */
+    public static final int PLAYER_SIZE = 60;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
-    /** Die Größe des Spielers. */
-    private static final int PLAYER_SIZE = 60;
     //</editor-fold>
 
 
@@ -151,21 +152,14 @@ public final class Player {
     public int getScreenPositionX() {
         return screenPositionX;
     }
-    //</editor-fold>
-
-
-    //<editor-fold desc="MovementState">
 
     /**
-     * Ein {@link MovementState Status} existiert für jede Richtung, in die sich der Spieler bewegen kann.
+     * Gibt den aktuellen Status, in welche Richtung sich der Spieler bewegt, zurück.
+     *
+     * @return Der aktuelle Status, in welche Richtung sich der Spieler bewegt.
      */
-    private enum MovementState {
-        //<editor-fold desc="VALUES">
-        /** Der Status für die Bewegung nach links. */
-        LEFT,
-        /** Der Status für die Bewegung nach rechts. */
-        RIGHT
-        //</editor-fold>
+    public MovementState getCurrentMovementState() {
+        return this.currentMovementState;
     }
     //</editor-fold>
 
