@@ -37,8 +37,6 @@ public class KeyboardTask implements Runnable {
             case LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
             case RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
         }
-
-        System.out.println("test" + movementState);
     }
     //</editor-fold>
 }
