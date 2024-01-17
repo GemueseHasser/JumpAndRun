@@ -5,6 +5,7 @@ import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.MovementState;
 import de.informatik.game.object.graphic.gui.GameGui;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.Executors;
@@ -26,12 +27,18 @@ public final class Player {
     public static final int STEP_SIZE = 5;
     /** Die Größe des Spielers. */
     public static final int PLAYER_SIZE = 60;
+    /** Die maximale Anzahl an Leben, die der Spieler haben kann. */
+    public static final int MAX_HEALTH_AMOUNT = 50;
     /** Die y-Koordinate, an der der Spieler bei der Initialisierung platziert wird. */
     private static final int START_POSITION_Y = 300;
     /** Die Sprunghöhe des Spielers. */
     private static final int JUMP_HEIGHT = 60;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
+    /** Die Skalierung (wie breit) die Lebensanzeige des Spielers sein soll. */
+    private static final int HEALTH_SCALE = 4;
+    /** Die Höhe der Lebensanzeige des Spielers. */
+    private static final int HEALTH_HEIGHT = 30;
     //</editor-fold>
 
 
@@ -42,6 +49,8 @@ public final class Player {
     private int screenPositionX;
     /** Die aktuelle y-Koordinate des Spielers. */
     private int positionY;
+    /** Die Anzahl an Leben, die der Spieler aktuell hat. */
+    private int health;
     /** Die Zählvariable für die Animation des Spielers. */
     private int currentAnimationCount = 1;
     /** Die aktuelle Animation des Spielers in Form eines Bildes. */
@@ -61,6 +70,7 @@ public final class Player {
         absolutePositionX = MAX_LEFT_POINT_ON_SCREEN;
         screenPositionX = MAX_LEFT_POINT_ON_SCREEN;
         positionY = START_POSITION_Y;
+        health = MAX_HEALTH_AMOUNT;
 
         // update animation
         updateAnimation();
@@ -72,6 +82,14 @@ public final class Player {
      * @param g Das {@link Graphics2D Graphics-Objekt}, auf dessen Grundlage der Spieler gezeichnet wird.
      */
     public void drawPlayer(final Graphics2D g) {
+        // draw health
+        g.setColor(Color.RED);
+        g.fillRect(20, 20, health * HEALTH_SCALE, HEALTH_HEIGHT);
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(20 + (health * HEALTH_SCALE), 20, (MAX_HEALTH_AMOUNT - health) * HEALTH_SCALE, HEALTH_HEIGHT);
+        g.setColor(Color.BLACK);
+        g.drawRect(20, 20, MAX_HEALTH_AMOUNT * HEALTH_SCALE, HEALTH_HEIGHT);
+
         switch (currentMovementState) {
             case LEFT -> g.drawImage(
                 currentAnimation,
@@ -213,6 +231,40 @@ public final class Player {
      */
     public boolean isJumping() {
         return jumping;
+    }
+
+    /**
+     * Gibt die Anzahl an Leben zurück, die der Spieler aktuell hat.
+     *
+     * @return Die Anzahl an Leben, die der Spieler aktuell hat.
+     */
+    public int getHealth() {
+        return health;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="Setter">
+
+    /**
+     * Setzt die Leben neu, die der Spieler aktuell hat. Wenn die angegebene Anzahl an Leben aber kleiner als 0 ist,
+     * wird die Anzahl der Leben einfach auf 0 gesetzt und wenn die Anzahl der Leben größer ist, als die maximal
+     * zulässige Anzahl an Leben, wird diese ebenfalls einfach auf die maximale Anzahl an Leben gesetzt.
+     *
+     * @param health Die Anzahl an Leben, die der Spieler neu gesetzt bekommen soll.
+     */
+    public void setHealth(final int health) {
+        if (health > MAX_HEALTH_AMOUNT) {
+            this.health = MAX_HEALTH_AMOUNT;
+            return;
+        }
+
+        if (health < 0) {
+            this.health = 0;
+            return;
+        }
+
+        this.health = health;
     }
     //</editor-fold>
 
