@@ -3,6 +3,7 @@ package de.informatik.game;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.gui.MenuGui;
+import de.informatik.game.task.KeyboardTask;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -38,6 +39,8 @@ public class JumpAndRun {
     private final Map<ImageType, BufferedImage> loadedImages = new HashMap<>();
     /** Das Fenster, in dem das Menü in diesem Spiel angezeigt wird. */
     private final MenuGui menuGui = new MenuGui();
+    /** Der Task, welcher die Tastatur überwacht. */
+    private final KeyboardTask keyboardTask = new KeyboardTask();
     //</editor-fold>
 
 
@@ -117,6 +120,15 @@ public class JumpAndRun {
      */
     public MenuGui getMenuGui() {
         return this.menuGui;
+    }
+
+    /**
+     * Gibt den Task zurück, welcher die Tastatur überwacht.
+     *
+     * @return Der Task, der die Tastatur überwacht.
+     */
+    public KeyboardTask getKeyboardTask() {
+        return keyboardTask;
     }
     //</editor-fold>
 

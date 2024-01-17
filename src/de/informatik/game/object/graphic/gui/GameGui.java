@@ -8,6 +8,9 @@ import de.informatik.game.object.graphic.Gui;
 import javax.swing.JFrame;
 
 import java.awt.Graphics2D;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Das Haupt-Fenster des {@link de.informatik.game.JumpAndRun Spiels}, welches auch als erstes geöffnet wird und worin
@@ -25,6 +28,12 @@ public final class GameGui extends Gui {
     //</editor-fold>
 
 
+    //<editor-fold desc="LOCAL FIELDS">
+    /** Der {@link ScheduledExecutorService}, womit Threads in einem bestimmten Pool ausgeführt werden können. */
+    private final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
+    //</editor-fold>
+
+
     //<editor-fold desc="CONSTRUCTORS">
 
     /**
@@ -37,6 +46,8 @@ public final class GameGui extends Gui {
         super(TITLE + " -- Level " + JumpAndRun.GAME_INSTANCE.getGameHandler().getCurrentLevel(), WIDTH, HEIGHT);
         super.addKeyListener(new KeyListener());
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        taskExecutor.scheduleAtFixedRate(JumpAndRun.GAME_INSTANCE.getKeyboardTask(), 0, 100, TimeUnit.MILLISECONDS);
     }
     //</editor-fold>
 
@@ -61,6 +72,7 @@ public final class GameGui extends Gui {
         super.dispose();
 
         JumpAndRun.GAME_INSTANCE.getMenuGui().open();
+        taskExecutor.close();
     }
     //</editor-fold>
 
