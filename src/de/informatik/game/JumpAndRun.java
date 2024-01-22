@@ -2,6 +2,7 @@ package de.informatik.game;
 
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.GameHandler;
+import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.graphic.gui.MenuGui;
 import de.informatik.game.task.KeyboardTask;
 
@@ -41,6 +42,8 @@ public class JumpAndRun {
     private final MenuGui menuGui = new MenuGui();
     /** Der Task, welcher die Tastatur überwacht. */
     private final KeyboardTask keyboardTask = new KeyboardTask();
+    /** Die Instanz des aktuellen {@link GameGui} ({@code null}, wenn kein Gui geöffnet ist). */
+    private GameGui currentGameGui;
     //</editor-fold>
 
 
@@ -130,6 +133,29 @@ public class JumpAndRun {
     public KeyboardTask getKeyboardTask() {
         return keyboardTask;
     }
+
+    /**
+     * Gibt die Instanz des aktuellen {@link GameGui} zurück.
+     *
+     * @return Die Instanz des aktuellen {@link GameGui} ({@code null}, wenn kein {@link GameGui} geöffnet ist).
+     */
+    public GameGui getCurrentGameGui() {
+        return currentGameGui;
+    }
     //</editor-fold>
 
+
+    //<editor-fold desc="Setter">
+
+    /**
+     * Setzt die aktuelle Instanz des {@link GameGui}. Wenn das aktuelle {@link GameGui} geschlossen wird, wird diese
+     * Instanz auf {@code null} gesetzt.
+     *
+     * @param currentGameGui Die neue aktuelle Instanz des {@link GameGui}. Wenn das aktuelle {@link GameGui}
+     *                       geschlossen wird, wird diese Instanz auf {@code null} gesetzt.
+     */
+    public void setCurrentGameGui(final GameGui currentGameGui) {
+        this.currentGameGui = currentGameGui;
+    }
+    //</editor-fold>
 }

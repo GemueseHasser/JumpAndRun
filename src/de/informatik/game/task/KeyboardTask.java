@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
  * sich der Spieler bewegt und wenn ja in welche Richtung. Diese Bewegung, die vom
  * {@link de.informatik.game.listener.KeyListener} initiiert wird, wird dann umgesetzt.
  */
-public class KeyboardTask implements Runnable {
+public final class KeyboardTask implements Runnable {
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Die aktuelle Taste, die gedrückt wird. */

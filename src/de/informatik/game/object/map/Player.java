@@ -72,8 +72,12 @@ public final class Player {
         positionY = START_POSITION_Y;
         health = MAX_HEALTH_AMOUNT;
 
-        // update animation
-        updateAnimation();
+        // initialize movement
+        currentMovementState = MovementState.RIGHT;
+        JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(-1);
+
+        // reset animation
+        resetAnimationCount();
     }
 
     /**

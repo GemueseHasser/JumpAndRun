@@ -48,6 +48,9 @@ public final class GameGui extends Gui {
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         taskExecutor.scheduleAtFixedRate(JumpAndRun.GAME_INSTANCE.getKeyboardTask(), 0, 100, TimeUnit.MILLISECONDS);
+
+        // register current gui in main-class
+        JumpAndRun.GAME_INSTANCE.setCurrentGameGui(this);
     }
     //</editor-fold>
 
@@ -73,6 +76,9 @@ public final class GameGui extends Gui {
 
         JumpAndRun.GAME_INSTANCE.getMenuGui().open();
         taskExecutor.close();
+
+        // unregister current gui instance in main-class
+        JumpAndRun.GAME_INSTANCE.setCurrentGameGui(null);
     }
     //</editor-fold>
 
