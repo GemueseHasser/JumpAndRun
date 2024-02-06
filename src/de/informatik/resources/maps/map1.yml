@@ -8,3 +8,7 @@ opponentLoader:
       - 200
       - 300
       - 400
+  - type: DRAGON
+    positions:
+      - 500
+      - 750
