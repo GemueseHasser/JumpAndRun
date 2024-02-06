@@ -41,7 +41,7 @@ public final class Dragon implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
+                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.DRAGON),
                 x,
                 Y_COORDINATE,
                 SIZE,
