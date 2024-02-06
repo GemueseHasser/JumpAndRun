@@ -1,6 +1,5 @@
 package de.informatik.game.handler;
 
-import de.informatik.game.constant.MovementState;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -56,8 +55,6 @@ public final class GameHandler {
             if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
-
-                    if (player.getCurrentMovementState() == MovementState.LEFT && !player.isJumping()) return;
                 }
             }
 
@@ -83,8 +80,6 @@ public final class GameHandler {
             if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
-
-                    if (player.getCurrentMovementState() == MovementState.RIGHT && !player.isJumping()) return;
                 }
             }
 
