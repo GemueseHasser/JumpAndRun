@@ -1,0 +1,10 @@
+name: Level 1
+mapLength: 1000
+backgroundImageType: BACKGROUND
+opponentLoader:
+  - type: BARRIER
+    positions:
+      - 100
+      - 200
+      - 300
+      - 400
