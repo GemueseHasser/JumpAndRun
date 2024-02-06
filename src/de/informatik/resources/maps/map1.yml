@@ -4,8 +4,11 @@ backgroundImageType: BACKGROUND
 opponentLoader:
   - type: BARRIER
     positions:
-      - 150
+      - 100
+      - 200
+      - 300
       - 400
-      - 550
+  - type: DRAGON
+    positions:
+      - 500
       - 750
-      - 900
