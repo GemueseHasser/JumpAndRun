@@ -24,7 +24,6 @@ public enum OpponentType {
     WEAKDRAGON(WeakDragon.class);
     //</editor-fold>
 
-
     //<editor-fold desc="LOCAL FIELDS">
     /** Die Klasse, auf der der Gegner basiert. */
     private final Class<?> opponentClass;
