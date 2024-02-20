@@ -26,7 +26,7 @@ public enum ImageType {
     UNC_4("player/unc4.png"),
     /** Eine einfache Barriere. */
     BARRIER("barrier.jpg"),
-    DRAGON("dragon.png");
+    DRAGON("weakDragon.png");
     //</editor-fold>
 
 

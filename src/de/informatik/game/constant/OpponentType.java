@@ -1,7 +1,7 @@
 package de.informatik.game.constant;
 
 import de.informatik.game.object.map.opponent.Barrier;
-import de.informatik.game.object.map.opponent.Dragon;
+import de.informatik.game.object.map.opponent.WeakDragon;
 
 /**
  * Ein {@link OpponentType} stellt einen Typen eines Gegners dar, welcher für jeden Typen eines Gegners angelegt werden
@@ -13,7 +13,7 @@ public enum OpponentType {
     /** Der Typ einer einfachen Barriere. */
     BARRIER(Barrier.class),
 
-    DRAGON(Dragon.class);
+    DRAGON(WeakDragon.class);
     //</editor-fold>
 
     //<editor-fold desc="LOCAL FIELDS">

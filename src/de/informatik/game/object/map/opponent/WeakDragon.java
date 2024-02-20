@@ -8,23 +8,23 @@ import de.informatik.game.object.map.Opponent;
 import java.awt.Graphics2D;
 
 /**
- * Ein {@link Dragon Dragon} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
+ * Ein {@link WeakDragon Dragon} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
  * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt eine flexible, sich bewegendes
  * Objekt dar, welches der Spieler bewältigen muss, um weiterzukommen.
  */
-public final class Dragon implements Opponent {
+public final class WeakDragon implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
     /** Die Größe von jedem Dragon. */
-    private static final int SIZE = 100;
+    private static final int SIZE = 150;
     /** Die y-Koordinate jeder Dragon. */
-    private static final int Y_COORDINATE = 390;
+    private static final int Y_COORDINATE = 235;
     //</editor-fold>
 
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Die Start-Koordinate der Dragon. */
-    private int startX;
+    private int startX = 50;
     /** Die aktuelle x-Koordinate der Dragon. */
     private int x;
     //</editor-fold>
