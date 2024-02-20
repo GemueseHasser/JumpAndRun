@@ -35,6 +35,7 @@ public final class KeyboardTask implements Runnable {
         switch (keyCode) {
             case KeyEvent.VK_LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
             case KeyEvent.VK_RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
+            default -> JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().stay();
         }
     }
     //</editor-fold>

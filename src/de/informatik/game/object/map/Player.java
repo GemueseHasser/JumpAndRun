@@ -56,7 +56,9 @@ public final class Player {
     /** Die aktuelle Animation des Spielers in Form eines Bildes. */
     private BufferedImage currentAnimation;
     /** Der aktuelle Status, in welche Richtung sich der Spieler bewegt. */
-    private MovementState currentMovementState = MovementState.RIGHT;
+    private MovementState currentMovementState = MovementState.STAY;
+    /** Nicht der aktuelle, sondern der vorherige Status der Bewegung des Spielers. */
+    private MovementState lastMovementState = MovementState.RIGHT;
     /** Der Zustand, ob der Spieler gerade hochspringt. */
     private boolean jumping;
     //</editor-fold>
@@ -73,7 +75,6 @@ public final class Player {
         health = MAX_HEALTH_AMOUNT;
 
         // initialize movement
-        currentMovementState = MovementState.RIGHT;
         JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(-1);
 
         // reset animation
@@ -95,15 +96,14 @@ public final class Player {
         g.drawRect(20, 20, MAX_HEALTH_AMOUNT * HEALTH_SCALE, HEALTH_HEIGHT);
 
         switch (currentMovementState) {
-            case LEFT -> g.drawImage(
-                currentAnimation,
-                screenPositionX + PLAYER_SIZE,
-                positionY,
-                -PLAYER_SIZE,
-                PLAYER_SIZE,
-                null
-            );
-            case RIGHT -> g.drawImage(currentAnimation, screenPositionX, positionY, PLAYER_SIZE, PLAYER_SIZE, null);
+            case LEFT -> drawLeftMovement(g);
+            case RIGHT -> drawRightMovement(g);
+            case STAY -> {
+                switch (lastMovementState) {
+                    case LEFT -> drawLeftMovement(g);
+                    case RIGHT -> drawRightMovement(g);
+                }
+            }
         }
     }
 
@@ -113,9 +113,14 @@ public final class Player {
     public void moveLeft() {
         // check if player should overall move left
         if (absolutePositionX - STEP_SIZE <= MAX_LEFT_POINT_ON_SCREEN) return;
+        if (currentMovementState == MovementState.STAY) {
+            currentMovementState = MovementState.LEFT;
+            return;
+        }
 
-        // update current movement state
+        // update current and last movement state
         currentMovementState = MovementState.LEFT;
+        lastMovementState = MovementState.LEFT;
 
         // update player animation
         updateAnimation();
@@ -137,9 +142,14 @@ public final class Player {
     public void moveRight() {
         // check if player should overall move right
         if (absolutePositionX + STEP_SIZE >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
+        if (currentMovementState == MovementState.STAY) {
+            currentMovementState = MovementState.RIGHT;
+            return;
+        }
 
-        // update current movement state
+        // update current and last movement state
         currentMovementState = MovementState.RIGHT;
+        lastMovementState = MovementState.RIGHT;
 
         // update player animation
         updateAnimation();
@@ -153,6 +163,13 @@ public final class Player {
 
         // update position on screen
         screenPositionX += STEP_SIZE;
+    }
+
+    /**
+     * Setzt den aktuellen Status der Bewegung des Spielers auf {@code STAY}.
+     */
+    public void stay() {
+        this.currentMovementState = MovementState.STAY;
     }
 
     /**
@@ -188,6 +205,24 @@ public final class Player {
         if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE;
 
         currentAnimation = ImageType.valueOf("UNC_" + currentAnimationCount).getImage();
+    }
+
+    /**
+     * Zeichnet den Spieler ein, welcher nach links ausgerichtet ist.
+     *
+     * @param g Das Grafik-Objekt, mit dem der Spieler gezeichnet werden soll.
+     */
+    private void drawLeftMovement(final Graphics2D g) {
+        g.drawImage(currentAnimation, screenPositionX + PLAYER_SIZE, positionY, -PLAYER_SIZE, PLAYER_SIZE, null);
+    }
+
+    /**
+     * Zeichnet den Spieler ein, welcher nach rechts ausgerichtet ist.
+     *
+     * @param g Das Grafik-Objekt, mit dem der Spieler gezeichnet werden soll.
+     */
+    private void drawRightMovement(final Graphics2D g) {
+        g.drawImage(currentAnimation, screenPositionX, positionY, PLAYER_SIZE, PLAYER_SIZE, null);
     }
 
     //<editor-fold desc="Getter">
@@ -226,6 +261,15 @@ public final class Player {
      */
     public MovementState getCurrentMovementState() {
         return currentMovementState;
+    }
+
+    /**
+     * Gibt nicht den aktuellen, sondern den vorherigen Status der Bewegung des Spielers zurück.
+     *
+     * @return Nicht der aktuelle, sondern der vorherige Status der Bewegung des Spielers.
+     */
+    public MovementState getLastMovementState() {
+        return lastMovementState;
     }
 
     /**

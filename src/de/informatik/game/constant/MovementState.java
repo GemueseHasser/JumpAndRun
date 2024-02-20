@@ -9,7 +9,9 @@ public enum MovementState {
     /** Der Status für die Bewegung nach links. */
     LEFT,
     /** Der Status für die Bewegung nach rechts. */
-    RIGHT
+    RIGHT,
+    /** Der Status für keine Bewegung. */
+    STAY;
     //</editor-fold>
 
 }
