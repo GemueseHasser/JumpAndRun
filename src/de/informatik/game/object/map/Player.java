@@ -212,7 +212,7 @@ public final class Player {
                     if (delayJumpOpponent != null) {
                         switch (currentMovementState) {
                             case RIGHT -> {
-                                if (delayJumpOpponent.getPositionX() + delayJumpOpponent.getSize() < this.screenPositionX) {
+                                if (delayJumpOpponent.getPositionX() + delayJumpOpponent.getWidth() < this.screenPositionX) {
                                     this.delayJump = false;
                                     this.delayJumpOpponent = null;
                                 }

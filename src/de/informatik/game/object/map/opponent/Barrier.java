@@ -17,11 +17,11 @@ public final class Barrier implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
     /** Die Breite jeder Barriere. */
-    private static final int WIDTH = 40;
+    private static final int WIDTH = 50;
     /** Die Höhe jeder Barriere. */
-    private static final int HEIGHT = 50;
+    private static final int HEIGHT = 60;
     /** Die y-Koordinate jeder Barriere. */
-    private static final int Y_COORDINATE = 310;
+    private static final int Y_COORDINATE = 300;
     //</editor-fold>
 
 
