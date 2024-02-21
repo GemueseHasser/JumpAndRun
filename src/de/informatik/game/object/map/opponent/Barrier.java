@@ -16,8 +16,10 @@ import java.awt.Graphics2D;
 public final class Barrier implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
-    /** Die Größe jeder Barriere. */
-    private static final int SIZE = 50;
+    /** Die Breite jeder Barriere. */
+    private static final int WIDTH = 40;
+    /** Die Höhe jeder Barriere. */
+    private static final int HEIGHT = 50;
     /** Die y-Koordinate jeder Barriere. */
     private static final int Y_COORDINATE = 310;
     //</editor-fold>
@@ -42,8 +44,8 @@ public final class Barrier implements Opponent {
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
             x,
             Y_COORDINATE,
-            SIZE,
-            SIZE,
+            WIDTH,
+            HEIGHT,
             null
         );
     }
@@ -118,8 +120,13 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public int getSize() {
-        return SIZE;
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
     //</editor-fold>
 }

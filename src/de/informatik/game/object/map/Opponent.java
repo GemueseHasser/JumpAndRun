@@ -59,11 +59,17 @@ public interface Opponent {
     int getPositionY();
 
     /**
-     * Soll die tatsächliche Größe des Gegners zurückgeben, also die Größe des sichtbaren Gegners und nicht die des
-     * Bildes.
+     * Soll die Breite des Gegners im Spiel zurückgeben.
      *
-     * @return Die Größe des Gegners, also die Größe des sichtbaren Gegners und nicht die des Bildes.
+     * @return Die Breite des Gegners im Spiel.
      */
-    int getSize();
+    int getWidth();
+
+    /**
+     * Soll die Höhe des Gegners im Spiel zurückgeben.
+     *
+     * @return Die Höhe des Gegners im Spiel.
+     */
+    int getHeight();
 
 }
