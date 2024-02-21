@@ -33,6 +33,8 @@ public final class Player {
     private static final int START_POSITION_Y = 300;
     /** Die Sprunghöhe des Spielers. */
     private static final int JUMP_HEIGHT = 60;
+    /** Die Dauer in Millisekunden, die der Spieler nach dem Abspringen schweben soll, bevor er wieder herunterfällt. */
+    private static final int JUMP_FLY_DURATION_IN_MILLIS = 150;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
     /** Die Skalierung (wie breit) die Lebensanzeige des Spielers sein soll. */
@@ -61,6 +63,10 @@ public final class Player {
     private MovementState lastMovementState = MovementState.RIGHT;
     /** Der Zustand, ob der Spieler gerade hochspringt. */
     private boolean jumping;
+    /** Der Zustand, ob der Sprung bzw. die Landung verzögert werden soll. */
+    private boolean delayJump;
+    /** Der Gegner, welcher, wenn die Landung nach einem Sprung verzögert werden soll, auf Kollision überprüft wird. */
+    private Opponent delayJumpOpponent;
     //</editor-fold>
 
 
@@ -113,6 +119,7 @@ public final class Player {
     public void moveLeft() {
         // check if player should overall move left
         if (absolutePositionX - STEP_SIZE <= MAX_LEFT_POINT_ON_SCREEN) return;
+
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.LEFT;
             return;
@@ -142,6 +149,7 @@ public final class Player {
     public void moveRight() {
         // check if player should overall move right
         if (absolutePositionX + STEP_SIZE >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
+
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.RIGHT;
             return;
@@ -173,19 +181,72 @@ public final class Player {
     }
 
     /**
-     * Lässt den Spieler hochspringen.
+     * Verzögert den Sprung bzw. die Landung des Sprungs, wenn der Spieler gerade mit einem Gegner kollidiert.
+     *
+     * @param opponent Der Gegner, mit dem der Spieler gerade kollidiert.
+     */
+    public void delayCurrentJumpUntilNoCollision(final Opponent opponent) {
+        if (!jumping) return;
+
+        this.delayJumpOpponent = opponent;
+        this.delayJump = true;
+    }
+
+    /**
+     * Lässt den Spieler hochspringen, wobei er mit einer geringeren Geschwindigkeit hochspringt und mit einer
+     * schnelleren Geschwindigkeit wieder herunterfällt.
      */
     public void jump() {
         if (jumping) return;
 
         jumping = true;
-        positionY -= JUMP_HEIGHT;
 
-        final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
-        taskExecutor.schedule(() -> {
-            positionY += JUMP_HEIGHT;
-            jumping = false;
-        }, 1000, TimeUnit.MILLISECONDS);
+        final int lastPositionY = positionY;
+
+        final ScheduledExecutorService jumpTask = Executors.newScheduledThreadPool(1);
+        final ScheduledExecutorService fallTask = Executors.newScheduledThreadPool(1);
+
+        jumpTask.scheduleAtFixedRate(() -> {
+            if (positionY <= lastPositionY - JUMP_HEIGHT) {
+                fallTask.scheduleAtFixedRate(() -> {
+                    if (delayJumpOpponent != null) {
+                        switch (currentMovementState) {
+                            case RIGHT -> {
+                                if (delayJumpOpponent.getPositionX() + delayJumpOpponent.getSize() < this.screenPositionX) {
+                                    this.delayJump = false;
+                                    this.delayJumpOpponent = null;
+                                }
+                            }
+                            case LEFT -> {
+                                if (delayJumpOpponent.getPositionX() > this.screenPositionX + PLAYER_SIZE) {
+                                    this.delayJump = false;
+                                    this.delayJumpOpponent = null;
+                                }
+                            }
+                        }
+
+                        if (delayJump && positionY + PLAYER_SIZE <= delayJumpOpponent.getPositionY()) {
+                            this.currentMovementState = this.lastMovementState;
+                            return;
+                        }
+                    }
+
+                    positionY += STEP_SIZE;
+
+                    if (positionY >= lastPositionY) {
+                        positionY = lastPositionY;
+                        jumping = false;
+
+                        fallTask.close();
+                    }
+                }, JUMP_FLY_DURATION_IN_MILLIS, 10, TimeUnit.MILLISECONDS);
+
+                jumpTask.close();
+            }
+
+            positionY -= STEP_SIZE;
+
+        }, 0, 65, TimeUnit.MILLISECONDS);
     }
 
     /**
