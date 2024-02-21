@@ -48,11 +48,11 @@ public final class GameHandler {
      * der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveLeft() {
-        final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+        final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
         final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
+            if (rightPlayerPosition >= opponent.getPositionX() && player.getScreenPositionX() <= opponent.getPositionX() + opponent.getSize()) {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
                 }
@@ -73,11 +73,11 @@ public final class GameHandler {
      * wenn der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveRight() {
-        final int rightPlayerPosition = player.getAbsolutePositionX() + Player.PLAYER_SIZE;
+        final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
         final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && player.getAbsolutePositionX() <= opponent.getPositionX() + opponent.getSize()) {
+            if (rightPlayerPosition >= opponent.getPositionX() && player.getScreenPositionX() <= opponent.getPositionX() + opponent.getSize()) {
                 if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getSize()) {
                     opponent.playerCollideOpponentEvent();
                 }
