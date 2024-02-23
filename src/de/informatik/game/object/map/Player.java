@@ -225,10 +225,7 @@ public final class Player {
                             }
                         }
 
-                        if (delayJump && positionY + PLAYER_SIZE <= delayJumpOpponent.getPositionY()) {
-                            this.currentMovementState = this.lastMovementState;
-                            return;
-                        }
+                        if (delayJump && positionY + PLAYER_SIZE <= delayJumpOpponent.getPositionY()) return;
                     }
 
                     positionY += STEP_SIZE;
