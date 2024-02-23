@@ -241,9 +241,9 @@ public final class Player {
                 jumpTask.close();
             }
 
-            positionY -= STEP_SIZE;
+            positionY -= (STEP_SIZE / 2);
 
-        }, 0, 65, TimeUnit.MILLISECONDS);
+        }, 0, 25, TimeUnit.MILLISECONDS);
     }
 
     /**
