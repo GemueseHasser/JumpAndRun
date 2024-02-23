@@ -55,7 +55,7 @@ public final class Barrier implements Opponent {
         if (!isMovingBackground) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
-            Xcounter += 5;
+            Xcounter += Player.STEP_SIZE;
         }
         // this is not quite working as intended
         // stacks the barriers, once they pass the screen
@@ -74,7 +74,7 @@ public final class Barrier implements Opponent {
         if (!isMovingBackground) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
-            Xcounter -= 5;
+            Xcounter -= Player.STEP_SIZE;
         }
         // something is going wrong here
         // once the player moves left, the values get reset to the edge-coordinates

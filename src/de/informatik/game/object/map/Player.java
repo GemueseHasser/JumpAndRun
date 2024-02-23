@@ -24,7 +24,7 @@ public final class Player {
     /** Der Punkt, den der Spieler maximal nach rechts gehen kann. */
     public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
     /** Die Größe jedes Schrittes des Spielers. */
-    public static final int STEP_SIZE = 5;
+    public static final int STEP_SIZE = 8;
     /** Die Größe des Spielers. */
     public static final int PLAYER_SIZE = 60;
     /** Die maximale Anzahl an Leben, die der Spieler haben kann. */
