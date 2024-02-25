@@ -135,7 +135,7 @@ public final class Map {
      * @param mapLength Die neue Größe dieser Umgebung.
      */
     public void setMapLength(final int mapLength) {
-        this.mapLength = mapLength;
+        this.mapLength = mapLength + Player.MAX_LEFT_POINT_ON_SCREEN;
     }
 
     /**
@@ -176,10 +176,10 @@ public final class Map {
     public static final class OpponentLoader {
 
         //<editor-fold desc="LOCAL FIELDS">
+        /** Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll. */
+        private final List<Integer> positions = new ArrayList<>();
         /** Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden soll. */
         private OpponentType type;
-        /** Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll. */
-        private List<Integer> positions;
         //</editor-fold>
 
 
@@ -221,7 +221,9 @@ public final class Map {
          * @param positions Alle Positionen, an denen dieser Typ eines Gegners geladen werden soll.
          */
         public void setPositions(final List<Integer> positions) {
-            this.positions = positions;
+            for (final int position : positions) {
+                this.positions.add(position + Player.MAX_LEFT_POINT_ON_SCREEN);
+            }
         }
         //</editor-fold>
     }

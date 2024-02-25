@@ -20,9 +20,9 @@ public final class Player {
 
     //<editor-fold desc="CONSTANTS">
     /** Der Punkt, den der Spieler maximal nach links gehen kann. */
-    public static final int MAX_LEFT_POINT_ON_SCREEN = 10;
+    public static final int MAX_LEFT_POINT_ON_SCREEN = 100;
     /** Der Punkt, den der Spieler maximal nach rechts gehen kann. */
-    public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 70;
+    public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 150;
     /** Die Größe jedes Schrittes des Spielers. */
     public static final int STEP_SIZE = 8;
     /** Die Größe des Spielers. */
@@ -118,7 +118,7 @@ public final class Player {
      */
     public void moveLeft() {
         // check if player should overall move left
-        if (absolutePositionX - STEP_SIZE <= MAX_LEFT_POINT_ON_SCREEN) return;
+        if (absolutePositionX <= MAX_LEFT_POINT_ON_SCREEN) return;
 
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.LEFT;
@@ -148,7 +148,7 @@ public final class Player {
      */
     public void moveRight() {
         // check if player should overall move right
-        if (absolutePositionX + STEP_SIZE >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
+        if (absolutePositionX >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
 
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.RIGHT;
