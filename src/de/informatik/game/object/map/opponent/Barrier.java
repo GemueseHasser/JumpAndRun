@@ -33,7 +33,7 @@ public final class Barrier implements Opponent {
     /** Die Menge an x-Koordinaten, die der Background sich verschoben hat. */
     private int Xcounter;
     /** Die letzte x-Koordinate des Backgrounds. */
-    private int middleXbg = 0;
+    private int middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
     //</editor-fold>
 
 
