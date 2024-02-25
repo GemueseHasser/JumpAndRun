@@ -51,8 +51,8 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
+    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
+        if (!isBackgroundMovable) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
             Xcounter += Player.STEP_SIZE;
@@ -70,8 +70,8 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
+    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
+        if (!isBackgroundMovable) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
             Xcounter -= Player.STEP_SIZE;

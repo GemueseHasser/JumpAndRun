@@ -51,7 +51,7 @@ public final class MapHandler {
         final Graphics2D g = image.createGraphics();
 
         final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
-        final int middleBackgroundX = (!isBackgroundMoving() ? map.getLastMiddleBackgroundX() : ((playerPosition / width) * width) - playerPosition);
+        final int middleBackgroundX = (!isBackgroundMovable() ? map.getLastMiddleBackgroundX() : ((playerPosition / width) * width) - playerPosition);
 
         // draw background
         g.drawImage(
@@ -97,7 +97,7 @@ public final class MapHandler {
      *
      * @return Wenn sich der Hintergrund aktuell bewegt {@code true}, ansonsten {@code false}.
      */
-    public static boolean isBackgroundMoving() {
+    public static boolean isBackgroundMovable() {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
         final int screenX = player.getScreenPositionX();
         final int absoluteX = player.getAbsolutePositionX();
