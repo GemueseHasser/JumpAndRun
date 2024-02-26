@@ -59,10 +59,7 @@ public final class GameGui extends Gui {
     @Override
     public void draw(final Graphics2D g) {
         // draw map (background and opponents)
-        g.drawImage(MapHandler.getRenderedMap(
-            JumpAndRun.GAME_INSTANCE.getGameHandler().getMap(),
-            JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().getAbsolutePositionX()
-        ), 0, 0, null);
+        g.drawImage(MapHandler.getRenderedMap(JumpAndRun.GAME_INSTANCE.getGameHandler().getMap()), 0, 0, null);
 
         // draw player
         JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().drawPlayer(g);

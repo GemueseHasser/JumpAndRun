@@ -42,21 +42,17 @@ public final class MapHandler {
      * Gegnern besteht. Diese Map aktualisiert sich auch immer wieder auf der Grundlage der Position des Spielers.
      *
      * @param map            Die Map, auf dessen Grundlage ein Bild erzeugt werden soll.
-     * @param playerPosition Die aktuelle Position des Spielers.
      *
      * @return Die fertig gerenderte Map in Form eines {@link BufferedImage Bildes}.
      */
-    public static BufferedImage getRenderedMap(final Map map, final int playerPosition) {
+    public static BufferedImage getRenderedMap(final Map map) {
         final BufferedImage image = new BufferedImage(GameGui.WIDTH, GameGui.HEIGHT, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g = image.createGraphics();
-
-        final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
-        final int middleBackgroundX = (!isBackgroundMovable() ? map.getLastMiddleBackgroundX() : ((playerPosition / width) * width) - playerPosition);
 
         // draw background
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
-            middleBackgroundX - GameGui.WIDTH,
+            map.getLastMiddleBackgroundX() - GameGui.WIDTH,
             0,
             GameGui.WIDTH,
             GameGui.HEIGHT,
@@ -64,7 +60,7 @@ public final class MapHandler {
         );
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
-            middleBackgroundX,
+            map.getLastMiddleBackgroundX(),
             0,
             GameGui.WIDTH,
             GameGui.HEIGHT,
@@ -72,7 +68,7 @@ public final class MapHandler {
         );
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
-            middleBackgroundX + GameGui.WIDTH,
+            map.getLastMiddleBackgroundX() + GameGui.WIDTH,
             0,
             GameGui.WIDTH,
             GameGui.HEIGHT,
@@ -87,8 +83,6 @@ public final class MapHandler {
         // dispose graphics object
         g.dispose();
 
-        // set last background position
-        map.setLastMiddleBackgroundX(middleBackgroundX);
         return image;
     }
 

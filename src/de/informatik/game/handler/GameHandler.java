@@ -48,6 +48,8 @@ public final class GameHandler {
      * der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveLeft() {
+        map.updateLastMiddleBackgroundX();
+
         final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
         final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
@@ -73,6 +75,8 @@ public final class GameHandler {
      * wenn der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveRight() {
+        map.updateLastMiddleBackgroundX();
+
         final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
         final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 

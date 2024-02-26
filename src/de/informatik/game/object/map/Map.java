@@ -3,6 +3,8 @@ package de.informatik.game.object.map;
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.OpponentType;
+import de.informatik.game.handler.MapHandler;
+import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -37,9 +39,7 @@ public final class Map {
      * bewegen kann.
      */
     public Map() {
-        final int playerPosition = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().getAbsolutePositionX();
-        final int width = Player.MAX_RIGHT_POINT_ON_SCREEN - Player.MAX_LEFT_POINT_ON_SCREEN;
-        lastMiddleBackgroundX = ((playerPosition / width) * width) - playerPosition;
+        updateLastMiddleBackgroundX();
     }
 
 
@@ -65,6 +65,33 @@ public final class Map {
                     "Error while loading opponents; has every opponent a constructor opponent(Integer startX)?"
                 );
                 throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * Aktualisiert die Position des mittleren Hintergrundbildes dieser Map.
+     */
+    public void updateLastMiddleBackgroundX() {
+        if (!MapHandler.isBackgroundMovable()) return;
+
+        final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
+
+        final int leftMargin = Player.MAX_LEFT_POINT_ON_SCREEN;
+        final int rightMargin = GameGui.WIDTH - Player.MAX_RIGHT_POINT_ON_SCREEN;
+
+        final int widthCounter = player.getAbsolutePositionX() / GameGui.WIDTH;
+
+        switch (player.getCurrentMovementState()) {
+            case LEFT -> {
+                if (player.getScreenPositionX() > Player.MAX_LEFT_POINT_ON_SCREEN) return;
+
+                lastMiddleBackgroundX = (widthCounter * GameGui.WIDTH) - (player.getAbsolutePositionX() - leftMargin);
+            }
+            case RIGHT -> {
+                if (player.getScreenPositionX() < Player.MAX_RIGHT_POINT_ON_SCREEN) return;
+
+                lastMiddleBackgroundX = ((widthCounter + 1) * GameGui.WIDTH) - (player.getAbsolutePositionX() + rightMargin);
             }
         }
     }
@@ -168,6 +195,7 @@ public final class Map {
 
 
     //<editor-fold desc="OpponentLoader">
+
     /**
      * Mithilfe des {@link OpponentLoader} wird für jeden {@link OpponentType Typ} aus allen Koordinaten, die in der
      * Map-Datei hinterlegt wurden, jeder einzelne {@link Opponent Gegner} erzeugt, wobei der {@link OpponentLoader}
@@ -209,7 +237,8 @@ public final class Map {
         /**
          * Setzt den Typen des Gegners neu, welcher an verschiedenen Koordinaten geladen werden soll.
          *
-         * @param type Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden soll.
+         * @param type Der {@link OpponentType Typ} des Gegners, welcher an verschiedenen Koordinaten geladen werden
+         *             soll.
          */
         public void setType(final OpponentType type) {
             this.type = type;
