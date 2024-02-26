@@ -229,6 +229,7 @@ public final class Player {
                     }
 
                     positionY += STEP_SIZE;
+                    resetAnimationCount();
 
                     if (positionY >= lastPositionY) {
                         positionY = lastPositionY;
@@ -242,6 +243,7 @@ public final class Player {
             }
 
             positionY -= (STEP_SIZE / 2);
+            resetAnimationCount();
 
         }, 0, 25, TimeUnit.MILLISECONDS);
     }
