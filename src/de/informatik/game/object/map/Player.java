@@ -117,21 +117,24 @@ public final class Player {
      * Simuliert die Bewegung nach links.
      */
     public void moveLeft() {
+        // update player animation
+        updateAnimation();
+        currentAnimationCount--;
+
+        // update last movement state
+        lastMovementState = MovementState.LEFT;
+
         // check if player should overall move left
         if (absolutePositionX <= MAX_LEFT_POINT_ON_SCREEN) return;
 
+        // check if player should stay
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.LEFT;
             return;
         }
 
-        // update current and last movement state
+        // update current movement state
         currentMovementState = MovementState.LEFT;
-        lastMovementState = MovementState.LEFT;
-
-        // update player animation
-        updateAnimation();
-        currentAnimationCount--;
 
         // decrement absolute position
         absolutePositionX -= STEP_SIZE;
@@ -147,21 +150,24 @@ public final class Player {
      * Simuliert die Bewegung nach rechts.
      */
     public void moveRight() {
+        // update player animation
+        updateAnimation();
+        currentAnimationCount++;
+
+        // update last movement state
+        lastMovementState = MovementState.RIGHT;
+
         // check if player should overall move right
         if (absolutePositionX >= JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getMapLength()) return;
 
+        // check if player should stay
         if (currentMovementState == MovementState.STAY) {
             currentMovementState = MovementState.RIGHT;
             return;
         }
 
-        // update current and last movement state
+        // update current movement state
         currentMovementState = MovementState.RIGHT;
-        lastMovementState = MovementState.RIGHT;
-
-        // update player animation
-        updateAnimation();
-        currentAnimationCount++;
 
         // increment absolute position
         absolutePositionX += STEP_SIZE;
