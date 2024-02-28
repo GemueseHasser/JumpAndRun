@@ -24,7 +24,7 @@ public final class Player {
     /** Der Punkt, den der Spieler maximal nach rechts gehen kann. */
     public static final int MAX_RIGHT_POINT_ON_SCREEN = GameGui.WIDTH - 150;
     /** Die Größe jedes Schrittes des Spielers. */
-    public static final int STEP_SIZE = 8;
+    public static final int STEP_SIZE = 2;
     /** Die Größe des Spielers. */
     public static final int PLAYER_SIZE = 60;
     /** Die maximale Anzahl an Leben, die der Spieler haben kann. */
@@ -243,7 +243,7 @@ public final class Player {
 
                         fallTask.close();
                     }
-                }, JUMP_FLY_DURATION_IN_MILLIS, 10, TimeUnit.MILLISECONDS);
+                }, JUMP_FLY_DURATION_IN_MILLIS, 2, TimeUnit.MILLISECONDS);
 
                 jumpTask.close();
             }
@@ -251,7 +251,7 @@ public final class Player {
             positionY -= (STEP_SIZE / 2);
             resetAnimationCount();
 
-        }, 0, 25, TimeUnit.MILLISECONDS);
+        }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -267,10 +267,10 @@ public final class Player {
      * außerhalb der festgelegten Grenzen befinden, wird diese wieder korrekt aktualisiert.
      */
     private void updateAnimation() {
-        if (currentAnimationCount > ANIMATION_SIZE) currentAnimationCount = 1;
-        if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE;
+        if ((currentAnimationCount / 3) > ANIMATION_SIZE) currentAnimationCount = 1;
+        if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE * 3;
 
-        currentAnimation = ImageType.valueOf("UNC_" + currentAnimationCount).getImage();
+        currentAnimation = ImageType.valueOf("UNC_" + ((currentAnimationCount / 3) == 0 ? 1 : (currentAnimationCount / 3))).getImage();
     }
 
     /**
