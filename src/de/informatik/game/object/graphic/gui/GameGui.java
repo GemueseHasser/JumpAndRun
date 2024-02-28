@@ -72,7 +72,7 @@ public final class GameGui extends Gui {
         super.dispose();
 
         JumpAndRun.GAME_INSTANCE.getMenuGui().open();
-        taskExecutor.close();
+        taskExecutor.shutdown();
 
         // unregister current gui instance in main-class
         JumpAndRun.GAME_INSTANCE.setCurrentGameGui(null);

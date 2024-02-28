@@ -33,8 +33,12 @@ public final class KeyboardTask implements Runnable {
     @Override
     public void run() {
         switch (keyCode) {
-            case KeyEvent.VK_LEFT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
-            case KeyEvent.VK_RIGHT -> JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
+            case KeyEvent.VK_LEFT:
+                JumpAndRun.GAME_INSTANCE.getGameHandler().moveLeft();
+                break;
+            case KeyEvent.VK_RIGHT:
+                JumpAndRun.GAME_INSTANCE.getGameHandler().moveRight();
+                break;
         }
     }
     //</editor-fold>

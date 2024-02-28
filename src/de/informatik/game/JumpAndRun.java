@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -88,7 +88,7 @@ public class JumpAndRun {
             for (int i = 1; i < LEVEL_AMOUNT + 1; i++) {
                 Files.copy(
                     Objects.requireNonNull(getClass().getResourceAsStream("/de/informatik/resources/maps/map" + i + ".yml")),
-                    Path.of("JumpAndRun/map" + i + ".yml")
+                    Paths.get("JumpAndRun/map" + i + ".yml")
                 );
             }
         } catch (IOException ignored) {

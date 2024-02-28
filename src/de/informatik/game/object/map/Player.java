@@ -102,14 +102,21 @@ public final class Player {
         g.drawRect(20, 20, MAX_HEALTH_AMOUNT * HEALTH_SCALE, HEALTH_HEIGHT);
 
         switch (currentMovementState) {
-            case LEFT -> drawLeftMovement(g);
-            case RIGHT -> drawRightMovement(g);
-            case STAY -> {
+            case LEFT:
+                drawLeftMovement(g);
+                break;
+            case RIGHT:
+                drawRightMovement(g);
+                break;
+            case STAY:
                 switch (lastMovementState) {
-                    case LEFT -> drawLeftMovement(g);
-                    case RIGHT -> drawRightMovement(g);
+                    case LEFT:
+                        drawLeftMovement(g);
+                        break;
+                    case RIGHT:
+                        drawRightMovement(g);
+                        break;
                 }
-            }
         }
     }
 
@@ -217,18 +224,18 @@ public final class Player {
                 fallTask.scheduleAtFixedRate(() -> {
                     if (delayJumpOpponent != null) {
                         switch (currentMovementState) {
-                            case RIGHT -> {
+                            case RIGHT:
                                 if (delayJumpOpponent.getPositionX() + delayJumpOpponent.getWidth() < this.screenPositionX) {
                                     this.delayJump = false;
                                     this.delayJumpOpponent = null;
                                 }
-                            }
-                            case LEFT -> {
+                                break;
+                            case LEFT:
                                 if (delayJumpOpponent.getPositionX() > this.screenPositionX + PLAYER_SIZE) {
                                     this.delayJump = false;
                                     this.delayJumpOpponent = null;
                                 }
-                            }
+                                break;
                         }
 
                         if (delayJump && positionY + PLAYER_SIZE <= delayJumpOpponent.getPositionY()) return;
@@ -241,11 +248,11 @@ public final class Player {
                         positionY = lastPositionY;
                         jumping = false;
 
-                        fallTask.close();
+                        fallTask.shutdown();
                     }
                 }, JUMP_FLY_DURATION_IN_MILLIS, 2, TimeUnit.MILLISECONDS);
 
-                jumpTask.close();
+                jumpTask.shutdown();
             }
 
             positionY -= (STEP_SIZE / 2);

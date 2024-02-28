@@ -17,8 +17,13 @@ public final class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyPressed(final KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT -> JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(e.getKeyCode());
-            case KeyEvent.VK_UP -> JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump();
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_RIGHT:
+                JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(e.getKeyCode());
+                break;
+            case KeyEvent.VK_UP:
+                JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump();
+                break;
         }
     }
 

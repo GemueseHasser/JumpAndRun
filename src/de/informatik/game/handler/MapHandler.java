@@ -11,8 +11,10 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Mithilfe des {@link MapHandler} lässt sich die Map laden, die sich aktuell im Ordner ./JumpAndRun befindet; sollte
@@ -34,7 +36,11 @@ public final class MapHandler {
      */
     public static Map loadMap(final int mapCount) throws FileNotFoundException {
         final Yaml yaml = new Yaml(new Constructor(Map.class, new LoaderOptions()));
-        return yaml.load(new FileInputStream("JumpAndRun/map" + mapCount + ".yml"));
+        try {
+            return yaml.load(Files.newInputStream(Paths.get("JumpAndRun/map" + mapCount + ".yml")));
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

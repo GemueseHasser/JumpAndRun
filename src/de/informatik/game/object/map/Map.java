@@ -49,7 +49,7 @@ public final class Map {
      */
     public void loadOpponents() {
         for (final OpponentLoader loader : opponentLoader) {
-            if (!Arrays.stream(loader.getType().getOpponentClass().getInterfaces()).toList().contains(Opponent.class)) {
+            if (!Arrays.asList(loader.getType().getOpponentClass().getInterfaces()).contains(Opponent.class)) {
                 System.out.println("No-Opponent-Class:" + loader.getType().name());
                 continue;
             }
@@ -83,16 +83,16 @@ public final class Map {
         final int widthCounter = player.getAbsolutePositionX() / GameGui.WIDTH;
 
         switch (player.getCurrentMovementState()) {
-            case LEFT -> {
+            case LEFT:
                 if (player.getScreenPositionX() > Player.MAX_LEFT_POINT_ON_SCREEN) return;
 
                 lastMiddleBackgroundX = (widthCounter * GameGui.WIDTH) - (player.getAbsolutePositionX() - leftMargin);
-            }
-            case RIGHT -> {
+                break;
+            case RIGHT:
                 if (player.getScreenPositionX() < Player.MAX_RIGHT_POINT_ON_SCREEN) return;
 
                 lastMiddleBackgroundX = ((widthCounter + 1) * GameGui.WIDTH) - (player.getAbsolutePositionX() + rightMargin);
-            }
+                break;
         }
     }
 
@@ -172,15 +172,6 @@ public final class Map {
      */
     public void setBackgroundImageType(final ImageType backgroundImageType) {
         this.backgroundImageType = backgroundImageType;
-    }
-
-    /**
-     * Setzt die letzte mittlere x-Koordinate des Hintergrundes in dieser Map neu.
-     *
-     * @param x Die letzte mittlere x-Koordinate des Hintergrundes in dieser Map.
-     */
-    public void setLastMiddleBackgroundX(final int x) {
-        this.lastMiddleBackgroundX = x;
     }
 
     /**
