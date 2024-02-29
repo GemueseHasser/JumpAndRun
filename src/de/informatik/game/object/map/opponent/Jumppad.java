@@ -40,7 +40,6 @@ public class Jumppad implements Opponent  {
 
         currentX = backgroundCounterX + initialStartingX;
         lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-
     }
 
     @Override
@@ -93,7 +92,7 @@ public class Jumppad implements Opponent  {
 
     @Override
     public int getHeight(){
-        return WIDTH;
+        return HEIGHT;
     }
 
 }
