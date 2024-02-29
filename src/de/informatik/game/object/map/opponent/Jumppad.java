@@ -8,50 +8,30 @@ import de.informatik.game.object.map.Player;
 
 import java.awt.Graphics2D;
 
-/**
- * Eine {@link Barrier Barriere} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
- * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt eine unflexible, sich nicht bewegende
- * Barriere dar, welche der Spieler überwinden muss, um weiterzukommen.
- */
-public final class Barrier implements Opponent {
+public class Jumppad implements Opponent  {
 
-    //<editor-fold desc="CONSTANTS">
-    /** Die Breite jeder Barriere. */
     private static final int WIDTH = 50;
-    /** Die Höhe jeder Barriere. */
     private static final int HEIGHT = 60;
-    /** Die y-Koordinate jeder Barriere. */
     private static final int Y_COORDINATE = 300;
-    //</editor-fold>
-
-
-    //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate der Barriere. */
     private int initialStartingX;
-    /** Die aktuelle x-Koordinate der Barriere. */
     private int currentX;
-    /** Die Menge an x-Koordinaten, die der Background sich verschoben hat. */
     private int backgroundCounterX;
-    /** Die letzte x-Koordinate des Backgrounds. */
-    private int lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-    //</editor-fold>
+    private int lastBackgroundCentreX = 0;
 
-
-    //<editor-fold desc="implementation">
     @Override
-    public void drawOpponent(final Graphics2D g) {
+    public void drawOpponent(final Graphics2D g){
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
+                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.JUMPPAD),
                 currentX,
-            Y_COORDINATE,
-            WIDTH,
-            HEIGHT,
-            null
+                Y_COORDINATE,
+                WIDTH,
+                HEIGHT,
+                null
         );
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMoving) {
+    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMoving){
         if (!isBackgroundMoving) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
@@ -64,7 +44,7 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMoving) {
+    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMoving){
         if (!isBackgroundMoving) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
@@ -76,8 +56,7 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public void playerCollideOpponentEvent() {
-        // decrement health, etc.
+    public void playerCollideOpponentEvent(){
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
         if (player.isJumping()) {
@@ -92,29 +71,29 @@ public final class Barrier implements Opponent {
     }
 
     @Override
-    public void initializeOpponent(final int startX) {
+    public void initializeOpponent(final int startX){
         this.initialStartingX = startX;
         this.currentX = startX;
     }
 
     @Override
-    public int getPositionX() {
+    public int getPositionX(){
         return currentX;
     }
 
     @Override
-    public int getPositionY() {
+    public int getPositionY(){
         return Y_COORDINATE;
     }
 
     @Override
-    public int getWidth() {
+    public int getWidth(){
         return WIDTH;
     }
 
     @Override
-    public int getHeight() {
-        return HEIGHT;
+    public int getHeight(){
+        return WIDTH;
     }
-    //</editor-fold>
+
 }
