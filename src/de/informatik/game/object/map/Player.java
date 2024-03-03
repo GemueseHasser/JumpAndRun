@@ -3,6 +3,7 @@ package de.informatik.game.object.map;
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.MovementState;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.awt.Color;
@@ -211,6 +212,9 @@ public final class Player {
      */
     public void jump() {
         if (jumping) return;
+
+        // play sound
+        SoundType.JUMP.play(0);
 
         jumping = true;
 

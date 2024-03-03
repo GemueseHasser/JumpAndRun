@@ -1,8 +1,10 @@
 package de.informatik.game.object.graphic.gui;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.object.graphic.Gui;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 
 import java.awt.Color;
@@ -85,6 +87,9 @@ public final class MenuGui extends Gui {
                 LEVEL_BUTTON_SIZE
             );
             button.addActionListener(e -> {
+                // play sound
+                SoundType.MENU_HOVER.play(0);
+
                 // set selected level
                 selectedLevel = currentLevel;
 
@@ -111,6 +116,9 @@ public final class MenuGui extends Gui {
         playButton = new JButton(PLAY_BUTTON_TEXT);
         playButton.setFont(STANDARD_FONT);
         playButton.addActionListener(e -> {
+            // play sound
+            SoundType.START_GAME.play(0);
+
             // initialize game-handler
             GAME_INSTANCE.getGameHandler().initialize(selectedLevel);
 
@@ -149,10 +157,21 @@ public final class MenuGui extends Gui {
     }
 
     @Override
+    public void open() {
+        super.open();
+
+        // start playing background music
+        SoundType.MENU_BACKGROUND.play(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
 
         playButton.setBackground(BUTTON_BACKGROUND);
+
+        // stop playing background music
+        SoundType.MENU_BACKGROUND.stop();
     }
     //</editor-fold>
 
