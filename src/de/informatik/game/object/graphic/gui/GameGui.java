@@ -1,10 +1,12 @@
 package de.informatik.game.object.graphic.gui;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.MapHandler;
 import de.informatik.game.listener.KeyListener;
 import de.informatik.game.object.graphic.Gui;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import java.awt.Graphics2D;
@@ -68,6 +70,14 @@ public final class GameGui extends Gui {
     }
 
     @Override
+    public void open() {
+        super.open();
+
+        // start playing background music
+        SoundType.GAME_BACKGROUND.play(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
 
@@ -76,6 +86,9 @@ public final class GameGui extends Gui {
 
         // unregister current gui instance in main-class
         JumpAndRun.GAME_INSTANCE.setCurrentGameGui(null);
+
+        // stop playing background music
+        SoundType.GAME_BACKGROUND.stop();
     }
     //</editor-fold>
 

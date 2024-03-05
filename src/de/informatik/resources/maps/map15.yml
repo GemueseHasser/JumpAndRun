@@ -4,7 +4,8 @@ backgroundImageType: BACKGROUND
 opponentLoader:
   - type: BARRIER
     positions:
-      - 100
-      - 200
-      - 300
+      - 150
       - 400
+      - 550
+      - 750
+      - 900
