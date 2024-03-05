@@ -61,9 +61,6 @@ public final class Map {
                     loadedOpponents.add(opponent);
                 }
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-                System.out.println(
-                    "Error while loading opponents; has every opponent a constructor opponent(Integer startX)?"
-                );
                 throw new RuntimeException(e);
             }
         }
