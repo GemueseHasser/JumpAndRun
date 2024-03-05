@@ -31,8 +31,8 @@ public enum SoundType {
             clip = (Clip) AudioSystem.getLine(info);
             clip.open(audioStream);
 
-            FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.VOLUME);
-            volume.setValue((float) level / 100);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(20f * (float) Math.log10((double) level / 100));
         } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             System.out.println(e.getMessage());
         }
@@ -44,8 +44,8 @@ public enum SoundType {
 
         if (clip.isRunning()) clip.stop();
 
-        clip.setFramePosition(0);
         clip.loop(loop);
+        clip.setMicrosecondPosition(0);
 
         clip.start();
     }
