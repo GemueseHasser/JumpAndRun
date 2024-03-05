@@ -88,7 +88,7 @@ public final class MenuGui extends Gui {
             );
             button.addActionListener(e -> {
                 // play sound
-                SoundType.MENU_HOVER.play(0);
+                SoundType.CHOOSE_LEVEL.play(0);
 
                 // set selected level
                 selectedLevel = currentLevel;
