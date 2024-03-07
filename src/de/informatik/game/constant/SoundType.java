@@ -1,6 +1,13 @@
 package de.informatik.game.constant;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import java.io.IOException;
 
 /**
@@ -38,12 +45,13 @@ public enum SoundType {
      * werden kann und auch beliebig oft wieder gestoppt werden kann.
      *
      * @param soundName Der Name der Datei des Tons, welche sich unter resources/sounds befindet.
-     * @param level     Die Lautstärke, mit der der jeweilige Ton abgespielt werden soll, von {@code 0} bis {@code 100}.
+     * @param level     Die Lautstärke, mit der der jeweilige Ton abgespielt werden soll, von {@code 0} bis
+     *                  {@code 100}.
      */
     SoundType(final String soundName, final int level) {
         try {
             final AudioInputStream audioStream = AudioSystem.getAudioInputStream(
-                    getClass().getResource("/de/informatik/resources/sounds/" + soundName)
+                getClass().getResource("/de/informatik/resources/sounds/" + soundName)
             );
             final DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
             clip = (Clip) AudioSystem.getLine(info);
