@@ -19,15 +19,15 @@ public enum SoundType {
 
     //<editor-fold desc="VALUES">
     /** Die Hintergrundmusik für das eigentliche Spiel. */
-    GAME_BACKGROUND("game_background.wav", 40),
+    GAME_BACKGROUND("game_background.wav", 10),
     /** Der Ton, welcher bei einem Sprung gespielt wird. */
-    JUMP("jump.wav", 60),
+    JUMP("jump.wav", 65),
     /** Die Hintergrundmusik für das Menü, in dem man das Spiel starten kann. */
-    MENU_BACKGROUND("menu_background.wav", 30),
+    MENU_BACKGROUND("menu_background.wav", 45),
     /** Der Ton, welcher gespielt wird, wenn man einen Level im Menü auswählt. */
-    CHOOSE_LEVEL("choose_level.wav", 35),
+    CHOOSE_LEVEL("choose_level.wav", 20),
     /** Der Ton, welcher gespielt wird, wenn man im Menü das Spiel startet. */
-    START_GAME("start_game.wav", 50);
+    START_GAME("start_game.wav", 100);
     //</editor-fold>
 
 
