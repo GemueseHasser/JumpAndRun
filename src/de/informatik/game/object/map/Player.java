@@ -59,9 +59,9 @@ public final class Player {
     /** Die aktuelle Animation des Spielers in Form eines Bildes. */
     private BufferedImage currentAnimation;
     /** Der aktuelle Status, in welche Richtung sich der Spieler bewegt. */
-    private MovementState currentMovementState = MovementState.STAY;
+    private MovementState currentMovementState;
     /** Nicht der aktuelle, sondern der vorherige Status der Bewegung des Spielers. */
-    private MovementState lastMovementState = MovementState.RIGHT;
+    private MovementState lastMovementState;
     /** Der Zustand, ob der Spieler gerade hochspringt. */
     private boolean jumping;
     /** Der Zustand, ob der Sprung bzw. die Landung verzögert werden soll. */
@@ -83,6 +83,8 @@ public final class Player {
 
         // initialize movement
         JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(-1);
+        currentMovementState = MovementState.STAY;
+        lastMovementState = MovementState.RIGHT;
 
         // reset animation
         resetAnimationCount();
