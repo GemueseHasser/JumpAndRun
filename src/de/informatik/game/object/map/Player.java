@@ -31,11 +31,9 @@ public final class Player {
     /** Die maximale Anzahl an Leben, die der Spieler haben kann. */
     public static final int MAX_HEALTH_AMOUNT = 50;
     /** Die y-Koordinate, an der der Spieler bei der Initialisierung platziert wird. */
-    private static final int START_POSITION_Y = 300;
+    public static final int START_POSITION_Y = 300;
     /** Die Sprunghöhe des Spielers. */
-    private static final int JUMP_HEIGHT = 60;
-    /** Die Dauer in Millisekunden, die der Spieler nach dem Abspringen schweben soll, bevor er wieder herunterfällt. */
-    private static final int JUMP_FLY_DURATION_IN_MILLIS = 150;
+    private static final int JUMP_HEIGHT = 80;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
     /** Die Skalierung (wie breit) die Lebensanzeige des Spielers sein soll. */
@@ -64,10 +62,8 @@ public final class Player {
     private MovementState lastMovementState;
     /** Der Zustand, ob der Spieler gerade hochspringt. */
     private boolean jumping;
-    /** Der Zustand, ob der Sprung bzw. die Landung verzögert werden soll. */
-    private boolean delayJump;
-    /** Der Gegner, welcher, wenn die Landung nach einem Sprung verzögert werden soll, auf Kollision überprüft wird. */
-    private Opponent delayJumpOpponent;
+    /** Der Zustand, ob Schwerkraft auf den Spieler wirken soll. */
+    private boolean gravity = true;
     //</editor-fold>
 
 
@@ -82,7 +78,7 @@ public final class Player {
         health = MAX_HEALTH_AMOUNT;
 
         // initialize movement
-        JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(-1);
+        JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(-1);
         currentMovementState = MovementState.STAY;
         lastMovementState = MovementState.RIGHT;
 
@@ -197,73 +193,29 @@ public final class Player {
     }
 
     /**
-     * Verzögert den Sprung bzw. die Landung des Sprungs, wenn der Spieler gerade mit einem Gegner kollidiert.
-     *
-     * @param opponent Der Gegner, mit dem der Spieler gerade kollidiert.
-     */
-    public void delayCurrentJumpUntilNoCollision(final Opponent opponent) {
-        if (!jumping) return;
-
-        this.delayJumpOpponent = opponent;
-        this.delayJump = true;
-    }
-
-    /**
-     * Lässt den Spieler hochspringen, wobei er mit einer geringeren Geschwindigkeit hochspringt und mit einer
-     * schnelleren Geschwindigkeit wieder herunterfällt.
+     * Lässt den Spieler hochspringen.
      */
     public void jump() {
         if (jumping) return;
+        if (gravity && positionY < START_POSITION_Y) return;
 
         // play sound
         SoundType.JUMP.play(0);
 
         jumping = true;
-
-        final int lastPositionY = positionY;
+        final int startY = positionY;
 
         final ScheduledExecutorService jumpTask = Executors.newScheduledThreadPool(1);
-        final ScheduledExecutorService fallTask = Executors.newScheduledThreadPool(1);
-
         jumpTask.scheduleAtFixedRate(() -> {
-            if (positionY <= lastPositionY - JUMP_HEIGHT) {
-                fallTask.scheduleAtFixedRate(() -> {
-                    if (delayJumpOpponent != null) {
-                        switch (currentMovementState) {
-                            case RIGHT:
-                                if (delayJumpOpponent.getPositionX() + delayJumpOpponent.getWidth() < this.screenPositionX) {
-                                    this.delayJump = false;
-                                    this.delayJumpOpponent = null;
-                                }
-                                break;
-                            case LEFT:
-                                if (delayJumpOpponent.getPositionX() > this.screenPositionX + PLAYER_SIZE) {
-                                    this.delayJump = false;
-                                    this.delayJumpOpponent = null;
-                                }
-                                break;
-                        }
+            gravity = false;
 
-                        if (delayJump && positionY + PLAYER_SIZE <= delayJumpOpponent.getPositionY()) return;
-                    }
-
-                    positionY += STEP_SIZE;
-                    resetAnimationCount();
-
-                    if (positionY >= lastPositionY) {
-                        positionY = lastPositionY;
-                        jumping = false;
-
-                        fallTask.shutdown();
-                    }
-                }, JUMP_FLY_DURATION_IN_MILLIS, 2, TimeUnit.MILLISECONDS);
-
+            if (positionY < startY - JUMP_HEIGHT) {
+                jumping = false;
                 jumpTask.shutdown();
             }
 
             positionY -= (STEP_SIZE / 2);
             resetAnimationCount();
-
         }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
@@ -361,6 +313,15 @@ public final class Player {
     }
 
     /**
+     * Gibt den Zustand zurück, ob Schwerkraft auf den Spieler wirken soll.
+     *
+     * @return Der Zustand, ob Schwerkraft auf den Spieler wirken soll.
+     */
+    public boolean hasGravity() {
+        return gravity;
+    }
+
+    /**
      * Gibt die Anzahl an Leben zurück, die der Spieler aktuell hat.
      *
      * @return Die Anzahl an Leben, die der Spieler aktuell hat.
@@ -401,6 +362,15 @@ public final class Player {
      */
     public void setPositionY(final int y) {
         this.positionY = y;
+    }
+
+    /**
+     * Legt den Zustand fest, ob Schwerkraft auf den Spieler wirken soll.
+     *
+     * @param gravity Der Zustand, ob Schwerkraft auf den Spieler wirken soll.
+     */
+    public void setGravity(final boolean gravity) {
+        this.gravity = gravity;
     }
     //</editor-fold>
 

@@ -22,6 +22,8 @@ public final class Barrier implements Opponent {
     private static final int HEIGHT = 60;
     /** Die y-Koordinate jeder Barriere. */
     private static final int Y_COORDINATE = 300;
+    /** Der Zustand, ob dieser Gegner durchlässig sein soll. */
+    private static final boolean PERMEABLE = false;
     //</editor-fold>
 
 
@@ -92,10 +94,7 @@ public final class Barrier implements Opponent {
         // decrement health, etc.
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
-        if (player.isJumping()) {
-            player.delayCurrentJumpUntilNoCollision(this);
-            return;
-        }
+        if (player.getPositionY() + Player.PLAYER_SIZE <= getPositionY()) return;
 
         if (player.getLastMovementState() == MovementState.LEFT && player.getCurrentMovementState() == MovementState.RIGHT) return;
         if (player.getLastMovementState() == MovementState.RIGHT && player.getCurrentMovementState() == MovementState.LEFT) return;
@@ -107,6 +106,11 @@ public final class Barrier implements Opponent {
     public void initializeOpponent(final int startX) {
         this.startX = startX;
         this.x = startX;
+    }
+
+    @Override
+    public boolean isPermeable() {
+        return PERMEABLE;
     }
 
     @Override

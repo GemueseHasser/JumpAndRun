@@ -50,16 +50,7 @@ public final class GameHandler {
     public void moveLeft() {
         map.updateLastMiddleBackgroundX();
 
-        final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
-        final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
-
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && player.getScreenPositionX() <= opponent.getPositionX() + opponent.getWidth()) {
-                if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getHeight()) {
-                    opponent.playerCollideOpponentEvent();
-                }
-            }
-
             opponent.playerMoveLeftEvent(
                 player.getAbsolutePositionX(),
                 player.getScreenPositionX() <= Player.MAX_LEFT_POINT_ON_SCREEN
@@ -77,16 +68,7 @@ public final class GameHandler {
     public void moveRight() {
         map.updateLastMiddleBackgroundX();
 
-        final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
-        final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
-
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            if (rightPlayerPosition >= opponent.getPositionX() && player.getScreenPositionX() <= opponent.getPositionX() + opponent.getWidth()) {
-                if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getHeight()) {
-                    opponent.playerCollideOpponentEvent();
-                }
-            }
-
             opponent.playerMoveRightEvent(
                 player.getAbsolutePositionX(),
                 player.getScreenPositionX() >= Player.MAX_RIGHT_POINT_ON_SCREEN

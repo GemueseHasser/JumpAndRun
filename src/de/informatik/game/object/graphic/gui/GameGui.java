@@ -49,7 +49,7 @@ public final class GameGui extends Gui {
         super.addKeyListener(new KeyListener());
         super.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        taskExecutor.scheduleAtFixedRate(JumpAndRun.GAME_INSTANCE.getKeyboardTask(), 0, 24, TimeUnit.MILLISECONDS);
+        taskExecutor.scheduleAtFixedRate(JumpAndRun.GAME_INSTANCE.getGameTask(), 0, 24, TimeUnit.MILLISECONDS);
 
         // register current gui in main-class
         JumpAndRun.GAME_INSTANCE.setCurrentGameGui(this);

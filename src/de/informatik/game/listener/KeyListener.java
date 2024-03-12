@@ -19,7 +19,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:
-                JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(e.getKeyCode());
+                JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(e.getKeyCode());
                 break;
             case KeyEvent.VK_UP:
                 JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump();
@@ -30,7 +30,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
     @Override
     public void keyReleased(final KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            JumpAndRun.GAME_INSTANCE.getKeyboardTask().setKeyCode(-1);
+            JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(-1);
         }
 
         JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().resetAnimationCount();

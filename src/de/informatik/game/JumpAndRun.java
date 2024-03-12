@@ -4,7 +4,7 @@ import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.graphic.gui.MenuGui;
-import de.informatik.game.task.KeyboardTask;
+import de.informatik.game.task.GameTask;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -40,8 +40,8 @@ public class JumpAndRun {
     private final Map<ImageType, BufferedImage> loadedImages = new HashMap<>();
     /** Das Fenster, in dem das Menü in diesem Spiel angezeigt wird. */
     private final MenuGui menuGui = new MenuGui();
-    /** Der Task, welcher die Tastatur überwacht. */
-    private final KeyboardTask keyboardTask = new KeyboardTask();
+    /** Der Task, welcher alle sich konstant wiederholenden Prozesse im Spiel aktualisiert. */
+    private final GameTask gameTask = new GameTask();
     /** Die Instanz des aktuellen {@link GameGui} ({@code null}, wenn kein Gui geöffnet ist). */
     private GameGui currentGameGui;
     //</editor-fold>
@@ -126,12 +126,12 @@ public class JumpAndRun {
     }
 
     /**
-     * Gibt den Task zurück, welcher die Tastatur überwacht.
+     * Gibt den Task zurück, welcher alle sich konstant wiederholenden Prozesse im Spiel aktualisiert.
      *
-     * @return Der Task, der die Tastatur überwacht.
+     * @return Der Task, welcher alle sich konstant wiederholenden Prozesse im Spiel aktualisiert.
      */
-    public KeyboardTask getKeyboardTask() {
-        return keyboardTask;
+    public GameTask getGameTask() {
+        return gameTask;
     }
 
     /**

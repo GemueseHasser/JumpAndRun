@@ -17,7 +17,7 @@ public interface Opponent {
     /**
      * Das Event, welches getriggert wird, wenn sich der Spieler nach links bewegt.
      *
-     * @param playerPosition     Die aktuelle absolute Position des Spielers.
+     * @param playerPosition      Die aktuelle absolute Position des Spielers.
      * @param isBackgroundMovable Der Zustand, ob der Hintergrund aktuell bewegbar ist.
      */
     void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable);
@@ -25,7 +25,7 @@ public interface Opponent {
     /**
      * Das Event, welches getriggert wird, wenn sich der Spieler nach rechts bewegt.
      *
-     * @param playerPosition     Die aktuelle absolute Position des Spielers.
+     * @param playerPosition      Die aktuelle absolute Position des Spielers.
      * @param isBackgroundMovable Der Zustand, ob der Hintergrund gerade bewegbar ist.
      */
     void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable);
@@ -43,6 +43,13 @@ public interface Opponent {
      *               der Map ausgelesen wird.
      */
     void initializeOpponent(final int startX);
+
+    /**
+     * Der Zustand, ob der Gegner durchlässig sein soll.
+     *
+     * @return Wenn der Gegner durchlässig sein soll {@code true}, ansonsten {@code false}.
+     */
+    boolean isPermeable();
 
     /**
      * Soll die aktuelle x-Koordinate des Gegners zurückgeben.
