@@ -8,7 +8,7 @@ opponentLoader:
       - 200
       - 300
       - 400
-  - type: DRAGON
+  - type: WEAKDRAGON
     positions:
       - 500
       - 750

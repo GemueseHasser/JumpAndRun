@@ -21,7 +21,7 @@ public enum OpponentType {
     STING(Sting.class),
     /** Der Typ einer Heilung. */
     HEAL(Heal.class),
-    DRAGON(WeakDragon.class);
+    WEAKDRAGON(WeakDragon.class);
     //</editor-fold>
 
 
