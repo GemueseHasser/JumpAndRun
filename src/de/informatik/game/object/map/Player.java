@@ -393,6 +393,15 @@ public final class Player {
 
         this.health = health;
     }
+
+    /**
+     * Legt die aktuelle y-Position des Spielers neu fest.
+     *
+     * @param y Die neue y-Position des Spielers.
+     */
+    public void setPositionY(final int y) {
+        this.positionY = y;
+    }
     //</editor-fold>
 
 }
