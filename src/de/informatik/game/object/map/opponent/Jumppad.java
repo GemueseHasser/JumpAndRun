@@ -8,7 +8,7 @@ import de.informatik.game.object.map.Player;
 
 import java.awt.Graphics2D;
 
-public class Jumppad implements Opponent  {
+public final class Jumppad implements Opponent  {
 
     private static final int WIDTH = 50;
     private static final int HEIGHT = 60;
@@ -16,7 +16,8 @@ public class Jumppad implements Opponent  {
     private int initialStartingX;
     private int currentX;
     private int backgroundCounterX;
-    private int lastBackgroundCentreX = 0;
+    private static final boolean PERMEABLE = false;
+    private int lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
 
     @Override
     public void drawOpponent(final Graphics2D g){
@@ -58,11 +59,6 @@ public class Jumppad implements Opponent  {
     public void playerCollideOpponentEvent(){
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
-        if (player.isJumping()) {
-            player.delayCurrentJumpUntilNoCollision(this);
-            return;
-        }
-
         if (player.getLastMovementState() == MovementState.LEFT && player.getCurrentMovementState() == MovementState.RIGHT) return;
         if (player.getLastMovementState() == MovementState.RIGHT && player.getCurrentMovementState() == MovementState.LEFT) return;
 
@@ -73,6 +69,11 @@ public class Jumppad implements Opponent  {
     public void initializeOpponent(final int startX){
         this.initialStartingX = startX;
         this.currentX = startX;
+    }
+
+    @Override
+    public boolean isPermeable() {
+        return PERMEABLE;
     }
 
     @Override
