@@ -19,7 +19,8 @@ public enum OpponentType {
     /** Der Typ eines Stachels. */
     STING(Sting.class),
     /** Der Typ einer Heilung. */
-    HEAL(Heal.class);
+    HEAL(Heal.class),
+    SCROLL(Scroll.class);
     //</editor-fold>
 
 
