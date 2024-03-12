@@ -13,7 +13,7 @@ public enum OpponentType {
     /** Der Typ einer einfachen Barriere. */
     BARRIER(Barrier.class),
 
-    DRAGON(WeakDragon.class);
+    WEAKDRAGON(WeakDragon.class);
     //</editor-fold>
 
     //<editor-fold desc="LOCAL FIELDS">
