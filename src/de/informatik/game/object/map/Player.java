@@ -9,6 +9,8 @@ import de.informatik.game.object.graphic.gui.GameGui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +38,10 @@ public final class Player {
     private static final int JUMP_HEIGHT = 80;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
+    /** Die zeitlichen Abstände, in Millisekunden, in denen die Animation aktualisiert werden soll. */
+    private static final int ANIMATION_PERIOD_IN_MILLIS = 60;
+    /** Die Zeit in Millisekunden, um die das Zurücksetzen der Animation verzögert werden kann. */
+    private static final int ANIMATION_RESET_DELAY_IN_MILLIS = 50;
     /** Die Skalierung (wie breit) die Lebensanzeige des Spielers sein soll. */
     private static final int HEALTH_SCALE = 4;
     /** Die Höhe der Lebensanzeige des Spielers. */
@@ -56,6 +62,8 @@ public final class Player {
     private int currentAnimationCount = 1;
     /** Die aktuelle Animation des Spielers in Form eines Bildes. */
     private BufferedImage currentAnimation;
+    /** Der Zeitpunkt, zu dem die Animation zuletzt aktualisiert wurde. */
+    private Instant lastAnimationUpdateMoment = Instant.now();
     /** Der aktuelle Status, in welche Richtung sich der Spieler bewegt. */
     private MovementState currentMovementState;
     /** Nicht der aktuelle, sondern der vorherige Status der Bewegung des Spielers. */
@@ -83,7 +91,7 @@ public final class Player {
         lastMovementState = MovementState.RIGHT;
 
         // reset animation
-        resetAnimationCount();
+        resetAnimation(false);
     }
 
     /**
@@ -124,8 +132,12 @@ public final class Player {
      */
     public void moveLeft() {
         // update player animation
-        updateAnimation();
-        currentAnimationCount--;
+        if (Duration.between(lastAnimationUpdateMoment, Instant.now()).toMillis() >= ANIMATION_PERIOD_IN_MILLIS) {
+            updateAnimation();
+            currentAnimationCount--;
+
+            lastAnimationUpdateMoment = Instant.now();
+        }
 
         // update last movement state
         lastMovementState = MovementState.LEFT;
@@ -157,8 +169,12 @@ public final class Player {
      */
     public void moveRight() {
         // update player animation
-        updateAnimation();
-        currentAnimationCount++;
+        if (Duration.between(lastAnimationUpdateMoment, Instant.now()).toMillis() >= ANIMATION_PERIOD_IN_MILLIS) {
+            updateAnimation();
+            currentAnimationCount++;
+
+            lastAnimationUpdateMoment = Instant.now();
+        }
 
         // update last movement state
         lastMovementState = MovementState.RIGHT;
@@ -215,16 +231,38 @@ public final class Player {
             }
 
             positionY -= (STEP_SIZE / 2);
-            resetAnimationCount();
+            resetAnimation(false);
         }, 0, 6, TimeUnit.MILLISECONDS);
     }
 
     /**
      * Setzt die Animation immer auf die Standard-Position zurück.
+     *
+     * @param delay Der Zustand, ob das Zurücksetzen kurz verzögert werden soll.
      */
-    public void resetAnimationCount() {
-        currentAnimationCount = 1;
+    public void resetAnimation(final boolean delay) {
+        if (!delay) {
+            currentAnimationCount = 1;
+            updateAnimation();
+            return;
+        }
+
+        switch (currentMovementState) {
+            case LEFT:
+                currentAnimationCount--;
+                break;
+
+            case RIGHT:
+                currentAnimationCount++;
+                break;
+        }
         updateAnimation();
+
+        final ScheduledExecutorService resetDelayTask = Executors.newScheduledThreadPool(1);
+        resetDelayTask.schedule(() -> {
+            currentAnimationCount = 1;
+            updateAnimation();
+        }, ANIMATION_RESET_DELAY_IN_MILLIS, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -232,10 +270,10 @@ public final class Player {
      * außerhalb der festgelegten Grenzen befinden, wird diese wieder korrekt aktualisiert.
      */
     private void updateAnimation() {
-        if ((currentAnimationCount / 3) > ANIMATION_SIZE) currentAnimationCount = 1;
-        if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE * 3;
+        if (currentAnimationCount > ANIMATION_SIZE) currentAnimationCount = 1;
+        if (currentAnimationCount < 1) currentAnimationCount = ANIMATION_SIZE;
 
-        currentAnimation = ImageType.valueOf("UNC_" + ((currentAnimationCount / 3) == 0 ? 1 : (currentAnimationCount / 3))).getImage();
+        currentAnimation = ImageType.valueOf("UNC_" + currentAnimationCount).getImage();
     }
 
     /**
