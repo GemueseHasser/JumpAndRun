@@ -9,6 +9,12 @@ import java.awt.event.KeyEvent;
  */
 public final class KeyListener implements java.awt.event.KeyListener {
 
+    //<editor-fold desc="CONSTANTS">
+    /** Der Zustand, ob das Zurücksetzen der Animation kurz verzögert werden soll. */
+    private static final boolean DELAY_ANIMATION_RESET = true;
+    //</editor-fold>
+
+
     //<editor-fold desc="implementation">
     @Override
     public void keyTyped(final KeyEvent e) {
@@ -33,7 +39,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
             JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(-1);
         }
 
-        JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().resetAnimationCount();
+        JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().resetAnimation(DELAY_ANIMATION_RESET);
     }
     //</editor-fold>
 }
