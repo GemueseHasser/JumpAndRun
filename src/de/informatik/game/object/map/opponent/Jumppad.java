@@ -59,8 +59,8 @@ public final class Jumppad implements Opponent  {
     public void playerCollideOpponentEvent(){
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
-        if (player.getLastMovementState() == MovementState.LEFT && player.getCurrentMovementState() == MovementState.RIGHT) return;
-        if (player.getLastMovementState() == MovementState.RIGHT && player.getCurrentMovementState() == MovementState.LEFT) return;
+        if (player.getScreenPositionX() > currentX && player.getCurrentMovementState() == MovementState.RIGHT) return;
+        if (player.getScreenPositionX() < currentX && player.getCurrentMovementState() == MovementState.LEFT) return;
 
         player.stay();
     }
