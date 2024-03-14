@@ -32,8 +32,8 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMoving){
-        if (!isBackgroundMoving) return;
+    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable){
+        if (!isBackgroundMovable) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
             backgroundCounterX += Player.STEP_SIZE;
@@ -44,8 +44,8 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMoving){
-        if (!isBackgroundMoving) return;
+    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable){
+        if (!isBackgroundMovable) return;
 
         if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
             backgroundCounterX -= Player.STEP_SIZE;

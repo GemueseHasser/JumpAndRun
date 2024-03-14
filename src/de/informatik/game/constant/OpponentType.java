@@ -12,6 +12,7 @@ public enum OpponentType {
     //<editor-fold desc="VALUES">
     /** Der Typ einer einfachen Barriere. */
     BARRIER(Barrier.class),
+    /** Der Typ eines Sprungbretts. */
     JUMPPAD(Jumppad.class);
     //</editor-fold>
 

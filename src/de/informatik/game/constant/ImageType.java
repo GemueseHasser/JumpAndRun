@@ -26,6 +26,7 @@ public enum ImageType {
     UNC_4("player/unc4.png"),
     /** Eine einfache Barriere. */
     BARRIER("barrier.png"),
+    /** Ein Sprungbrett. */
     JUMPPAD("jumppad.png");
     //</editor-fold>
 
