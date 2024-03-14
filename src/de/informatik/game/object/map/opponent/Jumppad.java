@@ -8,17 +8,33 @@ import de.informatik.game.object.map.Player;
 
 import java.awt.Graphics2D;
 
+/**
+ * Ein Katapult (Jump-pad) stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
+ * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt ein unflexibles, sich nicht bewegendes
+ * Sprungbrett dar, auf welches der Spieler springen kann, um in die Höhe katapultiert zu werden..
+ *
+ * Das Katapult ähnelt in vielen Maßen der {@link Barrier Barriere}.
+ */
+
 public final class Jumppad implements Opponent  {
 
+    //<editor-fold desc="CONSTANTS">
     private static final int WIDTH = 50;
     private static final int HEIGHT = 60;
     private static final int Y_COORDINATE = 300;
+    private static final boolean PERMEABLE = false;
+    //</editor-fold>
+
+
+    //<editor-fold desc="LOCAL FIELDS">
     private int initialStartingX;
     private int currentX;
     private int backgroundCounterX;
-    private static final boolean PERMEABLE = false;
     private int lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+    //</editor-fold>
 
+
+    //<editor-fold desc="IMPLEMENTATIONS">
     @Override
     public void drawOpponent(final Graphics2D g){
         g.drawImage(
@@ -95,5 +111,5 @@ public final class Jumppad implements Opponent  {
     public int getHeight(){
         return HEIGHT;
     }
-
+    //</editor-fold>
 }
