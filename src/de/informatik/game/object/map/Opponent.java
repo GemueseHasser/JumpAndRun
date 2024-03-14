@@ -45,9 +45,9 @@ public interface Opponent {
     void initializeOpponent(final int startX);
 
     /**
-     * Der Zustand, ob der Gegner durchlässig sein soll.
+     * Der Zustand, ob der Gegner von der Oberseite aus durchlässig sein soll.
      *
-     * @return Wenn der Gegner durchlässig sein soll {@code true}, ansonsten {@code false}.
+     * @return Wenn der Gegner von der Oberseite aus durchlässig sein soll {@code true}, ansonsten {@code false}.
      */
     boolean isPermeable();
 

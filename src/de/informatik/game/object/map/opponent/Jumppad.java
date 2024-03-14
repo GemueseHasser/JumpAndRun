@@ -24,7 +24,7 @@ public final class Jumppad implements Opponent {
     private static final int HEIGHT = 60;
     /** Die y-Koordinate jedes Jumppads. */
     private static final int Y_COORDINATE = 300;
-    /** Der Zustand, ob dieser Gegner durchlässig sein soll. */
+    /** Der Zustand, ob dieser Gegner von der Oberseite aus durchlässig sein soll. */
     private static final boolean PERMEABLE = false;
     //</editor-fold>
 
