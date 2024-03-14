@@ -1,6 +1,7 @@
 package de.informatik.game.constant;
 
 import de.informatik.game.object.map.opponent.Barrier;
+import de.informatik.game.object.map.opponent.Jumppad;
 
 /**
  * Ein {@link OpponentType} stellt einen Typen eines Gegners dar, welcher für jeden Typen eines Gegners angelegt werden
@@ -10,7 +11,9 @@ public enum OpponentType {
 
     //<editor-fold desc="VALUES">
     /** Der Typ einer einfachen Barriere. */
-    BARRIER(Barrier.class);
+    BARRIER(Barrier.class),
+    /** Der Typ eines Sprungbretts. */
+    JUMPPAD(Jumppad.class);
     //</editor-fold>
 
 

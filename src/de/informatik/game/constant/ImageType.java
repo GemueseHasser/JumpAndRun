@@ -25,7 +25,9 @@ public enum ImageType {
     /** Die vierte Animation des Spielers. */
     UNC_4("player/unc4.png"),
     /** Eine einfache Barriere. */
-    BARRIER("barrier.png");
+    BARRIER("barrier.png"),
+    /** Ein Sprungbrett. */
+    JUMPPAD("jumppad.png");
     //</editor-fold>
 
 

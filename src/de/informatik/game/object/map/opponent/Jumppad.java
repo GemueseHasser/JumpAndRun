@@ -9,18 +9,20 @@ import de.informatik.game.object.map.Player;
 import java.awt.Graphics2D;
 
 /**
- * Eine {@link Barrier Barriere} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
- * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt eine unflexible, sich nicht bewegende
- * Barriere dar, welche der Spieler überwinden muss, um weiterzukommen.
+ * Ein Katapult (Jump-pad) stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
+ * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt ein unflexibles, sich nicht bewegendes
+ * Sprungbrett dar, auf welches der Spieler springen kann, um in die Höhe katapultiert zu werden.. Das Katapult ähnelt
+ * in vielen Maßen der {@link Barrier Barriere}.
  */
-public final class Barrier implements Opponent {
+
+public final class Jumppad implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
-    /** Die Breite jeder Barriere. */
+    /** Die Breite jedes Jumppads. */
     private static final int WIDTH = 50;
-    /** Die Höhe jeder Barriere. */
+    /** Die Höhe jedes Jumppads. */
     private static final int HEIGHT = 60;
-    /** Die y-Koordinate jeder Barriere. */
+    /** Die y-Koordinate jedes Jumppads. */
     private static final int Y_COORDINATE = 300;
     /** Der Zustand, ob dieser Gegner durchlässig sein soll. */
     private static final boolean PERMEABLE = false;
@@ -28,9 +30,9 @@ public final class Barrier implements Opponent {
 
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate der Barriere. */
+    /** Die Start-Koordinate des Jumppads. */
     private int initialStartingX;
-    /** Die aktuelle x-Koordinate der Barriere. */
+    /** Die aktuelle x-Koordinate des Jumppads. */
     private int currentX;
     /** Die Menge an x-Koordinaten, die der Hintergrund sich verschoben hat. */
     private int backgroundCounterX;
@@ -43,8 +45,8 @@ public final class Barrier implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
-                currentX,
+            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.JUMPPAD),
+            currentX,
             Y_COORDINATE,
             WIDTH,
             HEIGHT,
@@ -56,20 +58,19 @@ public final class Barrier implements Opponent {
     public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
 
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
             backgroundCounterX += Player.STEP_SIZE;
         }
 
         currentX = backgroundCounterX + initialStartingX;
         lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-
     }
 
     @Override
     public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
 
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
             backgroundCounterX -= Player.STEP_SIZE;
         }
 
@@ -79,14 +80,11 @@ public final class Barrier implements Opponent {
 
     @Override
     public void playerCollideOpponentEvent() {
-        // decrement health, etc.
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
-        // check if the player runs away
         if (player.getScreenPositionX() > currentX && player.getCurrentMovementState() == MovementState.RIGHT) return;
         if (player.getScreenPositionX() < currentX && player.getCurrentMovementState() == MovementState.LEFT) return;
 
-        // freeze player
         player.stay();
     }
 
