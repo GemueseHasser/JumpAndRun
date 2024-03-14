@@ -11,18 +11,18 @@ import java.awt.Graphics2D;
 /**
  * Ein Katapult (Jump-pad) stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
  * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt ein unflexibles, sich nicht bewegendes
- * Sprungbrett dar, auf welches der Spieler springen kann, um in die Höhe katapultiert zu werden..
- * Das Katapult ähnelt in vielen Maßen der {@link Barrier Barriere}.
+ * Sprungbrett dar, auf welches der Spieler springen kann, um in die Höhe katapultiert zu werden.. Das Katapult ähnelt
+ * in vielen Maßen der {@link Barrier Barriere}.
  */
 
-public final class Jumppad implements Opponent  {
+public final class Jumppad implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
-    /** Die Breite jeder Barriere. */
+    /** Die Breite jedes Jumppads. */
     private static final int WIDTH = 50;
-    /** Die Höhe jeder Barriere. */
+    /** Die Höhe jedes Jumppads. */
     private static final int HEIGHT = 60;
-    /** Die y-Koordinate jeder Barriere. */
+    /** Die y-Koordinate jedes Jumppads. */
     private static final int Y_COORDINATE = 300;
     /** Der Zustand, ob dieser Gegner durchlässig sein soll. */
     private static final boolean PERMEABLE = false;
@@ -30,9 +30,9 @@ public final class Jumppad implements Opponent  {
 
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate der Barriere. */
+    /** Die Start-Koordinate des Jumppads. */
     private int initialStartingX;
-    /** Die aktuelle x-Koordinate der Barriere. */
+    /** Die aktuelle x-Koordinate des Jumppads. */
     private int currentX;
     /** Die Menge an x-Koordinaten, die der Hintergrund sich verschoben hat. */
     private int backgroundCounterX;
@@ -41,24 +41,24 @@ public final class Jumppad implements Opponent  {
     //</editor-fold>
 
 
-    //<editor-fold desc="implementations">
+    //<editor-fold desc="implementation">
     @Override
-    public void drawOpponent(final Graphics2D g){
+    public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.JUMPPAD),
-                currentX,
-                Y_COORDINATE,
-                WIDTH,
-                HEIGHT,
-                null
+            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.JUMPPAD),
+            currentX,
+            Y_COORDINATE,
+            WIDTH,
+            HEIGHT,
+            null
         );
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable){
+    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
 
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
             backgroundCounterX += Player.STEP_SIZE;
         }
 
@@ -67,10 +67,10 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable){
+    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
 
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX){
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
             backgroundCounterX -= Player.STEP_SIZE;
         }
 
@@ -79,7 +79,7 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public void playerCollideOpponentEvent(){
+    public void playerCollideOpponentEvent() {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
         if (player.getScreenPositionX() > currentX && player.getCurrentMovementState() == MovementState.RIGHT) return;
@@ -89,7 +89,7 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public void initializeOpponent(final int startX){
+    public void initializeOpponent(final int startX) {
         this.initialStartingX = startX;
         this.currentX = startX;
     }
@@ -100,22 +100,22 @@ public final class Jumppad implements Opponent  {
     }
 
     @Override
-    public int getPositionX(){
+    public int getPositionX() {
         return currentX;
     }
 
     @Override
-    public int getPositionY(){
+    public int getPositionY() {
         return Y_COORDINATE;
     }
 
     @Override
-    public int getWidth(){
+    public int getWidth() {
         return WIDTH;
     }
 
     @Override
-    public int getHeight(){
+    public int getHeight() {
         return HEIGHT;
     }
     //</editor-fold>
