@@ -333,15 +333,6 @@ public final class Player {
     }
 
     /**
-     * Gibt nicht den aktuellen, sondern den vorherigen Status der Bewegung des Spielers zurück.
-     *
-     * @return Nicht der aktuelle, sondern der vorherige Status der Bewegung des Spielers.
-     */
-    public MovementState getLastMovementState() {
-        return lastMovementState;
-    }
-
-    /**
      * Gibt den Zustand zurück, ob der Spieler gerade springt.
      *
      * @return Wenn der Spieler gerade springt {@code true}, ansonsten {@code false}.
