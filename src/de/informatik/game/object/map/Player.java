@@ -227,6 +227,8 @@ public final class Player {
 
             if (positionY < startY - JUMP_HEIGHT) {
                 jumping = false;
+                gravity = true;
+
                 jumpTask.shutdown();
             }
 
