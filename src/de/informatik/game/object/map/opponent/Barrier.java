@@ -94,9 +94,11 @@ public final class Barrier implements Opponent {
         // decrement health, etc.
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
+        // check if the player runs away
         if (player.getScreenPositionX() > x && player.getCurrentMovementState() == MovementState.RIGHT) return;
         if (player.getScreenPositionX() < x && player.getCurrentMovementState() == MovementState.LEFT) return;
 
+        // freeze player
         player.stay();
     }
 
