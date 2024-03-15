@@ -39,10 +39,16 @@ public interface Opponent {
      * Dieser Gegner wird hiermit initialisiert. Das heißt, dass diese Methode einzig und allein beim Laden des Spielers
      * auf der Map ausgeführt wird.
      *
-     * @param startX Die Koordinate, an der der Gegner zu Beginn platziert werden soll, welche aus der jeweiligen Datei
-     *               der Map ausgelesen wird.
+     * @param startX      Die x-Koordinate, an der der Gegner zu Beginn platziert werden soll, welche aus der jeweiligen
+     *                    Datei der Map ausgelesen wird.
+     * @param startY      Die y-Koordinate, an der der Gegner zu Beginn platziert werden soll, welche aus der jeweiligen
+     *                    Datei der Map ausgelesen wird.
+     * @param startWidth  Die Breite, die der Gegner zu Beginn haben soll, welche aus der jeweiligen Datei der Map
+     *                    ausgelesen wird.
+     * @param startHeight Die Höhe, die der Gegner zu Beginn haben soll, welche aus der jeweiligen Datei der Map
+     *                    ausgelesen wird.
      */
-    void initializeOpponent(final int startX);
+    void initializeOpponent(final int startX, final int startY, final int startWidth, final int startHeight);
 
     /**
      * Der Zustand, ob der Gegner von der Oberseite aus durchlässig sein soll.

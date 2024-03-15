@@ -1,11 +1,29 @@
-name: Level 1
+name: Level 2
 mapLength: 1000
 backgroundImageType: BACKGROUND
 opponentLoader:
   - type: BARRIER
-    positions:
-      - 150
-      - 400
-      - 550
-      - 750
-      - 900
+    x: 100
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 270
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 400
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 700
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 850
+    y: 0
+    width: 50
+    height: 60

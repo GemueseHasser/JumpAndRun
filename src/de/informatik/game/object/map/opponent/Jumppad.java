@@ -18,12 +18,6 @@ import java.awt.Graphics2D;
 public final class Jumppad implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
-    /** Die Breite jedes Jumppads. */
-    private static final int WIDTH = 50;
-    /** Die Höhe jedes Jumppads. */
-    private static final int HEIGHT = 60;
-    /** Die y-Koordinate jedes Jumppads. */
-    private static final int Y_COORDINATE = 300;
     /** Der Zustand, ob dieser Gegner von der Oberseite aus durchlässig sein soll. */
     private static final boolean PERMEABLE = false;
     //</editor-fold>
@@ -32,6 +26,12 @@ public final class Jumppad implements Opponent {
     //<editor-fold desc="LOCAL FIELDS">
     /** Die Start-Koordinate des Jumppads. */
     private int initialStartingX;
+    /** Die y-Koordinate dieses Gegners. */
+    private int yCoordinate;
+    /** Die Breite dieses Gegners. */
+    private int width;
+    /** Die Höhe dieses Gegners. */
+    private int height;
     /** Die aktuelle x-Koordinate des Jumppads. */
     private int currentX;
     /** Die Menge an x-Koordinaten, die der Hintergrund sich verschoben hat. */
@@ -46,10 +46,10 @@ public final class Jumppad implements Opponent {
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
             JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.JUMPPAD),
-            currentX,
-            Y_COORDINATE,
-            WIDTH,
-            HEIGHT,
+            getPositionX(),
+            getPositionY(),
+            getWidth(),
+            getHeight(),
             null
         );
     }
@@ -89,8 +89,11 @@ public final class Jumppad implements Opponent {
     }
 
     @Override
-    public void initializeOpponent(final int startX) {
+    public void initializeOpponent(final int startX, final int startY, final int startWidth, final int startHeight) {
         this.initialStartingX = startX;
+        this.yCoordinate = startY;
+        this.width = startWidth;
+        this.height = startHeight;
         this.currentX = startX;
     }
 
@@ -106,17 +109,17 @@ public final class Jumppad implements Opponent {
 
     @Override
     public int getPositionY() {
-        return Y_COORDINATE;
+        return yCoordinate;
     }
 
     @Override
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return HEIGHT;
+        return height;
     }
     //</editor-fold>
 }
