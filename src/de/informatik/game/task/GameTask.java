@@ -1,6 +1,7 @@
 package de.informatik.game.task;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.GameState;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
 
@@ -34,6 +35,9 @@ public final class GameTask implements Runnable {
     //<editor-fold desc="implementation">
     @Override
     public void run() {
+        // check if game is running
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() != GameState.RUNNING) return;
+
         // update movement
         switch (keyCode) {
             case KeyEvent.VK_LEFT:
@@ -45,6 +49,11 @@ public final class GameTask implements Runnable {
         }
 
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
+
+        if (player.getHealth() <= 0) {
+            JumpAndRun.GAME_INSTANCE.getGameHandler().updateGameState(GameState.LOSE);
+            return;
+        }
 
         // update player gravity
         player.setGravity(true);

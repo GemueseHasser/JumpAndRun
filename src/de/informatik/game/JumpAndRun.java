@@ -6,9 +6,13 @@ import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.graphic.gui.MenuGui;
 import de.informatik.game.task.GameTask;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -44,6 +48,8 @@ public class JumpAndRun {
     private final GameTask gameTask = new GameTask();
     /** Die Instanz des aktuellen {@link GameGui} ({@code null}, wenn kein Gui geöffnet ist). */
     private GameGui currentGameGui;
+    /** Die Standard-Schriftart für dieses Spiel. */
+    private Font gameFont;
     //</editor-fold>
 
 
@@ -56,6 +62,9 @@ public class JumpAndRun {
      * @param args Die Argumente, die von der JRE beim Start des Programms übergeben werden.
      */
     public static void main(final String[] args) {
+        // load game-font
+        GAME_INSTANCE.loadGameFont();
+
         // load images
         GAME_INSTANCE.loadImages();
 
@@ -67,6 +76,23 @@ public class JumpAndRun {
     }
     //</editor-fold>
 
+
+    /**
+     * Lädt die standard-Schriftart für dieses Spiel.
+     */
+    private void loadGameFont() {
+        final GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final InputStream fontStream = getClass().getResourceAsStream("/de/informatik/resources/fonts/game_font.ttf");
+
+        try {
+            assert fontStream != null;
+            gameFont = Font.createFont(Font.TRUETYPE_FONT, fontStream);
+        } catch (final FontFormatException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        graphicsEnvironment.registerFont(gameFont);
+    }
 
     /**
      * Lädt alle Bilder, die als {@link ImageType Typ} hinterlegt wurden und speichert diese in einer {@link Map} ab.
@@ -132,6 +158,15 @@ public class JumpAndRun {
      */
     public GameTask getGameTask() {
         return gameTask;
+    }
+
+    /**
+     * Gibt die standard-Schriftart dieses Spiels zurück.
+     *
+     * @return Die standard-Schriftart dieses Spiels.
+     */
+    public Font getGameFont() {
+        return this.gameFont;
     }
 
     /**

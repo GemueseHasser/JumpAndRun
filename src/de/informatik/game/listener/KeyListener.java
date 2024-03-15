@@ -1,6 +1,7 @@
 package de.informatik.game.listener;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.GameState;
 
 import java.awt.event.KeyEvent;
 
@@ -22,6 +23,8 @@ public final class KeyListener implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(final KeyEvent e) {
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() != GameState.RUNNING) return;
+
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:

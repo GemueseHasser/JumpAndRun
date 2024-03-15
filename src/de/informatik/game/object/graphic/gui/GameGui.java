@@ -1,6 +1,7 @@
 package de.informatik.game.object.graphic.gui;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.GameState;
 import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.MapHandler;
 import de.informatik.game.listener.KeyListener;
@@ -9,6 +10,7 @@ import de.informatik.game.object.graphic.Gui;
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,6 +29,10 @@ public final class GameGui extends Gui {
     public static final int HEIGHT = 500;
     /** Der Titel des Fensters. */
     private static final String TITLE = "Jump-and-Run";
+    /** Die Farbe, in der der Schriftzug für ein gewonnenes oder verlorenes Spiel angezeigt wird. */
+    private static final Color GAME_WIN_LOSE_COLOR = Color.RED;
+    /** Die Schriftgröße der Schriftart für die Darstellung des Gewinnens oder Verlierens. */
+    private static final float WIN_LOSE_FONT_SIZE = 60;
     //</editor-fold>
 
 
@@ -65,6 +71,18 @@ public final class GameGui extends Gui {
 
         // draw player
         JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().drawPlayer(g);
+
+        // check if game is running
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() != GameState.RUNNING) {
+            g.setFont(JumpAndRun.GAME_INSTANCE.getGameFont().deriveFont(WIN_LOSE_FONT_SIZE));
+
+            final String displayText = JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState().getDisplayText();
+            final int textWidth = g.getFontMetrics().stringWidth(displayText);
+            final int textHeight = g.getFontMetrics().getHeight();
+
+            g.setColor(GAME_WIN_LOSE_COLOR);
+            g.drawString(displayText, (WIDTH / 2) - (textWidth / 2), (HEIGHT / 2) - (textHeight / 2));
+        }
 
         repaint();
     }

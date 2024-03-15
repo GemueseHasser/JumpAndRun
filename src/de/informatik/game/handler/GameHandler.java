@@ -1,5 +1,6 @@
 package de.informatik.game.handler;
 
+import de.informatik.game.constant.GameState;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -19,6 +20,8 @@ public final class GameHandler {
     private Map map;
     /** Der aktuelle Level, der gespielt wird. */
     private int currentLevel;
+    /** Der aktuelle Status dieses Spiels. */
+    private GameState gameState;
     //</editor-fold>
 
 
@@ -31,6 +34,9 @@ public final class GameHandler {
 
         // initialize player
         player.initialize();
+
+        // initialize game-state
+        gameState = GameState.RUNNING;
 
         try {
             // load map
@@ -106,6 +112,27 @@ public final class GameHandler {
      */
     public int getCurrentLevel() {
         return this.currentLevel;
+    }
+
+    /**
+     * Gibt den aktuellen Status dieses Spiels zurück.
+     *
+     * @return Der aktuelle Status dieses Spiels.
+     */
+    public GameState getGameState() {
+        return this.gameState;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Setter">
+
+    /**
+     * Aktualisiert den aktuellen Status dieses Spiels.
+     *
+     * @param gameState Der neue Status, den dieses Spiel erhalten soll.
+     */
+    public void updateGameState(final GameState gameState) {
+        this.gameState = gameState;
     }
     //</editor-fold>
 
