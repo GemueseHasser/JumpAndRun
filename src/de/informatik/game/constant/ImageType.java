@@ -27,7 +27,9 @@ public enum ImageType {
     /** Eine einfache Barriere. */
     BARRIER("barrier.png"),
     /** Ein Sprungbrett. */
-    JUMPPAD("jumppad.png");
+    JUMPPAD("jumppad.png"),
+    /** Eine Anreihung von Stacheln. */
+    STING("sting.png");
     //</editor-fold>
 
 

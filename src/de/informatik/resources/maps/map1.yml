@@ -8,22 +8,52 @@ opponentLoader:
     width: 50
     height: 60
   - type: BARRIER
-    x: 270
+    x: 150
     y: 0
     width: 50
     height: 60
   - type: BARRIER
-    x: 400
+    x: 200
     y: 0
     width: 50
     height: 60
   - type: BARRIER
-    x: 700
+    x: 200
+    y: 60
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 250
     y: 0
     width: 50
     height: 60
   - type: BARRIER
-    x: 850
+    x: 250
+    y: 60
+    width: 50
+    height: 60
+  - type: STING
+    x: 350
+    y: 0
+    width: 70
+    height: 30
+  - type: BARRIER
+    x: 500
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 550
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 550
+    y: 60
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 600
     y: 0
     width: 50
     height: 60
