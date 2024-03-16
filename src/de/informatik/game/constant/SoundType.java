@@ -27,7 +27,11 @@ public enum SoundType {
     /** Der Ton, welcher gespielt wird, wenn man einen Level im Menü auswählt. */
     CHOOSE_LEVEL("choose_level.wav", 20),
     /** Der Ton, welcher gespielt wird, wenn man im Menü das Spiel startet. */
-    START_GAME("start_game.wav", 100);
+    START_GAME("start_game.wav", 100),
+    /** Der Ton, welcher gespielt wird, wenn der Spieler stirbt. */
+    DEATH("death.wav", 100),
+    /** Die Hintergrundmusik, die gespielt wird, sobald der Spieler tot ist. */
+    SAD_MUSIC("sad_music.wav", 30);
     //</editor-fold>
 
 

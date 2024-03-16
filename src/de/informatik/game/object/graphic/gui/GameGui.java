@@ -107,6 +107,7 @@ public final class GameGui extends Gui {
 
         // stop playing background music
         SoundType.GAME_BACKGROUND.stop();
+        SoundType.SAD_MUSIC.stop();
     }
     //</editor-fold>
 

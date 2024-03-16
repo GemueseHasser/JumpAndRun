@@ -2,8 +2,11 @@ package de.informatik.game.task;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.GameState;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
+
+import javax.sound.sampled.Clip;
 
 import java.awt.event.KeyEvent;
 
@@ -51,7 +54,15 @@ public final class GameTask implements Runnable {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
         if (player.getHealth() <= 0) {
+            // update game-state
             JumpAndRun.GAME_INSTANCE.getGameHandler().updateGameState(GameState.LOSE);
+
+            // stop all music
+            SoundType.GAME_BACKGROUND.stop();
+
+            // play death-sound and new background music
+            SoundType.DEATH.play(0);
+            SoundType.SAD_MUSIC.play(Clip.LOOP_CONTINUOUSLY);
             return;
         }
 
