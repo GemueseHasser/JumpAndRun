@@ -70,20 +70,17 @@ public final class GameTask implements Runnable {
         player.setGravity(true);
 
         for (final Opponent opponent : JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLoadedOpponents()) {
-            final int rightPlayerPosition = player.getScreenPositionX() + Player.PLAYER_SIZE;
             final int bottomPlayerPosition = player.getPositionY() + Player.PLAYER_SIZE;
 
             // check if player collides with opponent
-            if (rightPlayerPosition >= opponent.getPositionX() && player.getScreenPositionX() <= opponent.getPositionX() + opponent.getWidth()) {
-                if (bottomPlayerPosition >= opponent.getPositionY() && player.getPositionY() <= opponent.getPositionY() + opponent.getHeight()) {
-                    if (bottomPlayerPosition - Player.STEP_SIZE <= opponent.getPositionY() && bottomPlayerPosition + Player.STEP_SIZE >= opponent.getPositionY() && !opponent.isPermeable()) {
-                        player.setGravity(false);
-                        continue;
-                    }
-
-                    // trigger player collide event
-                    opponent.playerCollideOpponentEvent();
+            if (player.collides(opponent)) {
+                if (bottomPlayerPosition - Player.STEP_SIZE <= opponent.getPositionY() && bottomPlayerPosition + Player.STEP_SIZE >= opponent.getPositionY() && !opponent.isPermeable()) {
+                    player.setGravity(false);
+                    continue;
                 }
+
+                // trigger player collide event
+                opponent.playerCollideOpponentEvent();
             }
         }
 

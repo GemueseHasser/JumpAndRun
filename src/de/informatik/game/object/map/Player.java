@@ -131,6 +131,24 @@ public final class Player {
     }
 
     /**
+     * Prüft, ob der Spieler aktuell mit einem bestimmten Gegner kollidiert.
+     *
+     * @param opponent Der Gegner, welcher auf eine Kollision mit dieser Instanz des Spielers überprüft wird.
+     *
+     * @return Wenn der Spieler mit diesem Gegner kollidiert {@code true}, ansonsten {@code false}.
+     */
+    public boolean collides(final Opponent opponent) {
+        final int rightPlayerPosition = screenPositionX + PLAYER_SIZE;
+        final int bottomPlayerPosition = positionY + PLAYER_SIZE;
+
+        if (rightPlayerPosition >= opponent.getPositionX() && screenPositionX <= opponent.getPositionX() + opponent.getWidth()) {
+            return bottomPlayerPosition >= opponent.getPositionY() && positionY <= opponent.getPositionY() + opponent.getHeight();
+        }
+
+        return false;
+    }
+
+    /**
      * Simuliert die Bewegung nach links.
      */
     public void moveLeft() {
