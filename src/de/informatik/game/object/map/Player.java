@@ -1,6 +1,7 @@
 package de.informatik.game.object.map;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.GameState;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.MovementState;
 import de.informatik.game.constant.SoundType;
@@ -107,6 +108,8 @@ public final class Player {
         g.fillRect(20 + (health * HEALTH_SCALE), 20, (MAX_HEALTH_AMOUNT - health) * HEALTH_SCALE, HEALTH_HEIGHT);
         g.setColor(Color.BLACK);
         g.drawRect(20, 20, MAX_HEALTH_AMOUNT * HEALTH_SCALE, HEALTH_HEIGHT);
+
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() == GameState.LOSE) return;
 
         switch (currentMovementState) {
             case LEFT:
