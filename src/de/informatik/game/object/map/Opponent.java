@@ -16,19 +16,13 @@ public interface Opponent {
 
     /**
      * Das Event, welches getriggert wird, wenn sich der Spieler nach links bewegt.
-     *
-     * @param playerPosition      Die aktuelle absolute Position des Spielers.
-     * @param isBackgroundMovable Der Zustand, ob der Hintergrund aktuell bewegbar ist.
      */
-    void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable);
+    void playerMoveLeftEvent();
 
     /**
      * Das Event, welches getriggert wird, wenn sich der Spieler nach rechts bewegt.
-     *
-     * @param playerPosition      Die aktuelle absolute Position des Spielers.
-     * @param isBackgroundMovable Der Zustand, ob der Hintergrund gerade bewegbar ist.
      */
-    void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable);
+    void playerMoveRightEvent();
 
     /**
      * Das Event, welches getriggert wird, wenn der Spieler mit diesem Gegner zusammenstößt.

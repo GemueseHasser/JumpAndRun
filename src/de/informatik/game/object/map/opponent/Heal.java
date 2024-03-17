@@ -2,6 +2,7 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.handler.MapHandler;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -54,14 +55,14 @@ public final class Heal implements Opponent {
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
-        if (!isBackgroundMovable) return;
+    public void playerMoveLeftEvent() {
+        if (!MapHandler.isBackgroundMovable()) return;
         staticOpponentMovement.simulateLeftMovement();
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
-        if (!isBackgroundMovable) return;
+    public void playerMoveRightEvent() {
+        if (!MapHandler.isBackgroundMovable()) return;
         staticOpponentMovement.simulateRightMovement();
     }
 

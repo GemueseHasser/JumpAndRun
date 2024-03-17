@@ -57,10 +57,7 @@ public final class GameHandler {
         map.updateLastMiddleBackgroundX();
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            opponent.playerMoveLeftEvent(
-                player.getAbsolutePositionX(),
-                player.getScreenPositionX() <= Player.MAX_LEFT_POINT_ON_SCREEN
-            );
+            opponent.playerMoveLeftEvent();
         }
 
         // move left
@@ -75,10 +72,7 @@ public final class GameHandler {
         map.updateLastMiddleBackgroundX();
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
-            opponent.playerMoveRightEvent(
-                player.getAbsolutePositionX(),
-                player.getScreenPositionX() >= Player.MAX_RIGHT_POINT_ON_SCREEN
-            );
+            opponent.playerMoveRightEvent();
         }
 
         // move right
