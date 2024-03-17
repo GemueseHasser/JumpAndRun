@@ -35,9 +35,6 @@ public final class GameHandler {
         // initialize player
         player.initialize();
 
-        // initialize game-state
-        gameState = GameState.RUNNING;
-
         try {
             // load map
             map = MapHandler.loadMap(level);
@@ -47,6 +44,9 @@ public final class GameHandler {
 
         // load opponents
         map.loadOpponents();
+
+        // initialize game-state
+        gameState = GameState.RUNNING;
     }
 
     /**
