@@ -54,14 +54,13 @@ public final class GameHandler {
      * der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveLeft() {
+        player.moveLeft();
+
         map.updateLastMiddleBackgroundX();
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
             opponent.playerMoveLeftEvent();
         }
-
-        // move left
-        player.moveLeft();
     }
 
     /**
@@ -69,14 +68,13 @@ public final class GameHandler {
      * wenn der {@link de.informatik.game.listener.KeyListener} getriggert wird.
      */
     public void moveRight() {
+        player.moveRight();
+
         map.updateLastMiddleBackgroundX();
 
         for (final Opponent opponent : map.getLoadedOpponents()) {
             opponent.playerMoveRightEvent();
         }
-
-        // move right
-        player.moveRight();
     }
 
     //<editor-fold desc="Getter">
