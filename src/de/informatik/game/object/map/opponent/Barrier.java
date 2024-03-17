@@ -39,7 +39,7 @@ public final class Barrier implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.BARRIER),
+            ImageType.BARRIER.getImage(),
             getPositionX(),
             getPositionY(),
             getWidth(),

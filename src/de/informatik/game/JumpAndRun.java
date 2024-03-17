@@ -1,6 +1,5 @@
 package de.informatik.game;
 
-import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.gui.GameGui;
@@ -10,14 +9,11 @@ import de.informatik.game.task.GameTask;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -41,8 +37,6 @@ public class JumpAndRun {
     //<editor-fold desc="LOCAL FIELDS">
     /** Der {@link GameHandler} des Spiels, welcher alle Angelegenheiten während das Spiel läuft, regelt. */
     private final GameHandler gameHandler = new GameHandler();
-    /** Alle geladenen Bilder, welche als {@link ImageType Typ} hinterlegt wurden. */
-    private final Map<ImageType, BufferedImage> loadedImages = new HashMap<>();
     /** Das Fenster, in dem das Menü in diesem Spiel angezeigt wird. */
     private final MenuGui menuGui = new MenuGui();
     /** Der Task, welcher alle sich konstant wiederholenden Prozesse im Spiel aktualisiert. */
@@ -65,9 +59,6 @@ public class JumpAndRun {
     public static void main(final String[] args) {
         // load game-font
         GAME_INSTANCE.loadGameFont();
-
-        // load images
-        GAME_INSTANCE.loadImages();
 
         // copy default map file
         GAME_INSTANCE.copyDefaultMapFiles();
@@ -93,15 +84,6 @@ public class JumpAndRun {
         }
 
         graphicsEnvironment.registerFont(gameFont);
-    }
-
-    /**
-     * Lädt alle Bilder, die als {@link ImageType Typ} hinterlegt wurden und speichert diese in einer {@link Map} ab.
-     */
-    private void loadImages() {
-        for (final ImageType type : ImageType.values()) {
-            loadedImages.put(type, type.getImage());
-        }
     }
 
     /**
@@ -131,16 +113,6 @@ public class JumpAndRun {
      */
     public GameHandler getGameHandler() {
         return this.gameHandler;
-    }
-
-    /**
-     * Gibt eine {@link Map} zurück, welche alle geladenen Bilder enthält, die als {@link ImageType Typ} hinterlegt
-     * sind.
-     *
-     * @return Eine {@link Map}, welche alle geladenen Bilder enthält, die als {@link ImageType Typ} hinterlegt sind.
-     */
-    public Map<ImageType, BufferedImage> getLoadedImages() {
-        return this.loadedImages;
     }
 
     /**

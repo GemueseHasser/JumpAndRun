@@ -57,7 +57,7 @@ public final class MapHandler {
 
         // draw background
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
+            map.getBackgroundImageType().getImage(),
             map.getLastMiddleBackgroundX() - GameGui.WIDTH + 2,
             0,
             GameGui.WIDTH,
@@ -65,7 +65,7 @@ public final class MapHandler {
             null
         );
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
+            map.getBackgroundImageType().getImage(),
             map.getLastMiddleBackgroundX(),
             0,
             GameGui.WIDTH,
@@ -73,7 +73,7 @@ public final class MapHandler {
             null
         );
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(map.getBackgroundImageType()),
+            map.getBackgroundImageType().getImage(),
             map.getLastMiddleBackgroundX() + GameGui.WIDTH - 2,
             0,
             GameGui.WIDTH,

@@ -47,7 +47,7 @@ public final class Sting implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.STING),
+            ImageType.STING.getImage(),
             getPositionX(),
             getPositionY(),
             getWidth(),

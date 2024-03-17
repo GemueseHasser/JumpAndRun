@@ -45,7 +45,7 @@ public final class Heal implements Opponent {
         if (used) return;
 
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.HEAL),
+            ImageType.HEAL.getImage(),
             getPositionX(),
             getPositionY(),
             getWidth(),
