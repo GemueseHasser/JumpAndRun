@@ -394,6 +394,14 @@ public final class Player {
      * @param health Die Anzahl an Leben, die der Spieler neu gesetzt bekommen soll.
      */
     public void setHealth(final int health) {
+        if (health > this.health) {
+            SoundType.HEAL.play(0);
+        }
+
+        if (health < this.health) {
+            SoundType.DAMAGE.play(0);
+        }
+
         if (health > MAX_HEALTH_AMOUNT) {
             this.health = MAX_HEALTH_AMOUNT;
             return;
