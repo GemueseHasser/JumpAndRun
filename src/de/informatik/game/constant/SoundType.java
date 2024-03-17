@@ -84,10 +84,9 @@ public enum SoundType {
 
         clip.stop();
 
-        clip.loop(loop);
         clip.setMicrosecondPosition(0);
-
         clip.start();
+        clip.loop(loop);
     }
 
     /**
