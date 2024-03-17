@@ -1,6 +1,7 @@
 package de.informatik.game.constant;
 
 import de.informatik.game.object.map.opponent.Barrier;
+import de.informatik.game.object.map.opponent.Heal;
 import de.informatik.game.object.map.opponent.Jumppad;
 import de.informatik.game.object.map.opponent.Sting;
 
@@ -16,7 +17,9 @@ public enum OpponentType {
     /** Der Typ eines Sprungbretts. */
     JUMPPAD(Jumppad.class),
     /** Der Typ eines Stachels. */
-    STING(Sting.class);
+    STING(Sting.class),
+    /** Der Typ einer Heilung. */
+    HEAL(Heal.class);
     //</editor-fold>
 
 

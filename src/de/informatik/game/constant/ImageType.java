@@ -29,7 +29,9 @@ public enum ImageType {
     /** Ein Sprungbrett. */
     JUMPPAD("jumppad.png"),
     /** Eine Anreihung von Stacheln. */
-    STING("sting.png");
+    STING("sting.png"),
+    /** Ein Herz. */
+    HEAL("heal.png");
     //</editor-fold>
 
 

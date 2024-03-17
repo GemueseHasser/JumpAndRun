@@ -42,6 +42,11 @@ opponentLoader:
     y: 0
     width: 50
     height: 60
+  - type: HEAL
+    x: 515
+    y: 60
+    width: 25
+    height: 25
   - type: BARRIER
     x: 550
     y: 0

@@ -82,7 +82,7 @@ public enum SoundType {
     public void play(final int loop) {
         if (clip == null) return;
 
-        if (clip.isRunning()) clip.stop();
+        clip.stop();
 
         clip.loop(loop);
         clip.setMicrosecondPosition(0);

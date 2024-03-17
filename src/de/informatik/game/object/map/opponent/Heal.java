@@ -6,24 +6,20 @@ import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
 
 import java.awt.Graphics2D;
-import java.time.Duration;
-import java.time.Instant;
 
 /**
- * Ein {@link Sting Stachel} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
- * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt einen unflexiblen, sich nicht
- * bewegenden Stachel dar, welcher dem Spieler in gewissen zeitlichen Abständen einen gewissen Schaden zufügt, sollte
- * dieser den Stachel berühren.
+ * Eine {@link Heal Heilung} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
+ * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt eine unflexible, sich nicht bewegende
+ * Heilung dar, welche einmal vom Spieler genutzt werden kann und die dem Spieler eine gewisse Anzahl an Leben
+ * verschafft.
  */
-public final class Sting implements Opponent {
+public final class Heal implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
     /** Der Zustand, ob dieser Gegner von der Oberseite aus durchlässig sein soll. */
     private static final boolean PERMEABLE = true;
-    /** Die zeitlichen Abstände in Millisekunden, in denen der Spieler von diesem Stachel Schaden zugefügt bekommt. */
-    private static final int DAMAGE_PERIOD_IN_MILLIS = 100;
-    /** Der Schaden, den dieser Stachel bei dem Spieler verursacht. */
-    private static final int DAMAGE = 4;
+    /** Die Anzahl an Leben, um die der Spieler geheilt werden soll. */
+    private static final int HEAL_AMOUNT = 10;
     //</editor-fold>
 
 
@@ -42,16 +38,18 @@ public final class Sting implements Opponent {
     private int backgroundCounterX;
     /** Die letzte x-Koordinate des Hintergrundes. */
     private int lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-    /** Der Zeitpunkt, zu dem der Spieler durch diesen Stachel zuletzt Schaden bekommen hat. */
-    private Instant lastDamageMoment = Instant.now();
+    /** Der Zustand, ob dieses Objekt bereits zur Auffüllung der Leben eingelöst wurde. */
+    private boolean used;
     //</editor-fold>
 
 
     //<editor-fold desc="implementation">
     @Override
     public void drawOpponent(final Graphics2D g) {
+        if (used) return;
+
         g.drawImage(
-            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.STING),
+            JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.HEAL),
             getPositionX(),
             getPositionY(),
             getWidth(),
@@ -87,12 +85,12 @@ public final class Sting implements Opponent {
 
     @Override
     public void playerCollideOpponentEvent() {
+        if (used) return;
+
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
 
-        if (Duration.between(lastDamageMoment, Instant.now()).toMillis() >= DAMAGE_PERIOD_IN_MILLIS) {
-            player.setHealth(player.getHealth() - DAMAGE);
-            lastDamageMoment = Instant.now();
-        }
+        player.setHealth(player.getHealth() + HEAL_AMOUNT);
+        used = true;
     }
 
     @Override
