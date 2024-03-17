@@ -23,7 +23,24 @@ public final class KeyListener implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(final KeyEvent e) {
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() != GameState.RUNNING) return;
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() == GameState.LOSE) {
+            if (e.getKeyCode() != KeyEvent.VK_ENTER) return;
+            JumpAndRun.startLevel(JumpAndRun.GAME_INSTANCE.getGameHandler().getCurrentLevel());
+            return;
+        }
+
+        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getGameState() == GameState.WIN) {
+            if (e.getKeyCode() != KeyEvent.VK_ENTER) return;
+            final int nextLevel = JumpAndRun.GAME_INSTANCE.getGameHandler().getCurrentLevel() + 1;
+
+            if (nextLevel > JumpAndRun.LEVEL_AMOUNT) {
+                JumpAndRun.GAME_INSTANCE.getCurrentGameGui().dispose();
+                return;
+            }
+
+            JumpAndRun.startLevel(nextLevel);
+            return;
+        }
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:

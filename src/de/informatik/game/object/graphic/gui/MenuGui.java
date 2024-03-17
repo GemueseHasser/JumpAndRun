@@ -116,14 +116,7 @@ public final class MenuGui extends Gui {
         playButton = new JButton(PLAY_BUTTON_TEXT);
         playButton.setFont(STANDARD_FONT);
         playButton.addActionListener(e -> {
-            // play sound
-            SoundType.START_GAME.play(0);
-
-            // initialize game-handler
-            GAME_INSTANCE.getGameHandler().initialize(selectedLevel);
-
-            new GameGui().open();
-            this.dispose();
+            JumpAndRun.startLevel(selectedLevel);
         });
         initializeButton(playButton, 430);
 

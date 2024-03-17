@@ -1,6 +1,7 @@
 package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.GameState;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
@@ -91,6 +92,8 @@ public final class Heal implements Opponent {
 
         player.setHealth(player.getHealth() + HEAL_AMOUNT);
         used = true;
+
+        JumpAndRun.GAME_INSTANCE.getGameHandler().updateGameState(GameState.WIN);
     }
 
     @Override

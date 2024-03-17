@@ -33,6 +33,8 @@ public final class GameGui extends Gui {
     private static final Color GAME_WIN_LOSE_COLOR = Color.RED;
     /** Die Schriftgröße der Schriftart für die Darstellung des Gewinnens oder Verlierens. */
     private static final float WIN_LOSE_FONT_SIZE = 60;
+    /** Der Text, der unter dem Text für das Gewinnen oder Verlieren steht. */
+    private static final String WIN_LOSE_SUBTEXT = "Press Enter";
     //</editor-fold>
 
 
@@ -81,7 +83,12 @@ public final class GameGui extends Gui {
             final int textHeight = g.getFontMetrics().getHeight();
 
             g.setColor(GAME_WIN_LOSE_COLOR);
-            g.drawString(displayText, (WIDTH / 2) - (textWidth / 2), (HEIGHT / 2) - (textHeight / 2));
+            g.drawString(displayText, (WIDTH / 2) - (textWidth / 2), (HEIGHT / 2) - textHeight);
+
+            g.setFont(JumpAndRun.GAME_INSTANCE.getGameFont().deriveFont(WIN_LOSE_FONT_SIZE - 25));
+
+            final int subtextWidth = g.getFontMetrics().stringWidth(WIN_LOSE_SUBTEXT);
+            g.drawString(WIN_LOSE_SUBTEXT, (WIDTH / 2) - (subtextWidth / 2), (HEIGHT / 2) - (textHeight / 2) + 5);
         }
 
         repaint();

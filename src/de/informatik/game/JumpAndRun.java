@@ -1,6 +1,7 @@
 package de.informatik.game;
 
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.GameHandler;
 import de.informatik.game.object.graphic.gui.GameGui;
 import de.informatik.game.object.graphic.gui.MenuGui;
@@ -191,6 +192,29 @@ public class JumpAndRun {
      */
     public void setCurrentGameGui(final GameGui currentGameGui) {
         this.currentGameGui = currentGameGui;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="utility">
+
+    /**
+     * Startet ein gewisses Level.
+     *
+     * @param level Das Level, welches gestartet werden soll.
+     */
+    public static void startLevel(final int level) {
+        // play sound
+        SoundType.START_GAME.play(0);
+
+        // initialize game-handler
+        GAME_INSTANCE.getGameHandler().initialize(level);
+
+        if (GAME_INSTANCE.getCurrentGameGui() != null) {
+            GAME_INSTANCE.getCurrentGameGui().dispose();
+        }
+        GAME_INSTANCE.getMenuGui().dispose();
+        new GameGui().open();
     }
     //</editor-fold>
 }
