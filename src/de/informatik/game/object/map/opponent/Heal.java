@@ -2,6 +2,7 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
 
@@ -24,20 +25,14 @@ public final class Heal implements Opponent {
 
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate des Stachels. */
-    private int initialStartingX;
+    /** Das Objekt, welches die Bewegung dieses Gegners simuliert. */
+    private Map.StaticOpponentMovement staticOpponentMovement;
     /** Die y-Koordinate dieses Stachels. */
     private int yCoordinate;
     /** Die Breite dieses Stachels. */
     private int width;
     /** Die Höhe dieses Stachels. */
     private int height;
-    /** Die aktuelle x-Koordinate des Stachels. */
-    private int currentX;
-    /** Die Menge an x-Koordinaten, die der Hintergrund sich verschoben hat. */
-    private int backgroundCounterX;
-    /** Die letzte x-Koordinate des Hintergrundes. */
-    private int lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
     /** Der Zustand, ob dieses Objekt bereits zur Auffüllung der Leben eingelöst wurde. */
     private boolean used;
     //</editor-fold>
@@ -61,26 +56,13 @@ public final class Heal implements Opponent {
     @Override
     public void playerMoveLeftEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
-
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
-            backgroundCounterX += Player.STEP_SIZE;
-        }
-
-        currentX = backgroundCounterX + initialStartingX;
-        lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-
+        staticOpponentMovement.simulateLeftMovement();
     }
 
     @Override
     public void playerMoveRightEvent(final int playerPosition, final boolean isBackgroundMovable) {
         if (!isBackgroundMovable) return;
-
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != lastBackgroundCentreX) {
-            backgroundCounterX -= Player.STEP_SIZE;
-        }
-
-        currentX = backgroundCounterX + initialStartingX;
-        lastBackgroundCentreX = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+        staticOpponentMovement.simulateRightMovement();
     }
 
     @Override
@@ -95,11 +77,10 @@ public final class Heal implements Opponent {
 
     @Override
     public void initializeOpponent(final int startX, final int startY, final int startWidth, final int startHeight) {
-        this.initialStartingX = startX;
+        staticOpponentMovement = new Map.StaticOpponentMovement(startX);
         this.yCoordinate = startY;
         this.width = startWidth;
         this.height = startHeight;
-        this.currentX = startX;
     }
 
     @Override
@@ -109,7 +90,7 @@ public final class Heal implements Opponent {
 
     @Override
     public int getPositionX() {
-        return currentX;
+        return staticOpponentMovement.getCurrentX();
     }
 
     @Override
