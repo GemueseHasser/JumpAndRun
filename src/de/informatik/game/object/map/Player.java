@@ -235,13 +235,16 @@ public final class Player {
      * @param height          Die Höhe, die der Spieler hochspringen soll.
      * @param speedMultiplier Der Multiplikator, um den die standard Geschwindigkeit vergrößert oder verkleinert wird
      *                        des Sprungs.
+     * @param playSound       Der Zustand, ob der Ton des Springens abgespielt werden soll oder nicht.
      */
-    public void jump(final int height, final double speedMultiplier) {
+    public void jump(final int height, final double speedMultiplier, final boolean playSound) {
         if (jumping) return;
         if (gravity && positionY < START_POSITION_Y) return;
 
         // play sound
-        SoundType.JUMP.play(0);
+        if (playSound) {
+            SoundType.JUMP.play(0);
+        }
 
         jumping = true;
         final int startY = positionY;

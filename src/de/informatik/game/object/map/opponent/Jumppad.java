@@ -64,7 +64,7 @@ public final class Jumppad implements Opponent {
     @Override
     public void playerCollideOpponentEvent() {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
-        player.jump(Player.DEFAULT_JUMP_HEIGHT * 2, 1.5);
+        player.jump(Player.DEFAULT_JUMP_HEIGHT * 2, 1.5, false);
     }
 
     @Override
