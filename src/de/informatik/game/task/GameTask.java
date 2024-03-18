@@ -57,7 +57,7 @@ public final class GameTask implements Runnable {
             // update game-state
             JumpAndRun.GAME_INSTANCE.getGameHandler().updateGameState(GameState.LOSE);
 
-            // stop all music
+            // stop game music
             SoundType.GAME_BACKGROUND.stop();
 
             // play death-sound and new background music

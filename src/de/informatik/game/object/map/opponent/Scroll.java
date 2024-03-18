@@ -3,9 +3,12 @@ package de.informatik.game.object.map.opponent;
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.GameState;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.MapHandler;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
+
+import javax.sound.sampled.Clip;
 
 import java.awt.Graphics2D;
 
@@ -67,8 +70,16 @@ public final class Scroll implements Opponent {
     public void playerCollideOpponentEvent() {
         if (used) return;
 
+        // update game-state
         JumpAndRun.GAME_INSTANCE.getGameHandler().updateGameState(GameState.WIN);
         used = true;
+
+        // stop game music
+        SoundType.GAME_BACKGROUND.stop();
+
+        // play death-sound and new background music
+        SoundType.WIN_SOUND.play(0);
+        SoundType.WIN_MUSIC.play(Clip.LOOP_CONTINUOUSLY);
     }
 
     @Override

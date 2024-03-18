@@ -1,6 +1,10 @@
 package de.informatik.game.constant;
 
-import de.informatik.game.object.map.opponent.*;
+import de.informatik.game.object.map.opponent.Barrier;
+import de.informatik.game.object.map.opponent.Heal;
+import de.informatik.game.object.map.opponent.Jumppad;
+import de.informatik.game.object.map.opponent.Scroll;
+import de.informatik.game.object.map.opponent.Sting;
 
 /**
  * Ein {@link OpponentType} stellt einen Typen eines Gegners dar, welcher für jeden Typen eines Gegners angelegt werden

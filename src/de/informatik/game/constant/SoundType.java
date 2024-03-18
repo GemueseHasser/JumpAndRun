@@ -35,7 +35,11 @@ public enum SoundType {
     /** Der Ton, welcher gespielt wird, wenn der Spieler leben dazu bekommt. */
     HEAL("heal.wav", 80),
     /** Der Ton, welcher gespielt wird, wenn dem Spieler Leben abgezogen werden. */
-    DAMAGE("damage.wav", 80);
+    DAMAGE("damage.wav", 80),
+    /** Der Ton, welcher abgespielt wird, wenn der Spieler gewinnt. */
+    WIN_SOUND("win_sound.wav", 100),
+    /** Die Hintergrundmusik, die abgespielt wird, sobald der Spieler gewonnen hat. */
+    WIN_MUSIC("win_music.wav", 20);
     //</editor-fold>
 
 
@@ -67,7 +71,8 @@ public enum SoundType {
 
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(20f * (float) Math.log10((double) level / 100));
-        } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException | IllegalArgumentException e) {
+        } catch (final UnsupportedAudioFileException | IOException | LineUnavailableException |
+                       IllegalArgumentException e) {
             System.out.println(this.name() + ": " + e.getMessage());
         }
     }
