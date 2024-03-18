@@ -32,7 +32,8 @@ public enum ImageType {
     STING("sting.png"),
     /** Ein Herz. */
     HEAL("heal.png"),
-    SCROLL("scroll_texture_upd.png");
+    /** Eine Schriftrolle. */
+    SCROLL("scroll.png");
 
     //</editor-fold>
 

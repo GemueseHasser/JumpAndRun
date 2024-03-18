@@ -17,6 +17,7 @@ public enum OpponentType {
     STING(Sting.class),
     /** Der Typ einer Heilung. */
     HEAL(Heal.class),
+    /** Der Typ einer Schriftrolle. */
     SCROLL(Scroll.class);
     //</editor-fold>
 

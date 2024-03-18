@@ -4,37 +4,34 @@ import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.GameState;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.MapHandler;
+import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
-import de.informatik.game.object.map.Player;
 
-import java.awt.*;
+import java.awt.Graphics2D;
 
 /**
- * Eine {@link Barrier Barriere} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
+ * Eine {@link Scroll Schriftrolle} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
  * {@link de.informatik.game.object.map.Map} befinden kann. Dieser Gegner stellt eine unflexible, sich nicht bewegende
- * Barriere dar, welche der Spieler überwinden muss, um weiterzukommen.
+ * Schriftrolle dar, welche als "Sammelobjekt" dazu dient, das Level mit einem Sieg zu beenden.
  */
 public final class Scroll implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
-    /** Die Breite jeder Barriere. */
-    private static final int WIDTH = 50;
-    /** Die Höhe jeder Barriere. */
-    private static final int HEIGHT = 60;
-    /** Die y-Koordinate jeder Barriere. */
-    private static final int Y_COORDINATE = 300;
+    /** Der Zustand, ob dieser Gegner von der Oberseite aus durchlässig sein soll. */
+    private static final boolean PERMEABLE = true;
     //</editor-fold>
 
 
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate der Barriere. */
-    private int startX;
-    /** Die aktuelle x-Koordinate der Barriere. */
-    private int x;
-    /** Die Menge an x-Koordinaten, die der Background sich verschoben hat. */
-    private int Xcounter;
-    /** Die letzte x-Koordinate des Backgrounds. */
-    private int middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+    /** Das Objekt, welches die Bewegung dieses Gegners simuliert. */
+    private Map.StaticOpponentMovement staticOpponentMovement;
+    /** Die y-Koordinate dieses Gegners. */
+    private int yCoordinate;
+    /** Die Breite dieses Gegners. */
+    private int width;
+    /** Die Höhe dieses Gegners. */
+    private int height;
+    /** Der Zustand, ob dieses Objekt bereits eingesammelt wurde. */
     private boolean used;
     //</editor-fold>
 
@@ -43,50 +40,25 @@ public final class Scroll implements Opponent {
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-                ImageType.SCROLL.getImage(),
-                x,
-                Y_COORDINATE,
-                WIDTH,
-                HEIGHT,
-                null
+            ImageType.SCROLL.getImage(),
+            getPositionX(),
+            getPositionY(),
+            getWidth(),
+            getHeight(),
+            null
         );
     }
 
     @Override
     public void playerMoveLeftEvent() {
         if (!MapHandler.isBackgroundMovable()) return;
-
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
-            Xcounter += Player.STEP_SIZE;
-        }
-        // this is not quite working as intended
-        // stacks the barriers, once they pass the screen
-
-        // isMovingBackground was working, but named improperly
-
-        x = Xcounter + startX;
-        middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
-
-        // JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() not updating properly
-        // always jumps back to 0 at -615, when wrapping background, due to the bg's x-coordinate resetting
+        staticOpponentMovement.simulateLeftMovement();
     }
 
     @Override
     public void playerMoveRightEvent() {
         if (!MapHandler.isBackgroundMovable()) return;
-
-        if (JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() != middleXbg){
-            Xcounter -= Player.STEP_SIZE;
-        }
-        // something is going wrong here
-        // once the player moves left, the values get reset to the edge-coordinates
-
-        // and now it won't work at all anymore....
-
-        // why does it feel like this code wants to torture us
-
-        x = Xcounter + startX;
-        middleXbg = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX();
+        staticOpponentMovement.simulateRightMovement();
     }
 
     @Override
@@ -99,36 +71,36 @@ public final class Scroll implements Opponent {
 
     @Override
     public void initializeOpponent(int startX, int startY, int startWidth, int startHeight) {
-        this.startX = startX;
-        this.x = startX;
+        staticOpponentMovement = new Map.StaticOpponentMovement(startX);
+        this.yCoordinate = startY;
+        this.width = startWidth;
+        this.height = startHeight;
     }
 
     @Override
     public boolean isPermeable() {
-        return true;
+        return PERMEABLE;
     }
 
     @Override
     public int getPositionX() {
-        return x;
+        return staticOpponentMovement.getCurrentX();
     }
 
     @Override
     public int getPositionY() {
-        return Y_COORDINATE;
+        return yCoordinate;
     }
 
     @Override
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return HEIGHT;
+        return height;
     }
     //</editor-fold>
-
-
 
 }
