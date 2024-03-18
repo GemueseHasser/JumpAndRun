@@ -39,7 +39,9 @@ public enum SoundType {
     /** Der Ton, welcher abgespielt wird, wenn der Spieler gewinnt. */
     WIN_SOUND("win_sound.wav", 100),
     /** Die Hintergrundmusik, die abgespielt wird, sobald der Spieler gewonnen hat. */
-    WIN_MUSIC("win_music.wav", 20);
+    WIN_MUSIC("win_music.wav", 20),
+    /** Der Ton, welcher gespielt wird, wenn der Spieler von einem Jumppad in die Luft geschossen wird. */
+    WOOSH("woosh.wav", 100);
     //</editor-fold>
 
 

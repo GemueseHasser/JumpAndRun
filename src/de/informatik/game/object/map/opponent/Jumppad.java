@@ -2,6 +2,7 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.constant.SoundType;
 import de.informatik.game.handler.MapHandler;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
@@ -65,6 +66,7 @@ public final class Jumppad implements Opponent {
     public void playerCollideOpponentEvent() {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
         player.jump(Player.DEFAULT_JUMP_HEIGHT * 2, 1.5, false);
+        SoundType.WOOSH.play(0);
     }
 
     @Override
