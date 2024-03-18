@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -35,12 +37,18 @@ public final class GameGui extends Gui {
     private static final float WIN_LOSE_FONT_SIZE = 60;
     /** Der Text, der unter dem Text für das Gewinnen oder Verlieren steht. */
     private static final String WIN_LOSE_SUBTEXT = "Press Enter";
+    /** Die Zeit, zu dem der Titel des aktuellen Levels zu Beginn des Spiels auf dem Bildschirm angezeigt wird. */
+    private static final int SHOW_LEVEL_DURATION_IN_MILLIS = 700;
+    /** Die Schriftgröße, mit der der Titel des Levels angezeigt wird. */
+    private static final float SHOW_LEVEL_FONT_SIZE = 80;
     //</editor-fold>
 
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Der {@link ScheduledExecutorService}, womit Threads in einem bestimmten Pool ausgeführt werden können. */
     private final ScheduledExecutorService taskExecutor = Executors.newScheduledThreadPool(1);
+    /** Der Zeitpunkt, zu dem die Instanz dieses Fensters erstellt wurde. */
+    private final Instant instanceMoment;
     //</editor-fold>
 
 
@@ -61,6 +69,9 @@ public final class GameGui extends Gui {
 
         // register current gui in main-class
         JumpAndRun.GAME_INSTANCE.setCurrentGameGui(this);
+
+        // set instance moment
+        instanceMoment = Instant.now();
     }
     //</editor-fold>
 
@@ -89,6 +100,16 @@ public final class GameGui extends Gui {
 
             final int subtextWidth = g.getFontMetrics().stringWidth(WIN_LOSE_SUBTEXT);
             g.drawString(WIN_LOSE_SUBTEXT, (WIDTH / 2) - (subtextWidth / 2), (HEIGHT / 2) - (textHeight / 2) + 5);
+        }
+
+        // draw map name
+        if (Duration.between(instanceMoment, Instant.now()).toMillis() <= SHOW_LEVEL_DURATION_IN_MILLIS) {
+            g.setFont(JumpAndRun.GAME_INSTANCE.getGameFont().deriveFont(SHOW_LEVEL_FONT_SIZE));
+            final String levelText = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getName();
+            final int textWidth = g.getFontMetrics().stringWidth(levelText);
+            final int textHeight = g.getFontMetrics().getHeight();
+
+            g.drawString(levelText, (WIDTH / 2) - (textWidth / 2), (HEIGHT / 2) - (textHeight / 2));
         }
 
         repaint();
