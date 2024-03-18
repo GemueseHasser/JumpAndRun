@@ -39,6 +39,8 @@ public final class Scroll implements Opponent {
     //<editor-fold desc="implementation">
     @Override
     public void drawOpponent(final Graphics2D g) {
+        if (used) return;
+
         g.drawImage(
             ImageType.SCROLL.getImage(),
             getPositionX(),
