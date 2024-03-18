@@ -232,9 +232,11 @@ public final class Player {
     /**
      * Lässt den Spieler eine gewisse Höhe hochspringen.
      *
-     * @param height Die Höhe, die der Spieler hochspringen soll.
+     * @param height          Die Höhe, die der Spieler hochspringen soll.
+     * @param speedMultiplier Der Multiplikator, um den die standard Geschwindigkeit vergrößert oder verkleinert wird
+     *                        des Sprungs.
      */
-    public void jump(final int height) {
+    public void jump(final int height, final double speedMultiplier) {
         if (jumping) return;
         if (gravity && positionY < START_POSITION_Y) return;
 
@@ -257,7 +259,7 @@ public final class Player {
 
             positionY -= (STEP_SIZE / 2);
             resetAnimation(false);
-        }, 0, 6, TimeUnit.MILLISECONDS);
+        }, 0, (long) (6 / speedMultiplier), TimeUnit.MILLISECONDS);
     }
 
     /**

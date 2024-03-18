@@ -2,7 +2,6 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
-import de.informatik.game.constant.MovementState;
 import de.informatik.game.handler.MapHandler;
 import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
@@ -21,7 +20,7 @@ public final class Jumppad implements Opponent {
 
     //<editor-fold desc="CONSTANTS">
     /** Der Zustand, ob dieser Gegner von der Oberseite aus durchlässig sein soll. */
-    private static final boolean PERMEABLE = false;
+    private static final boolean PERMEABLE = true;
     //</editor-fold>
 
 
@@ -65,13 +64,7 @@ public final class Jumppad implements Opponent {
     @Override
     public void playerCollideOpponentEvent() {
         final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
-
-        if (player.getScreenPositionX() > staticOpponentMovement.getCurrentX() && player.getCurrentMovementState() == MovementState.RIGHT)
-            return;
-        if (player.getScreenPositionX() < staticOpponentMovement.getCurrentX() && player.getCurrentMovementState() == MovementState.LEFT)
-            return;
-
-        player.stay();
+        player.jump(Player.DEFAULT_JUMP_HEIGHT * 2, 1.5);
     }
 
     @Override

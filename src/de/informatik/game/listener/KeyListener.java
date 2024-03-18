@@ -49,7 +49,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
                 JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(e.getKeyCode());
                 break;
             case KeyEvent.VK_UP:
-                JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump(Player.DEFAULT_JUMP_HEIGHT);
+                JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump(Player.DEFAULT_JUMP_HEIGHT, 1);
                 break;
         }
     }
