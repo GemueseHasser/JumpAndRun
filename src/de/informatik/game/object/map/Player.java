@@ -36,7 +36,7 @@ public final class Player {
     /** Die y-Koordinate, an der der Spieler bei der Initialisierung platziert wird. */
     public static final int START_POSITION_Y = 300;
     /** Die Sprunghöhe des Spielers. */
-    private static final int JUMP_HEIGHT = 80;
+    public static final int DEFAULT_JUMP_HEIGHT = 80;
     /** Die Anzahl an einzelnen Animationen, die es für den Spieler gibt. */
     private static final int ANIMATION_SIZE = 4;
     /** Die zeitlichen Abstände, in Millisekunden, in denen die Animation aktualisiert werden soll. */
@@ -230,9 +230,11 @@ public final class Player {
     }
 
     /**
-     * Lässt den Spieler hochspringen.
+     * Lässt den Spieler eine gewisse Höhe hochspringen.
+     *
+     * @param height Die Höhe, die der Spieler hochspringen soll.
      */
-    public void jump() {
+    public void jump(final int height) {
         if (jumping) return;
         if (gravity && positionY < START_POSITION_Y) return;
 
@@ -246,7 +248,7 @@ public final class Player {
         jumpTask.scheduleAtFixedRate(() -> {
             gravity = false;
 
-            if (positionY < startY - JUMP_HEIGHT) {
+            if (positionY < startY - height) {
                 jumping = false;
                 gravity = true;
 

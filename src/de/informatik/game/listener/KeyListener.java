@@ -2,6 +2,7 @@ package de.informatik.game.listener;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.GameState;
+import de.informatik.game.object.map.Player;
 
 import java.awt.event.KeyEvent;
 
@@ -48,7 +49,7 @@ public final class KeyListener implements java.awt.event.KeyListener {
                 JumpAndRun.GAME_INSTANCE.getGameTask().setKeyCode(e.getKeyCode());
                 break;
             case KeyEvent.VK_UP:
-                JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump();
+                JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer().jump(Player.DEFAULT_JUMP_HEIGHT);
                 break;
         }
     }
