@@ -1,9 +1,6 @@
 package de.informatik.game.constant;
 
-import de.informatik.game.object.map.opponent.Barrier;
-import de.informatik.game.object.map.opponent.Heal;
-import de.informatik.game.object.map.opponent.Jumppad;
-import de.informatik.game.object.map.opponent.Sting;
+import de.informatik.game.object.map.opponent.*;
 
 /**
  * Ein {@link OpponentType} stellt einen Typen eines Gegners dar, welcher für jeden Typen eines Gegners angelegt werden
@@ -19,7 +16,9 @@ public enum OpponentType {
     /** Der Typ eines Stachels. */
     STING(Sting.class),
     /** Der Typ einer Heilung. */
-    HEAL(Heal.class);
+    HEAL(Heal.class),
+    /** Der Typ einer Schriftrolle. */
+    SCROLL(Scroll.class);
     //</editor-fold>
 
 
