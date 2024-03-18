@@ -78,6 +78,10 @@ public final class GameTask implements Runnable {
                     player.setGravity(false);
                     continue;
                 }
+                if (!opponent.isPermeable() && player.isJumping() && player.getPositionY() > opponent.getPositionY() + (opponent.getHeight() / 2)) {
+                    player.stopCurrentJump();
+                    continue;
+                }
 
                 // trigger player collide event
                 opponent.playerCollideOpponentEvent();

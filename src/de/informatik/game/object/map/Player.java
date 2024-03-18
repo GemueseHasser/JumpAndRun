@@ -73,6 +73,8 @@ public final class Player {
     private boolean jumping;
     /** Der Zustand, ob Schwerkraft auf den Spieler wirken soll. */
     private boolean gravity = true;
+    /** Der jeweilige Task, mit welchem der Sprung gehandhabt wird. */
+    private ScheduledExecutorService jumpTask;
     //</editor-fold>
 
 
@@ -249,20 +251,29 @@ public final class Player {
         jumping = true;
         final int startY = positionY;
 
-        final ScheduledExecutorService jumpTask = Executors.newScheduledThreadPool(1);
+        jumpTask = Executors.newScheduledThreadPool(1);
         jumpTask.scheduleAtFixedRate(() -> {
             gravity = false;
 
             if (positionY < startY - height) {
-                jumping = false;
-                gravity = true;
-
-                jumpTask.shutdown();
+                stopCurrentJump();
             }
 
             positionY -= (STEP_SIZE / 2);
             resetAnimation(false);
         }, 0, (long) (6 / speedMultiplier), TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Stoppt den aktuellen Sprung sofort. Sollte der Spieler aktuell nicht springen, passiert nichts.
+     */
+    public void stopCurrentJump() {
+        if (!jumping) return;
+
+        jumping = false;
+        gravity = true;
+
+        jumpTask.shutdown();
     }
 
     /**
