@@ -27,7 +27,8 @@ public enum SoundType {
     /** Der Ton, welcher gespielt wird, wenn man einen Level im Menü auswählt. */
     CHOOSE_LEVEL("choose_level.wav", 20),
     /** Der Ton, welcher gespielt wird, wenn man im Menü das Spiel startet. */
-    START_GAME("start_game.wav", 100);
+    START_GAME("start_game.wav", 100),
+    WOOSH1("woosh1.wav",25);
     //</editor-fold>
 
 
