@@ -1,0 +1,69 @@
+name: Level 15
+mapLength: 1000
+backgroundImageType: BACKGROUND
+opponentLoader:
+  - type: BARRIER
+    x: 100
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 150
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 200
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 200
+    y: 60
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 250
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 250
+    y: 60
+    width: 50
+    height: 60
+  - type: STING
+    x: 350
+    y: 0
+    width: 70
+    height: 30
+  - type: BARRIER
+    x: 500
+    y: 0
+    width: 50
+    height: 60
+  - type: HEAL
+    x: 515
+    y: 60
+    width: 25
+    height: 25
+  - type: BARRIER
+    x: 550
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 550
+    y: 60
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 600
+    y: 0
+    width: 50
+    height: 60
+  - type: BARRIER
+    x: 780
+    y: 20
+    width: 70
+    height: 50
