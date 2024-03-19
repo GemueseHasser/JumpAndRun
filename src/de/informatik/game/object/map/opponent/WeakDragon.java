@@ -2,10 +2,15 @@ package de.informatik.game.object.map.opponent;
 
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
+import de.informatik.game.handler.MapHandler;
 import de.informatik.game.object.graphic.gui.GameGui;
+import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
+import de.informatik.game.object.map.Player;
 
 import java.awt.Graphics2D;
+import java.time.Duration;
+import java.time.Instant;
 
 /**
  * Ein {@link WeakDragon Dragon} stellt eine Instanz eines {@link Opponent Gegners} dar, welcher sich auf der
@@ -14,87 +19,100 @@ import java.awt.Graphics2D;
  */
 public final class WeakDragon implements Opponent {
 
-    //<editor-fold desc="CONSTANTS">
-    /** Die Größe von jedem Dragon. */
-    private static final int SIZE = 150;
-    /** Die y-Koordinate jeder Dragon. */
-    private static final int Y_COORDINATE = 235;
-    //</editor-fold>
-
-
     //<editor-fold desc="LOCAL FIELDS">
-    /** Die Start-Koordinate der Dragon. */
-    private int startX = 50;
-    /** Die aktuelle x-Koordinate der Dragon. */
-    private int x;
-    //</editor-fold>
+    private Map.StaticOpponentMovement staticOpponentMovement;
+    private int yCoordinate;
+    private int width;
+    private int height;
 
+    private static final int DAMAGE_PERIOD_IN_MILLIS = 100;
+    /** Der Schaden, den dieser Stachel bei dem Spieler verursacht. */
+    private static final int DAMAGE = 2;
+    //</editor-fold>
+    private Instant lastDamageMoment = Instant.now();
 
     private int DMGFlame = 10;
-    /** Der Schaden den Der Drache mit seiner Flamme verursacht. */
+    /** Der Schaden den der Drache mit seiner Flamme verursacht. */
     private int HP = 100;
     /** Die Lebenspunkte des Drachen. */
     private int SPEED = 5;
-
 
     //<editor-fold desc="implementation">
     @Override
     public void drawOpponent(final Graphics2D g) {
         g.drawImage(
-                JumpAndRun.GAME_INSTANCE.getLoadedImages().get(ImageType.DRAGON),
-                x,
-                Y_COORDINATE,
-                SIZE,
-                SIZE,
+                ImageType.WEAKDRAGON.getImage(),
+                getPositionX(),
+                getPositionY(),
+                getWidth(),
+                getHeight(),
                 null
         );
     }
 
     @Override
-    public void playerMoveLeftEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
-        if (playerPosition < startX - GameGui.WIDTH - 70)
-            return;
+    public void playerMoveLeftEvent() {
+        if (!MapHandler.isBackgroundMovable()) return;
+        staticOpponentMovement.simulateLeftMovement();
 
-        x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
     }
 
     @Override
-    public void playerMoveRightEvent(final int playerPosition, final boolean isMovingBackground) {
-        if (!isMovingBackground) return;
-        if (playerPosition > startX + GameGui.WIDTH + 70) {
-            return;
-        }
-
-
-        x = JumpAndRun.GAME_INSTANCE.getGameHandler().getMap().getLastMiddleBackgroundX() + startX;
+    public void playerMoveRightEvent() {
+        if (!MapHandler.isBackgroundMovable()) return;
+        staticOpponentMovement.simulateRightMovement();
     }
 
     @Override
     public void playerCollideOpponentEvent() {
         // decrement health, etc.
+        final Player player = JumpAndRun.GAME_INSTANCE.getGameHandler().getPlayer();
+
+        if (Duration.between(lastDamageMoment, Instant.now()).toMillis() >= DAMAGE_PERIOD_IN_MILLIS) {
+            player.setHealth(player.getHealth() - DAMAGE);
+            lastDamageMoment = Instant.now();
+        }}
+
+
+
+    @Override
+    public boolean isPermeable() {
+        return false;
     }
 
     @Override
-    public void initializeOpponent(final int startX) {
-        this.startX = startX;
-        this.x = startX;
+    public void initializeOpponent(final int startX, final int yCoordinate, final int width, final int height) {
+        staticOpponentMovement = new Map.StaticOpponentMovement(startX);
+        this.yCoordinate = yCoordinate;
+        this.width = width;
+        this.height = height;
     }
 
     @Override
     public int getPositionX() {
-        return x;
+        return staticOpponentMovement.getCurrentX();
     }
 
     @Override
     public int getPositionY() {
-        return Y_COORDINATE;
+        return yCoordinate;
     }
 
     @Override
-    public int getSize() {
-        return SIZE;
+    public int getWidth() {
+        return width;
     }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+    /**
+    public void animation() {
+
+
+    }
+*/
     //</editor-fold>
 /**
     public void spitFire () {
