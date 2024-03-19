@@ -1,19 +1,15 @@
 package de.informatik.game.object.graphic.gui;
 
 import de.informatik.game.JumpAndRun;
+import de.informatik.game.constant.ImageType;
 import de.informatik.game.constant.SoundType;
 import de.informatik.game.object.graphic.Gui;
 
 import javax.sound.sampled.Clip;
-import javax.swing.JButton;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import static de.informatik.game.JumpAndRun.GAME_INSTANCE;
 
 /**
  * Das {@link MenuGui} stellt eine Instanz eines {@link Gui} dar. Das {@link MenuGui} wird dem Nutzer als erstes
@@ -31,9 +27,9 @@ public final class MenuGui extends Gui {
     /** Die Schriftart, die standardmäßig für alle Schriften in diesem {@link Gui} verwendet wird. */
     private static final Font STANDARD_FONT = new Font("Arial", Font.BOLD, 25);
     /** Die standard Hintergrundfarbe jedes Buttons. */
-    private static final Color BUTTON_BACKGROUND = Color.GRAY;
+    private static final Color BUTTON_BACKGROUND = Color.BLACK;
     /** Die Farbe, zu der sich die Hintergrundfarbe ändert, wenn man den Button mit der Maus berührt. */
-    private static final Color BUTTON_BACKGROUND_HOVER = Color.LIGHT_GRAY;
+    private static final Color BUTTON_BACKGROUND_HOVER = Color.GRAY;
     /** Die standard Breite eines Buttons. */
     private static final int BUTTON_WIDTH = 400;
     /** Die standard Höhe eines Buttons. */
@@ -45,7 +41,7 @@ public final class MenuGui extends Gui {
     /** Die Größe jedes Buttons, mit dem man das Level wählen kann. */
     private static final int LEVEL_BUTTON_SIZE = 70;
     /** Die Farbe, die der Button des jeweiligen Levels erhält, wenn man dieses Level ausgewählt hat. */
-    private static final Color LEVEL_BUTTON_SELECT_COLOR = Color.GREEN;
+    private static final Color LEVEL_BUTTON_SELECT_COLOR = Color.RED;
     //</editor-fold>
 
 
@@ -71,6 +67,8 @@ public final class MenuGui extends Gui {
         // create buttons for each level
         final JButton[] levelButtons = new JButton[JumpAndRun.LEVEL_AMOUNT];
 
+
+
         for (int i = 0; i < JumpAndRun.LEVEL_AMOUNT; i++) {
             // set current level
             final int currentLevel = i + 1;
@@ -79,6 +77,7 @@ public final class MenuGui extends Gui {
             final JButton button = new JButton("Lvl " + currentLevel);
             initializeButton(button, 0);
 
+            button.setIcon(new ImageIcon(ImageType.BUTTON_SELECTED.getImage())); // !!!!!!!!!!
             button.setFont(STANDARD_FONT.deriveFont(12F));
             button.setBounds(
                 53 + ((i % 5) * (LEVEL_BUTTON_SIZE + 10)),
@@ -98,10 +97,12 @@ public final class MenuGui extends Gui {
                     if (levelButton == button) continue;
 
                     levelButton.setBackground(BUTTON_BACKGROUND);
+                    levelButton.setIcon(new ImageIcon(ImageType.BUTTON_UNSELECTED.getImage()));
                 }
 
                 // color the selected button specifically
                 button.setBackground(LEVEL_BUTTON_SELECT_COLOR);
+                button.setIcon(new ImageIcon(ImageType.BUTTON_SELECTED.getImage()));
             });
 
             // add button to gui
@@ -199,6 +200,7 @@ public final class MenuGui extends Gui {
         //<editor-fold desc="LOCAL FIELDS">
         /** Der {@link java.awt.Button}, der von diesem Listener explizit überwacht werden soll. */
         private final JButton button;
+        private String buttonState = "unselected";
         //</editor-fold>
 
 
@@ -221,12 +223,19 @@ public final class MenuGui extends Gui {
         //<editor-fold desc="implementation">
         @Override
         public void mouseClicked(final MouseEvent e) {
+            if (buttonState.equalsIgnoreCase("selected")) {
+                button.setIcon(new ImageIcon(ImageType.BUTTON_UNSELECTED_HOVERING.getImage()));
+                buttonState = "unselected";
+                return;
+            }
+
+            button.setIcon(new ImageIcon(ImageType.BUTTON_SELECTED_HOVERING.getImage()));
+            buttonState = "selected";
 
         }
 
         @Override
         public void mousePressed(final MouseEvent e) {
-
         }
 
         @Override
@@ -236,6 +245,11 @@ public final class MenuGui extends Gui {
 
         @Override
         public void mouseEntered(final MouseEvent e) {
+            if (buttonState.equalsIgnoreCase("selected")) {
+                button.setIcon(new ImageIcon(ImageType.BUTTON_SELECTED_HOVERING.getImage()));
+            } else {
+                button.setIcon(new ImageIcon(ImageType.BUTTON_UNSELECTED_HOVERING.getImage()));
+            }
             if (button.getBackground() != BUTTON_BACKGROUND) return;
 
             button.setBackground(BUTTON_BACKGROUND_HOVER);
@@ -243,9 +257,18 @@ public final class MenuGui extends Gui {
 
         @Override
         public void mouseExited(final MouseEvent e) {
+            if (buttonState.equalsIgnoreCase("selected")) {
+                button.setIcon(new ImageIcon(ImageType.BUTTON_SELECTED.getImage()));
+            } else {
+                button.setIcon(new ImageIcon(ImageType.BUTTON_UNSELECTED.getImage()));
+            }
             if (button.getBackground() != BUTTON_BACKGROUND_HOVER) return;
 
             button.setBackground(BUTTON_BACKGROUND);
+        }
+
+        public String getButtonState(){
+            return buttonState;
         }
         //</editor-fold>
     }

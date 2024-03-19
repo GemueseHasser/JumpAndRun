@@ -33,7 +33,15 @@ public enum ImageType {
     /** Ein Herz. */
     HEAL("heal.png"),
     /** Eine Schriftrolle. */
-    SCROLL("scroll.png");
+    SCROLL("scroll.png"),
+    /** Das Bild für einen ausgewählten Knopf. **/
+    BUTTON_SELECTED("selected-button.png"),
+    /** Das Bild für einen ausgewählten Knopf, über dem die Maus hovert. **/
+    BUTTON_SELECTED_HOVERING("selected-hovering-button.png"),
+    /** Das Bild für einen nicht ausgewählten Knopf. **/
+    BUTTON_UNSELECTED("unselected-button.png"),
+    /** Das Bild für einen nicht ausgewählten Knopf, über dem die Maus hovert. **/
+    BUTTON_UNSELECTED_HOVERING("unselected-hovering-button.png");
 
     //</editor-fold>
 
