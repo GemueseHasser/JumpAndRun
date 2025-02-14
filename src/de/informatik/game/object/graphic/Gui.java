@@ -3,8 +3,7 @@ package de.informatik.game.object.graphic;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /**
  * Ein {@link Gui} stellt ein {@link JFrame Fenster} dar, welches bereits bestimmte Eigenschaften besitzt und welches
@@ -81,7 +80,11 @@ public abstract class Gui extends JFrame {
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
 
-            draw((Graphics2D) g);
+            final Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+            draw(g2d);
         }
         //</editor-fold>
     }
