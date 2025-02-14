@@ -3,9 +3,9 @@ package de.informatik.game.object.map;
 import de.informatik.game.JumpAndRun;
 
 /**
- * Ein {@link Map.StaticOpponentMovement} ist ein Objekt, welches man für einen bestimmten Gegner erzeugen kann, welcher
+ * Ein {@link StaticOpponentMovement} ist ein Objekt, welches man für einen bestimmten Gegner erzeugen kann, welcher
  * sich statisch mit dem Hintergrund der aktuellen {@link Map} mitbewegen soll. Es wird also durch Aufrufen der
- * Methoden des {@link Map.StaticOpponentMovement} in den jeweiligen implementierten Methoden in der jeweiligen
+ * Methoden des {@link StaticOpponentMovement} in den jeweiligen implementierten Methoden in der jeweiligen
  * Gegner-Klasse die Berechnung der aktuellen x-Koordinate des Gegners übernommen.
  */
 public final class StaticOpponentMovement {
@@ -25,10 +25,10 @@ public final class StaticOpponentMovement {
     //<editor-fold desc="CONSTRUCTORS">
 
     /**
-     * Erzeugt eine neue und vollständig unabhängige Instanz eines {@link Map.StaticOpponentMovement}. Ein
-     * {@link Map.StaticOpponentMovement} ist ein Objekt, welches man für einen bestimmten Gegner erzeugen kann, welcher
+     * Erzeugt eine neue und vollständig unabhängige Instanz eines {@link StaticOpponentMovement}. Ein
+     * {@link StaticOpponentMovement} ist ein Objekt, welches man für einen bestimmten Gegner erzeugen kann, welcher
      * sich statisch mit dem Hintergrund der aktuellen {@link Map} mitbewegen soll. Es wird also durch Aufrufen der
-     * Methoden des {@link Map.StaticOpponentMovement} in den jeweiligen implementierten Methoden in der jeweiligen
+     * Methoden des {@link StaticOpponentMovement} in den jeweiligen implementierten Methoden in der jeweiligen
      * Gegner-Klasse die Berechnung der aktuellen x-Koordinate des Gegners übernommen.
      *
      * @param initialStartingX Die x-Koordinate, mit der der Gegner initialisiert wurde.
