@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/JumpAndRun_jar2</output-path>
     <root id="archive" name="JumpAndRun.jar">
       <element id="module-output" name="JumpAndRun" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/snakeyaml-2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/snakeyaml-2.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

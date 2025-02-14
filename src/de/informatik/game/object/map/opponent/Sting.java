@@ -3,9 +3,9 @@ package de.informatik.game.object.map.opponent;
 import de.informatik.game.JumpAndRun;
 import de.informatik.game.constant.ImageType;
 import de.informatik.game.handler.MapHandler;
-import de.informatik.game.object.map.Map;
 import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.Player;
+import de.informatik.game.object.map.StaticOpponentMovement;
 
 import java.awt.Graphics2D;
 import java.time.Duration;
@@ -31,7 +31,7 @@ public final class Sting implements Opponent {
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Das Objekt, welches die Bewegung dieses Gegners simuliert. */
-    private Map.StaticOpponentMovement staticOpponentMovement;
+    private StaticOpponentMovement staticOpponentMovement;
     /** Die y-Koordinate dieses Stachels. */
     private int yCoordinate;
     /** Die Breite dieses Stachels. */
@@ -80,7 +80,7 @@ public final class Sting implements Opponent {
 
     @Override
     public void initializeOpponent(final int startX, final int startY, final int startWidth, final int startHeight) {
-        staticOpponentMovement = new Map.StaticOpponentMovement(startX);
+        staticOpponentMovement = new StaticOpponentMovement(startX);
         this.yCoordinate = startY;
         this.width = startWidth;
         this.height = startHeight;
