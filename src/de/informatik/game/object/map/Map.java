@@ -7,7 +7,6 @@ import de.informatik.game.object.graphic.gui.GameGui;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,13 +47,8 @@ public final class Map {
      */
     public void loadOpponents() {
         for (final OpponentLoader loader : opponentLoader) {
-            if (!Arrays.asList(loader.getType().getOpponentClass().getInterfaces()).contains(Opponent.class)) {
-                System.out.println("No-Opponent-Class:" + loader.getType().name());
-                continue;
-            }
-
             try {
-                final Opponent opponent = (Opponent) loader.getType().getOpponentClass().getDeclaredConstructor().newInstance();
+                final Opponent opponent = loader.getType().getOpponentClass().getDeclaredConstructor().newInstance();
                 opponent.initializeOpponent(loader.getX(), loader.getY(), loader.getWidth(), loader.getHeight());
                 loadedOpponents.add(opponent);
             } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |

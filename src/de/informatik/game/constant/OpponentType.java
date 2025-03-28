@@ -1,5 +1,6 @@
 package de.informatik.game.constant;
 
+import de.informatik.game.object.map.Opponent;
 import de.informatik.game.object.map.opponent.Barrier;
 import de.informatik.game.object.map.opponent.Heal;
 import de.informatik.game.object.map.opponent.Jumppad;
@@ -28,7 +29,7 @@ public enum OpponentType {
 
     //<editor-fold desc="LOCAL FIELDS">
     /** Die Klasse, auf der der Gegner basiert. */
-    private final Class<?> opponentClass;
+    private final Class<? extends Opponent> opponentClass;
     //</editor-fold>
 
 
@@ -41,7 +42,7 @@ public enum OpponentType {
      *
      * @param opponentClass Die Klasse, auf der der Gegner basiert.
      */
-    OpponentType(final Class<?> opponentClass) {
+    OpponentType(final Class<? extends Opponent> opponentClass) {
         this.opponentClass = opponentClass;
     }
     //</editor-fold>
@@ -54,7 +55,7 @@ public enum OpponentType {
      *
      * @return Die Klasse, auf der der Gegner basiert.
      */
-    public Class<?> getOpponentClass() {
+    public Class<? extends Opponent> getOpponentClass() {
         return opponentClass;
     }
     //</editor-fold>
